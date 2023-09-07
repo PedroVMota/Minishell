@@ -1,0 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_env.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/12 18:25:43 by pvital-m          #+#    #+#             */
+/*   Updated: 2023/09/01 11:23:35 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static  t_env *get_last(t_env *lst)
+{
+	if(!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+t_env *ft_env_add(char *str)
+{
+	t_env *new;
+
+	new = (t_env *)ft_calloc(sizeof(t_env), 1);
+	if (!new)
+		return (NULL);
+	new->var = str;
+	new->value = NULL;
+	new->var_len = ft_strlen(str);
+	new->next = NULL;
+	return (new);
+}
+
+void ft_ml_envadd_back(t_env **lst, t_env *new)
+{
+	t_env *last;
+
+	if (!new)
+		return ;
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	last = get_last(*lst);
+	last->next = new;
+}
+
+int ft_env_delete(t_env **env)
+{
+	t_env *tmp;
+
+	while ((*env))
+	{
+		tmp = (*env)->next;
+		free((*env)->var);
+		free((*env)->value);
+		free((*env));
+		(*env) = tmp;
+	}
+	return (1);
+}
+
+t_env *set_env(char **envp){
+	t_env *env;
+
+	env = NULL;
+	int i = -1;
+	while(envp[++i])
+		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i])));
+	return env;
+}
