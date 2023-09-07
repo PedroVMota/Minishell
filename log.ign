@@ -1,0 +1,148 @@
+==20804== Memcheck, a memory error detector
+==20804== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==20804== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==20804== Command: ./minishell
+==20804== Parent PID: 20620
+==20804== 
+==20807== 
+==20807== HEAP SUMMARY:
+==20807==     in use at exit: 56 bytes in 1 blocks
+==20807==   total heap usage: 2 allocs, 1 frees, 1,080 bytes allocated
+==20807== 
+==20807== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20807==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20807==    by 0x109944: main (syntax.c:124)
+==20807== 
+==20807== LEAK SUMMARY:
+==20807==    definitely lost: 0 bytes in 0 blocks
+==20807==    indirectly lost: 0 bytes in 0 blocks
+==20807==      possibly lost: 0 bytes in 0 blocks
+==20807==    still reachable: 56 bytes in 1 blocks
+==20807==         suppressed: 0 bytes in 0 blocks
+==20807== 
+==20807== For lists of detected and suppressed errors, rerun with: -s
+==20807== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==20808== Invalid free() / delete / delete[] / realloc()
+==20808==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20808==    by 0x109545: syntax_report (syntax.c:48)
+==20808==    by 0x109723: syntax_sep (syntax.c:83)
+==20808==    by 0x10984A: ft_syntax_checker (syntax.c:107)
+==20808==    by 0x109A08: main (syntax.c:141)
+==20808==  Address 0x10b058 is in a r-- mapped file /home/pedro/42Projects/Minishell/minishell segment
+==20808== 
+==20808== 
+==20808== HEAP SUMMARY:
+==20808==     in use at exit: 56 bytes in 1 blocks
+==20808==   total heap usage: 2 allocs, 2 frees, 1,080 bytes allocated
+==20808== 
+==20808== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20808==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20808==    by 0x109944: main (syntax.c:124)
+==20808== 
+==20808== LEAK SUMMARY:
+==20808==    definitely lost: 0 bytes in 0 blocks
+==20808==    indirectly lost: 0 bytes in 0 blocks
+==20808==      possibly lost: 0 bytes in 0 blocks
+==20808==    still reachable: 56 bytes in 1 blocks
+==20808==         suppressed: 0 bytes in 0 blocks
+==20808== 
+==20808== For lists of detected and suppressed errors, rerun with: -s
+==20808== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==20809== Invalid free() / delete / delete[] / realloc()
+==20809==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20809==    by 0x109545: syntax_report (syntax.c:48)
+==20809==    by 0x10964D: syntax_sep (syntax.c:71)
+==20809==    by 0x10984A: ft_syntax_checker (syntax.c:107)
+==20809==    by 0x109A08: main (syntax.c:141)
+==20809==  Address 0x10b05e is in a r-- mapped file /home/pedro/42Projects/Minishell/minishell segment
+==20809== 
+==20809== 
+==20809== HEAP SUMMARY:
+==20809==     in use at exit: 56 bytes in 1 blocks
+==20809==   total heap usage: 2 allocs, 2 frees, 1,080 bytes allocated
+==20809== 
+==20809== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20809==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20809==    by 0x109944: main (syntax.c:124)
+==20809== 
+==20809== LEAK SUMMARY:
+==20809==    definitely lost: 0 bytes in 0 blocks
+==20809==    indirectly lost: 0 bytes in 0 blocks
+==20809==      possibly lost: 0 bytes in 0 blocks
+==20809==    still reachable: 56 bytes in 1 blocks
+==20809==         suppressed: 0 bytes in 0 blocks
+==20809== 
+==20809== For lists of detected and suppressed errors, rerun with: -s
+==20809== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==20810== 
+==20810== HEAP SUMMARY:
+==20810==     in use at exit: 56 bytes in 1 blocks
+==20810==   total heap usage: 2 allocs, 1 frees, 1,080 bytes allocated
+==20810== 
+==20810== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20810==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20810==    by 0x109944: main (syntax.c:124)
+==20810== 
+==20810== LEAK SUMMARY:
+==20810==    definitely lost: 0 bytes in 0 blocks
+==20810==    indirectly lost: 0 bytes in 0 blocks
+==20810==      possibly lost: 0 bytes in 0 blocks
+==20810==    still reachable: 56 bytes in 1 blocks
+==20810==         suppressed: 0 bytes in 0 blocks
+==20810== 
+==20810== For lists of detected and suppressed errors, rerun with: -s
+==20810== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==20811== 
+==20811== HEAP SUMMARY:
+==20811==     in use at exit: 56 bytes in 1 blocks
+==20811==   total heap usage: 2 allocs, 1 frees, 1,080 bytes allocated
+==20811== 
+==20811== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20811==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20811==    by 0x109944: main (syntax.c:124)
+==20811== 
+==20811== LEAK SUMMARY:
+==20811==    definitely lost: 0 bytes in 0 blocks
+==20811==    indirectly lost: 0 bytes in 0 blocks
+==20811==      possibly lost: 0 bytes in 0 blocks
+==20811==    still reachable: 56 bytes in 1 blocks
+==20811==         suppressed: 0 bytes in 0 blocks
+==20811== 
+==20811== For lists of detected and suppressed errors, rerun with: -s
+==20811== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==20812== 
+==20812== HEAP SUMMARY:
+==20812==     in use at exit: 56 bytes in 1 blocks
+==20812==   total heap usage: 2 allocs, 1 frees, 1,080 bytes allocated
+==20812== 
+==20812== 56 bytes in 1 blocks are still reachable in loss record 1 of 1
+==20812==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20812==    by 0x109944: main (syntax.c:124)
+==20812== 
+==20812== LEAK SUMMARY:
+==20812==    definitely lost: 0 bytes in 0 blocks
+==20812==    indirectly lost: 0 bytes in 0 blocks
+==20812==      possibly lost: 0 bytes in 0 blocks
+==20812==    still reachable: 56 bytes in 1 blocks
+==20812==         suppressed: 0 bytes in 0 blocks
+==20812== 
+==20812== For lists of detected and suppressed errors, rerun with: -s
+==20812== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==20804== 
+==20804== HEAP SUMMARY:
+==20804==     in use at exit: 56 bytes in 1 blocks
+==20804==   total heap usage: 2 allocs, 1 frees, 1,080 bytes allocated
+==20804== 
+==20804== 56 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==20804==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==20804==    by 0x109944: main (syntax.c:124)
+==20804== 
+==20804== LEAK SUMMARY:
+==20804==    definitely lost: 56 bytes in 1 blocks
+==20804==    indirectly lost: 0 bytes in 0 blocks
+==20804==      possibly lost: 0 bytes in 0 blocks
+==20804==    still reachable: 0 bytes in 0 blocks
+==20804==         suppressed: 0 bytes in 0 blocks
+==20804== 
+==20804== For lists of detected and suppressed errors, rerun with: -s
+==20804== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
