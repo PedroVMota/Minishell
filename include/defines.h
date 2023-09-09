@@ -32,20 +32,15 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
-typedef struct s_redirection
+typedef struct s_cmd
 {
-	char				*infile;
-	char				*outfile;
-	int					input;
-	int					output;
-}						t_redirection;
+	int pipe[2];				// pipe;
+	int red[2]; 			// in case there is a redirection token
 
-typedef struct s_comands
-{
-	t_redirection		*redirect;
-	char				**args;
-	struct s_comands	*next;
-}						t_commands;
+	char				**cmd; // command and arguments
+	struct s_cmd	*prev; 
+	struct s_cmd	*next;
+}						t_cmds;
 
 typedef struct s_shell
 {
@@ -53,7 +48,6 @@ typedef struct s_shell
 	int					hd;
 	int					stop;
 	t_env				*env;
-	t_commands			*command;
 }						t_shell;
 
 # define ERR_MALLOC "Error: malloc failed\n"
