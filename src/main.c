@@ -37,17 +37,14 @@ void prompt(void)
 	}
 }
 
-#ifdef MAIN
-	int main(int c, char **v, char **envp)
-	{
-		(void)c;
-		(void)v;
-		g_shell.env = set_env(envp);
-		g_shell.exit = 0;
-		g_shell.command = NULL;
-		rl_catch_signals = 0;
-		ft_ml_sigdefault(); // on linux
-		prompt();
-		return (0);
-	}
-#endif
+int main(int c, char **v, char **envp)
+{
+	(void)c;
+	(void)v;
+	g_shell.env = set_env(envp);
+	g_shell.exit = 0;
+	rl_catch_signals = 0;
+	ft_ml_sigdefault(); // on linux
+	prompt();
+	return (0);
+}

@@ -1,5 +1,5 @@
 NAME = minishell
-CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address,undefined
+CFLAGS =  #-Wall -Wextra -Werror #-fsanitize=address,undefined
 CFLAGS_EXTRA = -g
 INC = -I include/
 EXT_LIBRARY = libft/libft.a

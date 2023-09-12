@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
@@ -53,5 +51,6 @@ void prompt(void);
 void del_quotes(char **input);
 void syntax_quotes(char *input, int i, int *flag);
 void quote_delete_str(char **input, char c);
+t_cmds *ft_build_command(char *input);
 
 #endif

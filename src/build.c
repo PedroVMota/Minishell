@@ -1,36 +1,61 @@
 #include "minishell.h"
 
-
-void toggle(char l, t_mode *stat)
+int check_sep(char *str, int *arr)
 {
-	if(l == '\"' && *stat == ENV_MODE_TOKEN)
-		*stat == ENV_MODE_DQUOTE;
-	else if (l == '\'' && *stat == ENV_MODE_TOKEN)
-		*stat == ENV_MODE_QUOTE;
-	else if(l == '\"' && *stat == ENV_MODE_DQUOTE)
-		*stat == ENV_MODE_TOKEN;
-	else if(l == '\'' && *stat == ENV_MODE_QUOTE)
-		*stat == ENV_MODE_TOKEN;
+	arr[0] = 0;
+	if ((str[0] == '<' && str[1] == '<') || (str[0] == '>' && str[1] == '>'))
+		arr[0] = 2;
+	else if (str[0] == '<' || str[0] == '>')
+		arr[0] = 1;
+	else if (str[0] == '|')
+		arr[0] = 1;
+	return (arr[0]);
 }
 
-static void replace_especial_characters(char *in)
+void parse(char *res, char *str, char sep, int *arr)
 {
-	t_mode new = ENV_MODE_TOKEN;
-	t_mode old = ENV_MODE_TOKEN;
-	int i;
+	int len;
 
-	i = 0;
-	while(in[i])
+	len = 0;
+	while (str && *str)
 	{
-		old = new;
-		toggle(in[i], &new);
-		if(in[i] == '')
+		if ((*str == '\'' || *str == '\"') && (!sep || sep == *str))
+			sep = (*str) * (sep != *str);
+		else if (*str == ' ' && !sep)
+			*str = 2;
+		if (!sep && check_sep(str, arr))
+		{
+			*res++ = 2;
+			*res++ = (3 - (*str != '|' || len != 0 || arr[1] == 0));
+			if ((*str != '|' || !arr[1]) || len)
+				*res++ = *str;
+			if (str++ && *str != '|' && arr[0] == 2)
+				*res++ = *str++;
+			*res++ = 2;
+			len++;
+		}
+		// else if ((*str == 2 && arr[1]) ||
+				//  ((*str != 2 || *str++ != 2) && ++arr[1]))
+		// {
+			// len = !(!!(*res++ = *str++));
+		// }
 	}
+	printf("res: %s\n", &res[0]);
 }
 
-
-void ft_build_command(char *input)
+t_cmds *ft_build_command(char *input)
 {
-	t_cmds *cmdlst;
-	char *pre_split;
+	char *res = NULL;
+	int arr[2];
+
+	arr[0] = 0;
+	arr[1] = 0;
+	res = ft_calloc((ft_strlen(input) * 3 + 1), 1);
+	if (!res)
+		return NULL;
+	parse(res, input, 0, arr);
+	printf("%sInput Size: %ld\nAllocation: %ld\nString: %s%s", RED, ft_strlen(input), ft_strlen(input) * 3 + 1, res,RESET);
+
+
+	return NULL;
 }
