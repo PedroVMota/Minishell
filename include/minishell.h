@@ -22,6 +22,7 @@
 #include <stdio.h>
 
 extern t_shell g_shell;
+typedef int64_t t_counter;
 
 #define MEMDEBUG(name, address) printf("%s: %p\n", name, address);
 // syntax error msg;
@@ -52,5 +53,9 @@ void del_quotes(char **input);
 void syntax_quotes(char *input, int i, int *flag);
 void quote_delete_str(char **input, char c);
 t_cmds *ft_build_command(char *input);
+void ft_mode_changer_ascii(char set, t_mode *stat);
+void ft_mode_changer_not_printable(char set, t_mode *stat);
+void switch_caracters(char *ptr);
+
 
 #endif

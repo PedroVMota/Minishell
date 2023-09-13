@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-bool CheckValid(char *ptr)
+bool VarCheckValid(char *ptr)
 {
 	t_env *vars;
 	char *var;
@@ -16,4 +16,23 @@ bool CheckValid(char *ptr)
 			return true;
 		vars = vars->next;
 	}
+}
+
+t_counter VarCounter(char *ptr)
+{
+	t_counter count;
+	t_mode ar;
+
+	ar = ENV_MODE_TOKEN; // old 
+	count = 0;
+	if(!ptr)
+		return NULL;
+	while(ptr && *ptr)
+	{
+		ft_mode_changer_ascii(*ptr, &ar);
+		if(*ptr == '$' && (ar != ENV_MODE_QUOTE) && VarCheckValid(*ptr))
+			count++;
+		ptr++;
+	}
+	return count;
 }
