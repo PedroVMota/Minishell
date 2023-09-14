@@ -37,7 +37,7 @@ typedef struct s_cmd
 	int pipe[2];				// pipe;
 	int red[2]; 			// in case there is a redirection token
 
-	char				**cmd; // command and arguments
+	char				**args; // command and arguments
 	struct s_cmd	*prev; 
 	struct s_cmd	*next;
 }						t_cmds;

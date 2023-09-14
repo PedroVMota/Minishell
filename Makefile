@@ -1,5 +1,5 @@
 NAME = minishell
-CFLAGS =  #-Wall -Wextra -Werror #-fsanitize=address,undefined
+CFLAGS = -fsanitize=address,undefined  #-Wall -Wextra -Werror 
 CFLAGS_EXTRA = -g
 INC = -I include/
 EXT_LIBRARY = libft/libft.a
@@ -11,8 +11,8 @@ OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
 #@echo $(OBJS)
-	valgrind --leak-check=full --show-leak-kinds=all --log-file=log.txt ./$(NAME)
-# ./$(NAME)
+#valgrind --leak-check=full --show-leak-kinds=all --log-file=log.txt ./$(NAME)
+	./$(NAME)
 
 $(NAME): $(OBJS)
 	@make -C libft/ --no-print

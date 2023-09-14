@@ -26,11 +26,11 @@ t_counter VarCounter(char *ptr)
 	ar = ENV_MODE_TOKEN; // old 
 	count = 0;
 	if(!ptr)
-		return NULL;
+		return 0;
 	while(ptr && *ptr)
 	{
 		ft_mode_changer_ascii(*ptr, &ar);
-		if(*ptr == '$' && (ar != ENV_MODE_QUOTE) && VarCheckValid(*ptr))
+		if(*ptr == '$' && (ar != ENV_MODE_QUOTE) && VarCheckValid(ptr))
 			count++;
 		ptr++;
 	}

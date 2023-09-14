@@ -10,6 +10,8 @@ static char replace(char c)
 		return TOKEN_IN;
 	if(c == ';')
 		return TOKEN_SEMI_COLOM;
+	if(c == ' ')
+		return TOKEN_SPACE;
 	if(c == '\"')
 		return TOKEN_DQUOTE;
 	if(c == '\'')
@@ -31,6 +33,6 @@ void switch_caracters(char *ptr)
 		|| ((arr[0] == ENV_MODE_QUOTE && arr[1] == ENV_MODE_TOKEN) \
 		|| (arr[0] == ENV_MODE_TOKEN && arr[1] == ENV_MODE_QUOTE)))
 			*ptr = replace(*ptr);
-			ptr++;
+		ptr++;
 	}
 }
