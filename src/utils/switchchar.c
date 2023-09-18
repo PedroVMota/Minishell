@@ -23,6 +23,8 @@ void switch_caracters(char *ptr)
 	t_mode arr[2];
 
 	arr[0] = ENV_MODE_TOKEN;
+	if(!ptr)
+		return ;
 	while (ptr && *ptr)
 	{
 		arr[1] = arr[0];

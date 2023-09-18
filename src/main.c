@@ -32,7 +32,6 @@ void prompt(void)
 		add_history(input);
 		ft_syntax_checker(input);
 		ft_build_command(input);
-		printf("%sUser Input >%s %s%s%s\n", YEL, RESET, MAG, input, RESET);
 		free(input);
 	}
 }

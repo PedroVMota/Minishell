@@ -28,9 +28,10 @@ clean:
 	@rm -rf  *.log a.out */*.log */*/*.log log.*
 	
 fclean: clean
-	@rm -f $(NAME)
+	@rm -f $(NAME) lst lst.txt
 	@make fclean -C libft/ --no-print
 	clear \
+
 
 re: fclean all
 

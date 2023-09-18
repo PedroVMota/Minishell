@@ -50,20 +50,7 @@ void ft_ml_envadd_back(t_env **lst, t_env *new)
 	last->next = new;
 }
 
-int ft_env_delete(t_env **env)
-{
-	t_env *tmp;
 
-	while ((*env))
-	{
-		tmp = (*env)->next;
-		free((*env)->var);
-		free((*env)->value);
-		free((*env));
-		(*env) = tmp;
-	}
-	return (1);
-}
 
 t_env *set_env(char **envp){
 	t_env *env;

@@ -57,5 +57,37 @@ void ft_mode_changer_ascii(char set, t_mode *stat);
 void ft_mode_changer_not_printable(char set, t_mode *stat);
 void switch_caracters(char *ptr);
 
+int print_split(char **ptr);
+void CommandDisplay(t_cmds *ptr);
+
+/// @brief Clean Double pointer
+void free_split(char **split);
+/// @brief Frees the memory used by a command list and closes all file descriptors.
+/// @param cmds A pointer to the head of the command list.
+void clean_commands(t_cmds **cmds);
+
+/// @brief prepare all the meta data information.
+/// @param elements The first position of the list
+/// @return Return the head position of the lsit
+t_cmds *ft_buildlst(char *elements);
+
+/// @brief Search the last position of the list
+/// @param cmds The first position of the list
+/// @return Return the last position of the list
+t_cmds *ft_lstpos(t_cmds *cmds);
+
+/// @brief Create a node with everything with the default values
+/// @param cmd Will be splitted and give to the nodes->args
+/// @return the Allocated Malloc (Free available)
+t_cmds *_create_node(char *cmd);
+
+/// @brief Create a node with everything with the default values
+/// @param SingleComand Will be splitted and give to the nodes->args
+/// @param Head The very first head that will be distribute the done
+/// @return Doesn't return nothing. Instead the head will be updated!
+t_cmds *_add(char *cmd_line, t_cmds **head);
+
+void print_special(char *ptr);
+int print_split(char **ptr);
 
 #endif

@@ -35,8 +35,7 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int pipe[2];				// pipe;
-	int red[2]; 			// in case there is a redirection token
-
+	int redirection[2]; 			// in case there is a redirection token
 	char				**args; // command and arguments
 	struct s_cmd	*prev; 
 	struct s_cmd	*next;

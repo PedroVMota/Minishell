@@ -8,3 +8,4 @@ minishell
 a.out
 log.*
 *.ign
+.temp
