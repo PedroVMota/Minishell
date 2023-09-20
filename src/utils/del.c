@@ -4,7 +4,7 @@ void free_split(char **split)
 {
 	char **ptr = split;
 	if(!split)
-		return 0;
+		return ;
 	while (*ptr)
 	{
 		free(*ptr);
@@ -35,7 +35,6 @@ void clean_commands(t_cmds **cmds)
 		free(ptr);
 		ptr = next;
 	}
-	*cmds = NULL;
 }
 
 int ft_env_delete(t_env **env)
@@ -45,8 +44,7 @@ int ft_env_delete(t_env **env)
 	while ((*env))
 	{
 		tmp = (*env)->next;
-		free((*env)->var);
-		free((*env)->value);
+		free_split((*env)->vars);
 		free((*env));
 		(*env) = tmp;
 	}

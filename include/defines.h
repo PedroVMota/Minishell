@@ -26,8 +26,7 @@ typedef enum token_status
 
 typedef struct s_env
 {
-	char				*var;
-	char				*value;
+	char				**vars;
 	int					var_len;
 	struct s_env		*next;
 }						t_env;

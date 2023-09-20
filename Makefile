@@ -1,6 +1,6 @@
 NAME = minishell
-CFLAGS = -fsanitize=address,undefined  #-Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g
+CFLAGS = -Wall -Wextra -Werror 
+CFLAGS_EXTRA = -g #-fsanitize=address,undefined
 INC = -I include/
 EXT_LIBRARY = libft/libft.a
 
@@ -20,7 +20,7 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	@printf "\033[0;32mMinishell: \033[0;33mTaking care of the software...\033[0m\r"
-	$(CC) $(CFLAGS) -D MAIN $(CFLAGS_EXTRA) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) -D MAIN $(CFLAGS_EXTRA) $(INC) -c $< -o $@
 
 clean:
 	@make clean -C libft/ --no-print

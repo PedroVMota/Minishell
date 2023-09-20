@@ -4,6 +4,7 @@
 		"history.h": "c",
 		"libft.h": "c",
 		"defines.h": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"functional": "c"
 	}
 }

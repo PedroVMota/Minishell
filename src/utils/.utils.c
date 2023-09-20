@@ -24,8 +24,7 @@ void CommandDisplay(t_cmds *ptr)
 			printf("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*\n");
 			printf("Command: %d\n", command);
 			printf("Current command: ");
-			if(ptr->args)
-				print_split(ptr->args);
+			print_split(ptr->args);
 			printf("Pipe[0] = %d\n", ptr->pipe[0]);
 			printf("Pipe[1] = %d\n", ptr->pipe[1]);
 			printf("redi[0] = %d\n", ptr->redirection[0]);
@@ -37,7 +36,10 @@ void CommandDisplay(t_cmds *ptr)
 		close(report); // Close the file descriptor
 		exit(0);
 	}
-	waitpid(id, NULL, 0);
+	int stat = 0;
+	waitpid(id, &stat, 0);
+	if(stat)
+		printf("List Command Error: ");
 }
 
 void print_special(char *ptr)
@@ -64,8 +66,7 @@ int print_split(char **ptr)
 		print_special(ptr[i]);
 		printf(", ");
 	}
-	printf("]\n");
+	printf("] | ");
 	printf("Size: [%d]\n", i);
-
 	return (i);
 }

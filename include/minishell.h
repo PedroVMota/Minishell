@@ -48,6 +48,10 @@ void syntax_report(char *error, char *input, int size);
 // ui
 void prompt(void);
 
+void var_replacer(char **str);
+// pase
+char **parse(char **arr, t_cmds *node);
+bool var_state(char *str);
 // AUX
 void del_quotes(char **input);
 void syntax_quotes(char *input, int i, int *flag);
@@ -88,6 +92,5 @@ t_cmds *_create_node(char *cmd);
 t_cmds *_add(char *cmd_line, t_cmds **head);
 
 void print_special(char *ptr);
-int print_split(char **ptr);
 
 #endif

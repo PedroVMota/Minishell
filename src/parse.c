@@ -1,16 +1,18 @@
 #include <minishell.h>
 
-t_cmds	*ft_build_command(char *input)
-{
-	t_cmds *cmds;
-	char **ptr;
-	int len;
+// Mode 0 nothing 1 string
 
-	switch_caracters(input);
-	cmds = NULL;
-	ptr = ft_split(input, TOKEN_PIPE);
-	cmds = ft_buildlst(input);
-	// CommandDisplay(cmds);
-	clean_commands(&cmds);
-	free_split(ptr);
+void check(int mode, char *string);
+
+char **parse(char **arr, t_cmds *node)
+{
+	int selector;
+
+	selector = -1;
+	print_split(arr);
+	while (arr[++selector])
+		var_replacer(&arr[selector]);
+	print_split(arr);
+	(void)node;
+	return arr;
 }

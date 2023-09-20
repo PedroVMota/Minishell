@@ -1,7 +1,5 @@
 #include <minishell.h>
 
-
-
 t_cmds *ft_lstpos(t_cmds *cmds)
 {
 	if (!cmds)
@@ -16,14 +14,13 @@ t_cmds *_create_node(char *str)
 	t_cmds *node = malloc(sizeof(t_cmds));
 	if (node == NULL)
 		return NULL;
-	node->args = ft_split(str, TOKEN_SPACE);
-	node->pipe[0] = -1;
-	node->pipe[1] = -1;
-	node->redirection[0] = -1;
-	node->redirection[1] = -1;
+	node->pipe[0] = 0;
+	node->pipe[1] = 1;
+	node->redirection[0] = 0;
+	node->redirection[1] = 1;
 	node->prev = NULL;
 	node->next = NULL;
-	print_split(node->args);
+	node->args = parse(ft_split(str, TOKEN_SPACE), node);
 	return node;
 }
 

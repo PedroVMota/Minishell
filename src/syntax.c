@@ -47,11 +47,7 @@ void syntax_report(char *error, char *input, int size)
 	if (input)
 		free(input);
 	g_shell.exit = 2;
-#ifdef MAIN
 	prompt();
-#else
-	exit(0);
-#endif
 }
 
 void syntax_sep(char *input, int i, int size)

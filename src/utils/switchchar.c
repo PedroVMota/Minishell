@@ -16,6 +16,7 @@ static char replace(char c)
 		return TOKEN_DQUOTE;
 	if(c == '\'')
 		return TOKEN_QUOTE;
+	return c;
 }
 
 void switch_caracters(char *ptr)
