@@ -1,30 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   switchchar.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/21 18:05:29 by pedro             #+#    #+#             */
+/*   Updated: 2023/09/21 18:13:45 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-static char replace(char c)
+char	replace(char c)
 {
-	if(c == '|')
-		return TOKEN_PIPE;
-	if(c == '>')
-		return TOKEN_OUT;
-	if(c == '<')
-		return TOKEN_IN;
-	if(c == ';')
-		return TOKEN_SEMI_COLOM;
-	if(c == ' ')
-		return TOKEN_SPACE;
-	if(c == '\"')
-		return TOKEN_DQUOTE;
-	if(c == '\'')
-		return TOKEN_QUOTE;
-	return c;
+	if (c == '|')
+		return (TOKEN_PIPE);
+	if (c == '>')
+		return (TOKEN_OUT);
+	if (c == '<')
+		return (TOKEN_IN);
+	if (c == ';')
+		return (TOKEN_SEMI_COLOM);
+	if (c == ' ')
+		return (TOKEN_SPACE);
+	if (c == '\"')
+		return (TOKEN_DQUOTE);
+	if (c == '\'')
+		return (TOKEN_QUOTE);
+	return (c);
 }
 
-void switch_caracters(char *ptr)
+void	switch_caracters(char *ptr)
 {
-	t_mode arr[2];
+	t_mode	arr[2];
 
 	arr[0] = ENV_MODE_TOKEN;
-	if(!ptr)
+	if (!ptr)
 		return ;
 	while (ptr && *ptr)
 	{

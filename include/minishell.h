@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/09/04 09:41:05 by pedro            ###   ########.fr       */
+/*   Updated: 2023/09/21 18:15:22 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,61 @@
 extern t_shell g_shell;
 typedef int64_t t_counter;
 
-#define MEMDEBUG(name, address) printf("%s: %p\n", name, address);
+#define MEMDEBUG(name, address) printf("%s%s%s: %p\n", RED, name, RESET, address);
 // syntax error msg;
 #define PIPE_SYNTAX_ERROR "Error: syntax error near unexpected token `|'\n"
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
+
+
+
+
+
+
+
+
+
+/// @brief Replace the content.
+/// @param str The first position of the str
+/// @param new_value the new content
+/// @param del Is gonna be the content that will be replaced;
+/// @return Return the head position of the lsit
+char	*replace_var(char *str, char *new_value, char *del);
+/// @brief Replace the content.
+/// @param str The content
+/// @return without the variable name
+/// @note Norminette Ok!
+char *delete (char *str);
+/// @brief Replace all the variable depending if exist or not if
+/// 	not then the `$VarName` will be removed
+/// @param str the string will be modified
+void	var_replacer(char **str);
+/// @brief Check the number of $ that will be inside the string
+/// @param str The string that will be searched!
+/// @return A integer 32 that will the number of varaible
+/// inside the current variable
+int	variable_counter(char *str);
+/// @brief Choose between replace and delete function depending the
+/// variabled founded
+/// @param ptr the string that will be modified
+/// @return the string modified
+char	*varcheckvalid(char *ptr);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // enviroment
 void ft_ml_envadd_back(t_env **lst, t_env *new);
@@ -50,7 +100,7 @@ void prompt(void);
 
 void var_replacer(char **str);
 // pase
-char **parse(char **arr, t_cmds *node);
+void parse(t_cmds *node);
 bool var_state(char *str);
 // AUX
 void del_quotes(char **input);

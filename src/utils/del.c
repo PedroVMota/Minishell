@@ -1,9 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   del.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
+/*   Updated: 2023/09/21 18:03:43 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-void free_split(char **split)
+void	free_split(char **split)
 {
-	char **ptr = split;
-	if(!split)
+	char	**ptr;
+
+	ptr = split;
+	if (!split)
 		return ;
 	while (*ptr)
 	{
@@ -13,16 +27,17 @@ void free_split(char **split)
 	free(split);
 }
 
-void clean_commands(t_cmds **cmds)
+void	clean_commands(t_cmds **cmds)
 {
-	t_cmds *ptr;
-	t_cmds *next;
+	t_cmds	*ptr;
+	t_cmds	*next;
 
 	next = NULL;
 	ptr = *cmds;
 	while (ptr)
 	{
-		free_split(ptr->args);
+		if (ptr->args)
+			free_split(ptr->args);
 		if (ptr->pipe[0] != -1)
 			close(ptr->pipe[0]);
 		if (ptr->pipe[1] != -1)
@@ -37,9 +52,9 @@ void clean_commands(t_cmds **cmds)
 	}
 }
 
-int ft_env_delete(t_env **env)
+int	ft_env_delete(t_env **env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while ((*env))
 	{

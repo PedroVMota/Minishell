@@ -17,13 +17,9 @@ struct s_shell g_shell;
 t_cmds	*ft_build_command(char *input)
 {
 	t_cmds *cmds;
-	char **ptr;
 
 	switch_caracters(input);
-	cmds = NULL;
-	ptr = ft_split(input, TOKEN_PIPE);
 	cmds = ft_buildlst(input);
-	free_split(ptr);
 	return cmds;
 }
 

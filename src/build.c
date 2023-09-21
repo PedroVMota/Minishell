@@ -19,6 +19,8 @@ static t_cmds *setup(char **nodes)
 		index++;
 	}
 	free(nodes);
+	parse(lst);
+	clean_commands(&lst);
 	return lst;
 }
 

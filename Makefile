@@ -1,6 +1,6 @@
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g #-fsanitize=address,undefined
+CFLAGS_EXTRA = -g -fsanitize=address,undefined
 INC = -I include/
 EXT_LIBRARY = libft/libft.a
 
@@ -10,8 +10,6 @@ FILES = $(shell find ./src/ -type f -name "*.c")
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
-#@echo $(OBJS)
-#valgrind --leak-check=full --show-leak-kinds=all --log-file=log.txt ./$(NAME)
 	./$(NAME)
 
 $(NAME): $(OBJS)
