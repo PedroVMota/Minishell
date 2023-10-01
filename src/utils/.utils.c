@@ -1,14 +1,17 @@
 #include <minishell.h>
 
-void CommandDisplay(t_cmds *ptr)
+void	CommandDisplay(t_cmds *ptr)
 {
+	pid_t	id;
+	int		command;
+	int		report;
+	int		stat;
 
-	pid_t id = fork();
-
+	id = fork();
 	if (id == 0)
 	{
-		int command = 0;
-		int report = open("lst.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
+		command = 0;
+		report = open("lst.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (report == -1)
 		{
 			printf("No file\n");
@@ -36,17 +39,19 @@ void CommandDisplay(t_cmds *ptr)
 		close(report); // Close the file descriptor
 		exit(0);
 	}
-	int stat = 0;
+	stat = 0;
 	waitpid(id, &stat, 0);
-	if(stat)
+	if (stat != 0)
 		printf("List Command Error: ");
 }
 
-void print_special(char *ptr)
+void	print_special(char *ptr)
 {
 	while (*ptr)
 	{
-		if (*ptr == TOKEN_PIPE || *ptr == TOKEN_OUT || *ptr == TOKEN_IN || *ptr == TOKEN_SEMI_COLOM || *ptr == TOKEN_SPACE || *ptr == TOKEN_DQUOTE || *ptr == TOKEN_QUOTE)
+		if (*ptr == TOKEN_PIPE || *ptr == TOKEN_OUT || *ptr == TOKEN_IN
+			|| *ptr == TOKEN_SEMI_COLOM || *ptr == TOKEN_SPACE
+			|| *ptr == TOKEN_DQUOTE || *ptr == TOKEN_QUOTE)
 			printf("[%d]", *ptr);
 		else
 			printf("%c", *ptr);
@@ -54,19 +59,18 @@ void print_special(char *ptr)
 	}
 }
 
-int print_split(char **ptr)
+int	print_split(char **ptr)
 {
-	int i;
+	int	i;
 
 	i = -1;
-
-	printf("Split: [");
+	printf("{\n");
 	while (ptr && ptr[++i])
 	{
+		printf("\tArg[%d]: ", i);
 		print_special(ptr[i]);
-		printf(", ");
+		printf(";\n");
 	}
-	printf("] | ");
-	printf("Size: [%d]\n", i);
+	printf("}\n");
 	return (i);
 }

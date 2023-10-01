@@ -6,11 +6,28 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:08:35 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/21 18:16:34 by pedro            ###   ########.fr       */
+/*   Updated: 2023/09/25 12:16:32 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	remove_quotes(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == TOKEN_DQUOTE || str[i] == TOKEN_QUOTE)
+			i++;
+		else
+			str[j++] = str[i++];
+	}
+	str[j] = '\0';
+}
 
 /// @brief Check position index of the variable
 /// @param ptr string that will be searched
@@ -74,15 +91,21 @@ char	*manage(char *str)
 		free(var);
 		vars = vars->next;
 	}
-	return (delete(str));
+	return (delete (str));
 }
 
 char	*varcheckvalid(char *ptr)
 {
+	char	*final;
+
+	final = 0;
 	if (!check_variable(ptr) || !ptr)
 		return (ptr);
 	else
-		return (manage(ptr));
+	{
+		final = manage(ptr);
+		return (final);
+	}
 	return (ptr);
 }
 

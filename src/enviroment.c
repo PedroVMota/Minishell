@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_env.c                                          :+:      :+:    :+:   */
+/*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:25:43 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/09/01 11:23:35 by pedro            ###   ########.fr       */
+/*   Updated: 2023/09/22 08:53:16 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_env *get_last(t_env *lst)
+static t_env	*get_last(t_env *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -21,15 +21,15 @@ static t_env *get_last(t_env *lst)
 	return (lst);
 }
 
-t_env *ft_env_add(char *str)
+t_env	*ft_env_add(char *str)
 {
-	t_env *new;
-	char **split;
+	t_env	*new;
+	char	**split;
 
 	split = ft_split(str, '=');
 	if (!split)
-		return NULL;
-	free(str); 
+		return (NULL);
+	free(str);
 	new = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!new)
 		return (NULL);
@@ -39,28 +39,29 @@ t_env *ft_env_add(char *str)
 	return (new);
 }
 
-void ft_ml_envadd_back(t_env **lst, t_env *new)
+void	ft_ml_envadd_back(t_env **lst, t_env *new)
 {
-	t_env *last;
+	t_env	*last;
 
 	if (!new)
-		return;
+		return ;
 	if (!*lst)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	last = get_last(*lst);
 	last->next = new;
 }
 
-t_env *set_env(char **envp)
+t_env	*set_env(char **envp)
 {
-	t_env *env;
+	t_env	*env;
+	int		i;
 
 	env = NULL;
-	int i = -1;
+	i = -1;
 	while (envp[++i])
 		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i])));
-	return env;
+	return (env);
 }

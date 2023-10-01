@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/22 08:52:30 by pedro             #+#    #+#             */
+/*   Updated: 2023/10/01 10:56:55 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 void	var_replacer(char **str)
 {
-	int varcounter;
-	int varselector;
-	int strselector;
+	int	varcounter;
+	int	varselector;
+	int	strselector;
 
 	varselector = 0;
 	varcounter = 0;
@@ -12,6 +24,7 @@ void	var_replacer(char **str)
 	while (str[strselector])
 	{
 		varcounter = variable_counter(str[strselector]);
+		varselector = 0;
 		while (varselector < varcounter)
 		{
 			str[strselector] = varcheckvalid(str[strselector]);
@@ -19,15 +32,15 @@ void	var_replacer(char **str)
 		}
 		strselector++;
 	}
-	print_split(str);
 }
 
-void parse(t_cmds *node)
+void	parse(t_cmds *node)
 {
 	while (node)
 	{
-		print_split(node->args);
+		
 		var_replacer(node->args);
+		redirection(node);
 		node = node->next;
 	}
 }

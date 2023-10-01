@@ -5,6 +5,7 @@
 		"libft.h": "c",
 		"defines.h": "c",
 		"typeinfo": "c",
-		"functional": "c"
+		"functional": "c",
+		"cerrno": "c"
 	}
 }

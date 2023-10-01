@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/21 18:17:06 by pedro            ###   ########.fr       */
+/*   Updated: 2023/09/26 13:23:11 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ t_cmds	*_create_node(char *str)
 	node = malloc(sizeof(t_cmds));
 	if (node == NULL)
 		return (NULL);
-	if (pipe(node->pipe))
-	{
-		free(node);
-		return (NULL);
-	}
+	node->pipe[0] = -1;
+	node->pipe[1] = -1;
 	node->redirection[0] = -1;
 	node->redirection[1] = -1;
 	node->prev = NULL;

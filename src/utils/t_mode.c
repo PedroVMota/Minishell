@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:18:08 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/21 18:18:11 by pedro            ###   ########.fr       */
+/*   Updated: 2023/09/25 12:47:57 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 // Update the t_mode enum value only works for char;
 void	ft_mode_changer_ascii(char set, t_mode *stat)
 {
-	if (!set)
-		return ;
 	if (set == '\"' && *stat == ENV_MODE_TOKEN)
 		*stat = ENV_MODE_DQUOTE;
 	else if (set == '\'' && *stat == ENV_MODE_TOKEN)

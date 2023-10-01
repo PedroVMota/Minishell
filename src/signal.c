@@ -1,31 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/22 08:54:48 by pedro             #+#    #+#             */
+/*   Updated: 2023/09/23 10:22:21 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-
-void ft_ml_sigdefault(void)
+void	ft_ml_sigdefault(void)
 {
-    signal(SIGINT, handle_sign);
-    signal(SIGQUIT, handle_quit);
+	signal(SIGINT, handle_sign);
+	signal(SIGQUIT, handle_quit);
 }
 
-void handle_quit(int sig)
+void	handle_quit(int sig)
 {
-    pid_t id;
-    int status;
+	pid_t	id;
+	int		status;
 
-    (void)sig;
-    id = waitpid(-1, &status, 0);
-    if (id == -1)
-        SIG_IGN;
-    else if(!g_shell.hd)
-    {
-        write(1, "Quit (core dumped)\n", 20);
-        return;
-    }
+	(void)sig;
+	id = waitpid(-1, &status, 0);
+	if (id == -1)
+		(void)(SIG_IGN);
+	else if (!g_shell.hd)
+	{
+		write(1, "Quit (core dumped)\n", 20);
+		return ;
+	}
 }
 
-void handle_sign(int sig)
+void	handle_sign(int sig)
 {
-    pid_t	pid;
+	pid_t	pid;
 	int		status;
 
 	(void)sig;
