@@ -12,10 +12,23 @@
 
 #include "minishell.h"
 
-static t_cmds	*setup(char **nodes)
+int cmd_size(t_cmds *head)
 {
-	t_cmds	*lst;
-	int		index;
+	int size;
+
+	size = 0;
+	while (head)
+	{
+		size++;
+		head = head->next;
+	}
+	return size;
+}
+
+static t_cmds *setup(char **nodes)
+{
+	t_cmds *lst;
+	int index;
 
 	lst = NULL;
 	index = 0;
@@ -26,15 +39,16 @@ static t_cmds	*setup(char **nodes)
 			free(nodes[index]);
 		index++;
 	}
+	g_shell.lstsize = cmd_size(lst);
 	free(nodes);
 	parse(lst);
 	return (lst);
 }
 
-t_cmds	*ft_buildlst(char *elements)
+t_cmds *ft_buildlst(char *elements)
 {
-	char	**nodes;
-	t_cmds	*cmds;
+	char **nodes;
+	t_cmds *cmds;
 
 	if (!elements)
 		return (NULL);

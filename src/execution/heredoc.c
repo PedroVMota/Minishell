@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/01 10:27:07 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/02 14:07:36 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	check_elements(char *input, char *target)
 		return (1);
 	return (0);
 }
+
+
 
 void	heredoc(t_cmds *node, char *delimiter)
 {

@@ -15,7 +15,7 @@
 /// @brief Remove an element of a 2d matrix
 /// @param arr the list
 /// @param index the position that will be removed;
-void	remove_element(char **arr, int index)
+void	split_str_del(char **arr, int index)
 {
 	int	len;
 	int	i;
@@ -34,7 +34,7 @@ void	remove_element(char **arr, int index)
 	arr[len - 1] = NULL;
 }
 
-void	move_element(char **src, int src_index, char **dest, int dest_index)
+void	split_str_move(char **src, int src_index, char **dest, int dest_index)
 {
 	int	dest_len;
 	int	src_len;
@@ -51,4 +51,20 @@ void	move_element(char **src, int src_index, char **dest, int dest_index)
 		return ;
 	dest[dest_index] = src[src_index];
 	src[src_index] = NULL;
+}
+
+void split_str_replace(char **str, int index, char *new)
+{
+	int len;
+
+	len = 0;
+	if(!str)
+		return ;
+	while(str[len])
+		len++;
+	if (index >= len)
+		return ;
+	if(str[index])
+		free(str[index]);
+	str[index] = new;
 }

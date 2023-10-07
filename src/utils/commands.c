@@ -28,8 +28,8 @@ t_cmds	*_create_node(char *str)
 	node = malloc(sizeof(t_cmds));
 	if (node == NULL)
 		return (NULL);
-	node->pipe[0] = -1;
-	node->pipe[1] = -1;
+	node->pipe[0] = 0;
+	node->pipe[1] = 1;
 	node->redirection[0] = -1;
 	node->redirection[1] = -1;
 	node->prev = NULL;

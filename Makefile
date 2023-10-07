@@ -23,7 +23,7 @@ $(NAME): $(OBJS)
 clean:
 	@make clean -C libft/ --no-print
 	@rm -f $(OBJS)
-	@rm -rf  *.log a.out */*.log */*/*.log log.*
+	@rm -rf  *.log */*.log */*/*.log log.*
 	
 fclean: clean
 	@rm -f $(NAME) lst lst.txt

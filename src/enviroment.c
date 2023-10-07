@@ -34,7 +34,6 @@ t_env	*ft_env_add(char *str)
 	if (!new)
 		return (NULL);
 	new->vars = split;
-	new->var_len = ft_strlen(str);
 	new->next = NULL;
 	return (new);
 }

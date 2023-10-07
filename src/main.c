@@ -12,26 +12,33 @@
 
 #include "minishell.h"
 
-struct s_shell	g_shell;
+struct s_shell g_shell;
 
-t_cmds	*ft_build_command(char *input)
+t_cmds *execution(char *input)
 {
-	t_cmds	*cmds;
+	t_cmds *cmds;
 
 	switch_caracters(input);
 	cmds = ft_buildlst(input);
-	return (cmds);
+	if(!cmds)
+		return NULL;
+
+	CommandDisplay(cmds);
+
+	return cmds;
 }
 
-void	prompt(void)
+void prompt(void)
 {
-	char	*input;
-	t_cmds	*lst;
+	char *input;
+	t_cmds *ptr;
 
-	lst = NULL;
 	input = NULL;
+	int attempt = 0;
 	while (1)
 	{
+		printf("Tentativa %d\n", attempt);
+		displayerror(input);
 		input = readline("minishell$ ");
 		if (!input)
 		{
@@ -43,14 +50,14 @@ void	prompt(void)
 		}
 		add_history(input);
 		ft_syntax_checker(input);
-		lst = ft_build_command(input);
-		CommandDisplay(lst);
-		clean_commands(&lst);
+		ptr = execution(input);
+		clean_commands(&ptr);
 		free(input);
+		attempt++;
 	}
 }
 
-int	main(int c, char **v, char **envp)
+int main(int c, char **v, char **envp)
 {
 	(void)c;
 	(void)v;
@@ -59,5 +66,6 @@ int	main(int c, char **v, char **envp)
 	rl_catch_signals = 0;
 	ft_ml_sigdefault();
 	prompt();
+	printf("%sDIOS%s", GRN, RESET);
 	return (0);
 }

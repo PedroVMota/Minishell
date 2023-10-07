@@ -12,13 +12,13 @@
 
 #include <minishell.h>
 
-void	free_split(char **split)
+void free_split(char **split)
 {
-	char	**ptr;
+	char **ptr;
 
 	ptr = split;
 	if (!split)
-		return ;
+		return;
 	while (*ptr)
 	{
 		free(*ptr);
@@ -27,10 +27,10 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	clean_commands(t_cmds **cmds)
+void clean_commands(t_cmds **cmds)
 {
-	t_cmds	*ptr;
-	t_cmds	*next;
+	t_cmds *ptr;
+	t_cmds *next;
 
 	next = NULL;
 	ptr = *cmds;
@@ -38,9 +38,9 @@ void	clean_commands(t_cmds **cmds)
 	{
 		if (ptr->args)
 			free_split(ptr->args);
-		if (ptr->pipe[0] != -1)
+		if (ptr->pipe[0] != -1 && ptr->pipe[0] != 0 && ptr->pipe[0] != 1 && ptr->pipe[0] != 2)
 			close(ptr->pipe[0]);
-		if (ptr->pipe[1] != -1)
+		if (ptr->pipe[1] != -1 && ptr->pipe[1] != 0 && ptr->pipe[1] != 1 && ptr->pipe[1] != 2)
 			close(ptr->pipe[1]);
 		if (ptr->redirection[0] != -1)
 			close(ptr->redirection[0]);
@@ -52,9 +52,9 @@ void	clean_commands(t_cmds **cmds)
 	}
 }
 
-int	ft_env_delete(t_env **env)
+int ft_env_delete(t_env **env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	while ((*env))
 	{
