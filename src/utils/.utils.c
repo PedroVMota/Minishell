@@ -7,9 +7,14 @@ void	CommandDisplay(t_cmds *ptr)
 	int		report;
 	int		stat;
 
+	if(!ptr)
+		return ;
 	id = fork();
+
 	if (id == 0)
 	{
+		if(!ptr)
+			exit(1);
 		command = 0;
 		report = open("lst.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (report == -1)
@@ -49,9 +54,9 @@ void	print_special(char *ptr)
 {
 	while (*ptr)
 	{
-		if (*ptr == TOKEN_PIPE || *ptr == TOKEN_OUT || *ptr == TOKEN_IN
-			|| *ptr == TOKEN_SEMI_COLOM || *ptr == TOKEN_SPACE
-			|| *ptr == TOKEN_DQUOTE || *ptr == TOKEN_QUOTE)
+		if (*ptr == PIPE || *ptr == OUTAPP || *ptr == INFILE
+			|| *ptr == SEMI_COLOM || *ptr == SPACE
+			|| *ptr == DQUOTE || *ptr == QUOTE)
 			printf("[%d]", *ptr);
 		else
 			printf("%c", *ptr);

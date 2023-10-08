@@ -68,3 +68,22 @@ void split_str_replace(char **str, int index, char *new)
 		free(str[index]);
 	str[index] = new;
 }
+
+char	**split_str_copy(char **src)
+{
+	int		len;
+	char	**dest;
+
+	len = 0;
+	if (!src)
+		return (NULL);
+	while (src[len])
+		len++;
+	dest = malloc(sizeof(char *) * (len + 1));
+	if (!dest)
+		return (NULL);
+	dest[len] = NULL;
+	while (--len >= 0)
+		dest[len] = ft_strdup(src[len]);
+	return (dest);
+}

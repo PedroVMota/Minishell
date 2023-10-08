@@ -14,31 +14,24 @@
 
 struct s_shell g_shell;
 
-t_cmds *execution(char *input)
+void execution(char *input)
 {
 	t_cmds *cmds;
 
 	switch_caracters(input);
 	cmds = ft_buildlst(input);
-	if(!cmds)
-		return NULL;
-
+	software(cmds);
 	CommandDisplay(cmds);
-
-	return cmds;
+	clean_commands(&cmds);
+	free(input);
 }
 
 void prompt(void)
 {
 	char *input;
-	t_cmds *ptr;
-
 	input = NULL;
-	int attempt = 0;
 	while (1)
 	{
-		printf("Tentativa %d\n", attempt);
-		displayerror(input);
 		input = readline("minishell$ ");
 		if (!input)
 		{
@@ -50,10 +43,7 @@ void prompt(void)
 		}
 		add_history(input);
 		ft_syntax_checker(input);
-		ptr = execution(input);
-		clean_commands(&ptr);
-		free(input);
-		attempt++;
+		execution(input);
 	}
 }
 

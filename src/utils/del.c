@@ -34,6 +34,8 @@ void clean_commands(t_cmds **cmds)
 
 	next = NULL;
 	ptr = *cmds;
+	if (!ptr)
+		return;
 	while (ptr)
 	{
 		if (ptr->args)
@@ -42,9 +44,9 @@ void clean_commands(t_cmds **cmds)
 			close(ptr->pipe[0]);
 		if (ptr->pipe[1] != -1 && ptr->pipe[1] != 0 && ptr->pipe[1] != 1 && ptr->pipe[1] != 2)
 			close(ptr->pipe[1]);
-		if (ptr->redirection[0] != -1)
+		if (ptr->redirection[0] != -1 && ptr->redirection[0] != 0 && ptr->redirection[0] != 1 && ptr->redirection[0] != 2)
 			close(ptr->redirection[0]);
-		if (ptr->redirection[1] != -1)
+		if (ptr->redirection[1] != -1 && ptr->redirection[1] != 0 && ptr->redirection[1] != 1 && ptr->redirection[1] != 2)
 			close(ptr->redirection[1]);
 		next = ptr->next;
 		free(ptr);

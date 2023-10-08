@@ -34,7 +34,7 @@ t_cmds	*_create_node(char *str)
 	node->redirection[1] = -1;
 	node->prev = NULL;
 	node->next = NULL;
-	node->args = ft_split(str, TOKEN_SPACE);
+	node->args = ft_split(str, SPACE);
 	return (node);
 }
 

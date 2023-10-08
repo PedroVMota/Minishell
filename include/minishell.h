@@ -29,7 +29,6 @@ extern t_shell g_shell;
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
-
 int software(t_cmds *head);
 // Data Type Manipulation
 
@@ -43,7 +42,7 @@ void split_str_del(char **arr, int index);
 void split_str_move(char **src, int src_index, char **dest,
 					int dest_index);
 void split_str_replace(char **str, int index, char *new);
-
+char **split_str_copy(char **src);
 /// @brief Replace the content.
 /// @param str The first position of the str
 /// @param new_value the new content
@@ -139,6 +138,5 @@ int print_split(char **ptr);
 void CommandDisplay(t_cmds *ptr);
 
 #endif
-
 
 #define displayerror(err) printf("%s%s%s\n", RED, err, RESET);

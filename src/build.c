@@ -52,7 +52,7 @@ t_cmds *ft_buildlst(char *elements)
 
 	if (!elements)
 		return (NULL);
-	nodes = ft_split(elements, TOKEN_PIPE);
+	nodes = ft_split(elements, PIPE);
 	cmds = setup(nodes);
 	return (cmds);
 }

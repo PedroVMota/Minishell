@@ -1,6 +1,6 @@
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g #-fsanitize=address,undefined
+CFLAGS_EXTRA = -g -fsanitize=address,undefined
 INC = -I include/
 EXT_LIBRARY = libft/libft.a
 
@@ -24,11 +24,16 @@ clean:
 	@make clean -C libft/ --no-print
 	@rm -f $(OBJS)
 	@rm -rf  *.log */*.log */*/*.log log.*
+
+
+useless: 
+	rm -rf *.log *.del *.ign
 	
-fclean: clean
+fclean: clean useless
 	@rm -f $(NAME) lst lst.txt
 	@make fclean -C libft/ --no-print
 	clear \
+
 
 
 re: fclean all

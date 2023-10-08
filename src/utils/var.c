@@ -65,7 +65,7 @@ char *delete(char *str)
 	while (*p != '\0')
 	{
 		if (*p == '$')
-			while (*p != TOKEN_DQUOTE && *p != '\0')
+			while (*p != QUOTE && *p != '\0')
 				p++;
 		else
 			*q++ = *p++;

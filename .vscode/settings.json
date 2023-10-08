@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"defines.h": "c",
+		"readline.h": "c",
+		"minishell.h": "c",
+		"random": "c"
+	}
+}

@@ -38,8 +38,6 @@ void	parse(t_cmds *node)
 {
 	while (node)
 	{
-		if(node->next)
-			
 		var_replacer(node->args);
 		redirection(node);
 		node = node->next;

@@ -17,19 +17,19 @@ void	ft_mode_changer_ascii(char set, t_mode *stat);
 char	replace(char c)
 {
 	if (c == '|')
-		return (TOKEN_PIPE);
+		return (PIPE);
 	if (c == '>')
-		return (TOKEN_OUT);
+		return (OUTTRUC);
 	if (c == '<')
-		return (TOKEN_IN);
+		return (INFILE);
 	if (c == ';')
-		return (TOKEN_SEMI_COLOM);
+		return (SEMI_COLOM);
 	if (c == ' ')
-		return (TOKEN_SPACE);
+		return (SPACE);
 	if (c == '\"')
-		return (TOKEN_DQUOTE);
+		return (DQUOTE);
 	if (c == '\'')
-		return (TOKEN_QUOTE);
+		return (QUOTE);
 	return (c);
 }
 

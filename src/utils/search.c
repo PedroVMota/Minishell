@@ -21,7 +21,7 @@ void	remove_quotes(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == TOKEN_DQUOTE || str[i] == TOKEN_QUOTE)
+		if (str[i] == DQUOTE || str[i] == QUOTE)
 			i++;
 		else
 			str[j++] = str[i++];
@@ -41,7 +41,7 @@ int	var_pos(char *ptr)
 		return (0);
 	while (ptr[index])
 	{
-		if (ptr[index] == TOKEN_QUOTE)
+		if (ptr[index] == QUOTE)
 			return (-1);
 		if (ptr[index] == '$')
 			return (index);
@@ -60,7 +60,7 @@ bool	check_variable(char *str)
 	second_layer = 0;
 	while (str[second_layer])
 	{
-		if (str[second_layer] == TOKEN_QUOTE)
+		if (str[second_layer] == QUOTE)
 			return (false);
 		if (str[second_layer] == '$' && str[second_layer + 1] != 0)
 			return (true);
@@ -118,7 +118,7 @@ int	variable_counter(char *str)
 	second_layer = 0;
 	while (str[second_layer])
 	{
-		if (str[second_layer] == TOKEN_QUOTE)
+		if (str[second_layer] == QUOTE)
 			return (-1);
 		if (str[second_layer] == '$')
 			counter++;

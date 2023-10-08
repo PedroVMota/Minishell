@@ -22,6 +22,8 @@ static char **getpaths(void)
 	t_env *list = g_shell.env;
 
 	char **paths;
+
+	paths = NULL;
 	while (list)
 	{
 		if (!ft_strcmp("PATH", list->vars[0]))
@@ -32,6 +34,7 @@ static char **getpaths(void)
 		}
 		list = list->next;
 	}
+	free_split(paths);
 	list = NULL;
 	return NULL;
 }
@@ -52,14 +55,21 @@ int find_command(t_cmds *cmd)
 	{
 		new_command = ft_strjoin(paths[index], cmd->args[0]);
 		if (!new_command)
+		{
+			free_split(paths);
 			return 1;
+		}
 		if (!access(new_command, F_OK))
 		{
 			free(cmd->args[0]);
 			cmd->args[0] = new_command;
+			free_split(paths);
 			return 0;
 		}
+		free(new_command);
 	}
+	free_split(paths);
+	print_split(paths);
 	return 2;
 }
 
@@ -92,5 +102,6 @@ int software(t_cmds *head)
 		}
 		head = head->next;
 	}
+	free(processlist);
 	return 0;
 }
