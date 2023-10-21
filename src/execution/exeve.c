@@ -69,8 +69,26 @@ int find_command(t_cmds *cmd)
 		free(new_command);
 	}
 	free_split(paths);
-	print_split(paths);
 	return 2;
+}
+
+bool isbuiltin(t_cmds *cmd)
+{
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "export"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "env"))
+		return true;
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		return true;
+	return false;
 }
 
 int software(t_cmds *head)
@@ -82,6 +100,11 @@ int software(t_cmds *head)
 		return 1;
 	while (head)
 	{
+		if(isbuiltin(head))
+		{
+			head = head->next;
+			continue;
+		}
 		if (find_command(head))
 		{
 			write(2, "Minishell: ", 12);

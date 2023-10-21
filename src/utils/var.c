@@ -34,7 +34,7 @@ char	*replace_var(char *str, char *new_value, char *del)
 	{
 		if (*p == '$' && flag == 0)
 		{
-			if (ft_strncmp(p + 1, del, strlen(del)) == 0)
+			if (ft_strncmp(p + 1, del, ft_strlen(del)) == 0)
 			{
 				ft_strlcpy(q, new_value, ft_strlen(new_value) + 1);
 				q += ft_strlen(new_value);
@@ -57,7 +57,7 @@ char *delete(char *str)
 	char	*p;
 	char	*q;
 
-	result = malloc(strlen(str) + 1);
+	result = malloc(ft_strlen(str) + 1);
 	p = str;
 	q = result;
 	if (result == NULL)
