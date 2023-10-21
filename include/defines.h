@@ -38,7 +38,7 @@ typedef struct s_cmd
 	int redirection_type;
 	int pipe[2];
 	int redirection[2];
-	int (*ft_exec)(struct s_cmd *cmd);
+	int (*ft_exec)(struct s_cmd *node);
 	char **args;
 	
 	struct s_cmd *prev;
