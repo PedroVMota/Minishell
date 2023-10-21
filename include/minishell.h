@@ -29,6 +29,7 @@ extern t_shell g_shell;
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
+bool	permission_tester(t_cmds *head);
 int software(t_cmds *head);
 // Data Type Manipulation
 

@@ -33,7 +33,7 @@ void prompt(void)
 	while (1)
 	{
 		input = readline("minishell$ ");
-		if (!input)
+		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
 				free(input);

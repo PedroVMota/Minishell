@@ -24,8 +24,6 @@ static int	check_elements(char *input, char *target)
 	return (0);
 }
 
-
-
 void	heredoc(t_cmds *node, char *delimiter)
 {
 	char	*text;
@@ -34,10 +32,7 @@ void	heredoc(t_cmds *node, char *delimiter)
 
 	text = NULL;
 	if (pipe(here_doc) == -1)
-	{
-		write(2, "Pipe Error\n", 12);
 		return ;
-	}
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
 	while (bytes_read > -1)
