@@ -75,7 +75,7 @@ void close_prev_fd(t_type mode, t_cmds *node, int *i)
 	check_permissions(node->args[*i], mode);
 }
 
-void make_redirection(t_type type, t_cmds *node, int *i)
+void make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 {
 	close_prev_fd(type, node, i);
 	if (type == FILE_IN_READ)
@@ -86,7 +86,7 @@ void make_redirection(t_type type, t_cmds *node, int *i)
 	}
 	if (type == FILE_IN_HEREDOC)
 	{
-		g_shell.hd = 1;
+		sh->hd = 1;
 		heredoc(node, node->args[*i]);
 	}
 	if (type == FILE_OUT_TRUNC)
@@ -107,7 +107,7 @@ void make_redirection(t_type type, t_cmds *node, int *i)
 		split_str_del(node->args, *i);
 }
 
-void redirection(t_cmds *node)
+void redirection(t_cmds *node, t_shell *sh)
 {
 	char **args;
 	t_type red_mode;
@@ -120,7 +120,7 @@ void redirection(t_cmds *node)
 	{
 		remove_quotes(args[i]);
 		red_mode = red_type_checker(args[i]);
-		make_redirection(red_mode, node, &i);
+		make_redirection(red_mode, node, &i, sh);
 		if(red_mode == FILE_NONE)
 			i++;
 	}

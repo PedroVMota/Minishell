@@ -18,12 +18,12 @@ void	add_directory(char **cmd)
 	}
 }
 
-static char	**getpaths(void)
+static char	**getpaths(t_shell *sh)
 {
 	t_env	*list;
 	char	**paths;
 
-	list = g_shell.env;
+	list = sh->env;
 	paths = NULL;
 	while (list)
 	{
@@ -47,7 +47,7 @@ int	find_command(t_cmds *cmd)
 	char	*new_command;
 
 	index = -1;
-	paths = getpaths();
+	paths = getpaths(cmd->sh);
 	if (!access(cmd->args[0], F_OK))
 		return (0);
 	while (paths[++index] && paths)
@@ -77,7 +77,7 @@ bool	permission_tester(t_cmds *head)
 		write(2, "Minishell: ", 12);
 		write(2, head->args[0], ft_strlen(head->args[0]));
 		write(2, " : Command not found\n", 22);
-		g_shell.exit = 127;
+		head->sh->exit = 127;
 		return true;
 	}
 	if (-1 == access(head->args[0], X_OK))
@@ -85,7 +85,7 @@ bool	permission_tester(t_cmds *head)
 		write(2, "Minishell: ", 12);
 		write(2, head->args[0], ft_strlen(head->args[0]));
 		write(2, " : Permission denied\n", 22);
-		g_shell.exit = 126;
+		head->sh->exit = 126;
 		return true;
 	}
 	return false;

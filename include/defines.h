@@ -39,6 +39,7 @@ typedef struct s_cmd
 	int pipe[2];
 	int redirection[2];
 	int (*ft_exec)(struct s_cmd *node);
+	struct s_shell *sh;
 	char **args;
 	
 	struct s_cmd *prev;
@@ -51,6 +52,8 @@ typedef struct s_shell
 	int lstsize;
 	int hd;
 	int stop;
+	
+	t_cmds *cmds;
 	t_env *env;
 } t_shell;
 

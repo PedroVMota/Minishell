@@ -28,7 +28,7 @@ int ft_unset(t_cmds *node)
 int ft_env(t_cmds *node)
 {
 	(void)node;
-	t_env *env = g_shell.env;
+	t_env *env = node->sh->env;
 	while (env)
 	{
 		print_split(env->vars);
@@ -88,11 +88,13 @@ bool isbuiltin(t_cmds *cmd)
 	return (false);
 }
 
-int software(t_cmds *head)
+int software(t_shell *sh)
 {
 	int *processlist;
+	t_cmds *head;
 
-	processlist = ft_calloc(g_shell.lstsize, sizeof(int));
+	head = sh->cmds;
+	processlist = ft_calloc(sh->lstsize, sizeof(int));
 	if (!processlist)
 		return (1);
 	while (head)

@@ -72,13 +72,13 @@ bool	check_variable(char *str)
 /// @brief This will search and replac or delete the string
 /// @param str String Modified
 /// @return the final string
-char	*manage(char *str)
+char	*manage(char *str, t_shell *sh)
 {
 	int		pos;
 	t_env	*vars;
 	char	*var;
 
-	vars = g_shell.env;
+	vars = sh->env;
 	pos = var_pos(str);
 	var = NULL;
 	if (pos == -1)
@@ -94,7 +94,7 @@ char	*manage(char *str)
 	return (delete (str));
 }
 
-char	*varcheckvalid(char *ptr)
+char	*varcheckvalid(char *ptr, t_shell *sh)
 {
 	char	*final;
 
@@ -103,7 +103,7 @@ char	*varcheckvalid(char *ptr)
 		return (ptr);
 	else
 	{
-		final = manage(ptr);
+		final = manage(ptr, sh);
 		return (final);
 	}
 	return (ptr);

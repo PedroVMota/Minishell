@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-void	var_replacer(char **str)
+void	var_replacer(char **str, t_shell *sh)
 {
 	int	varcounter;
 	int	varselector;
@@ -27,19 +27,19 @@ void	var_replacer(char **str)
 		varselector = 0;
 		while (varselector < varcounter)
 		{
-			str[strselector] = varcheckvalid(str[strselector]);
+			str[strselector] = varcheckvalid(str[strselector], sh);
 			varselector++;
 		}
 		strselector++;
 	}
 }
 
-void	parse(t_cmds *node)
+void	parse(t_cmds *node, t_shell *sh)
 {
 	while (node)
 	{
-		var_replacer(node->args);
-		redirection(node);
+		var_replacer(node->args, sh);
+		redirection(node, sh);
 		node = node->next;
 	}
 }
