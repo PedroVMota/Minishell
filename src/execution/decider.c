@@ -2,12 +2,12 @@
 
 int	ft_echo(t_cmds *node)
 {
-	(void)node;
+	builtin_echo(node);
 	return (0);
 }
 int	ft_cd(t_cmds *node)
 {
-	(void)node;
+	builtin_cd(node);
 	return (0);
 }
 int	ft_pwd(t_cmds *node)
@@ -15,17 +15,17 @@ int	ft_pwd(t_cmds *node)
 	(void)node;
 	return (0);
 }
-int	ft_export(t_cmds *node)
+/*int	ft_export(t_shell *sh)
 {
-	(void)node;
+	builtin_export(node);
+	return (0);
+}*/
+/*int	ft_unset(t_cmds *node)
+{
+	builtin_unset(node);
 	return (0);
 }
-int	ft_unset(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-
+*/
 int	ft_exit(t_cmds *node)
 {
 	(void)node;
@@ -52,10 +52,10 @@ void	decider(t_cmds *node)
 		node->ft_exec = &ft_cd;
 	else if (!ft_strcmp(node->args[0], "pwd"))
 		node->ft_exec = &ft_pwd;
-	else if (!ft_strcmp(node->args[0], "export"))
-		node->ft_exec = &ft_export;
-	else if (!ft_strcmp(node->args[0], "unset"))
-		node->ft_exec = &ft_unset;
+	/*else if (!ft_strcmp(node->args[0], "export"))
+		node->ft_exec = &ft_export;*/
+	/*else if (!ft_strcmp(node->args[0], "unset"))
+		node->ft_exec = &ft_unset;*/
 	else if (!ft_strcmp(node->args[0], "env"))
 		node->ft_exec = &ft_env;
 	else if (!ft_strcmp(node->args[0], "exit"))
@@ -88,8 +88,10 @@ int	software(t_shell *sh)
 	int		*processlist;
 	int		process;
 	t_cmds	*head;
+	int		child_status;
 
 	process = 0;
+	child_status = 0;
 	head = sh->cmds;
 	processlist = ft_calloc(sh->lstsize, sizeof(int));
 	if (!processlist)
@@ -99,21 +101,25 @@ int	software(t_shell *sh)
 		decider(head);
 		if (isbuiltin(head) || permission_tester(head))
 		{
-			processlist[process] = fork();
+//			processlist[process] = fork();
 			if (processlist[process] == 0)
 				head->ft_exec(head);
 			head = head->next;
 			continue ;
 		}
-		processlist[process] = fork();
-		if (processlist[process] == 0)
-			head->ft_exec(head);
+			processlist[process] = fork();
+			if (processlist[process] == 0)
+				head->ft_exec(head);
 		head = head->next;
 	}
 	while (process-- > 0)
 	{
 		printf("Waiting for process %d\n", processlist[process]);
 		waitpid(processlist[process], NULL, 0);
+		if (WIFEXITED(child_status))
+		   sh->exit = WEXITSTATUS(child_status);
+		if (child_status == 0)
+			printf("\nit worked i guess\n");
 	}
 	free(processlist);
 	return (0);

@@ -16,8 +16,8 @@
 #include "defines.h"
 #include "builtins.h"
 #include "libft.h"
-#include "readline/history.h"
-#include "readline/readline.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdbool.h>

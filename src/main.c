@@ -19,6 +19,7 @@ void	execution(char *input, t_shell *sh)
 	sh->cmds = ft_buildlst(input, sh);
 	software(sh);
 	CommandDisplay(sh->cmds);
+//	execute_single_comand(sh);
 	clean_commands(&sh->cmds);
 	free(input);
 }
