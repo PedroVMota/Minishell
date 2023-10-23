@@ -1,5 +1,24 @@
 #include "minishell.h"
 
+static bool	isbuiltin(t_cmds *cmd)
+{
+	if (!ft_strcmp(cmd->args[0], "echo"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "cd"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "export"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "unset"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "env"))
+		return (true);
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		return (true);
+	return (false);
+}
+
 void	add_directory(char **cmd)
 {
 	int		i;
@@ -69,22 +88,26 @@ int	find_command(t_cmds *cmd)
 
 bool	permission_tester(t_cmds *head)
 {
-	int result_find = find_command(head);
-	if(result_find == 24)
-		return true;
+	int	result_find;
+
+	if (isbuiltin(head))
+		return (false);
+	result_find = find_command(head);
+	if (result_find == 24)
+		return (true);
 	else if (result_find != 24 && result_find != 0)
 	{
-		write(2, "Minishell: ", 12);
-		write(2, head->args[0], ft_strlen(head->args[0]));
-		write(2, " : Command not found\n", 22);
+		// write(2, "Minishell: ", 12);
+		// write(2, head->args[0], ft_strlen(head->args[0]));
+		// write(2, " : Command not found\n", 22);
 		head->sh->exit = 127;
 		return (true);
 	}
 	if (-1 == access(head->args[0], X_OK))
 	{
-		write(2, "Minishell: ", 12);
-		write(2, head->args[0], ft_strlen(head->args[0]));
-		write(2, " : Permission denied\n", 22);
+		// write(2, "Minishell: ", 12);
+		// write(2, head->args[0], ft_strlen(head->args[0]));
+		// write(2, " : Permission denied\n", 22);
 		head->sh->exit = 126;
 		return (true);
 	}

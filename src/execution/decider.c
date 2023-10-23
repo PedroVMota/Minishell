@@ -1,48 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   decider.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
+/*   Updated: 2023/10/23 21:36:10 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-int	ft_echo(t_cmds *node)
+static void waitallpid(int **pid, int n)
 {
-	(void)node;
-	return (0);
-}
-int	ft_cd(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-int	ft_pwd(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-int	ft_export(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-int	ft_unset(t_cmds *node)
-{
-	(void)node;
-	return (0);
+	int *tmp;
+
+	tmp = *pid;
+	while(n-- > 0)
+		waitpid(tmp[n], NULL, 0);
+	free(*pid);
 }
 
-int	ft_exit(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-int	ft_exec(t_cmds *node)
-{
-	standard_choiser(node);
-	if (execve(node->args[0], node->args, NULL) == -1)
-	{
-		perror("execve");
-		exit(1);
-	}
-	return (0);
-}
-
-void	decider(t_cmds *node)
+void	exec_ptr_chooser(t_cmds *node)
 {
 	if (!node || !node->args)
 		return ;
@@ -64,24 +44,7 @@ void	decider(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-bool	isbuiltin(t_cmds *cmd)
-{
-	if (!ft_strcmp(cmd->args[0], "echo"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "cd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "pwd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "export"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "unset"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "env"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "exit"))
-		return (true);
-	return (false);
-}
+
 
 int	software(t_shell *sh)
 {
@@ -96,25 +59,13 @@ int	software(t_shell *sh)
 		return (1);
 	while (head)
 	{
-		decider(head);
-		if (isbuiltin(head) || permission_tester(head))
-		{
-			processlist[process] = fork();
-			if (processlist[process] == 0)
-				head->ft_exec(head);
-			head = head->next;
-			continue ;
-		}
+		exec_ptr_chooser(head);
+		permission_tester(head);	
 		processlist[process] = fork();
 		if (processlist[process] == 0)
 			head->ft_exec(head);
 		head = head->next;
 	}
-	while (process-- > 0)
-	{
-		printf("Waiting for process %d\n", processlist[process]);
-		waitpid(processlist[process], NULL, 0);
-	}
-	free(processlist);
+	waitallpid(&processlist, process);
 	return (0);
 }

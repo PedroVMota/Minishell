@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/25 13:13:22 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/23 22:26:42 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	prompt(t_shell *shell)
 		clock_t	end = clock();
 		//timer in seconds
 		double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-		printf("%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
+		printf("\n%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
 	}
 }
 

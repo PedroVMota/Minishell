@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                 +#+  +:+      
+/*   By: pedro <pedro@student.42.fr>                 +#+  +:+
 	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:38:59 by pedro             #+#    #+#             */
@@ -31,7 +31,6 @@ t_type	red_type_checker(char *str)
 		final = FILE_IN_READ + (str[1] == INFILE);
 	if (str[0] == OUTTRUC)
 	{
-		
 		final = 3 + (str[1] == OUTTRUC);
 		printf("final: %s\n", final == 4 ? "HERE" : "NO");
 	}
@@ -42,21 +41,24 @@ static void	check_permissions(char *filename, t_type mode)
 {
 	if (!filename && mode != FILE_NONE)
 	{
-		write(2, "Minishell: No such File or Directory\n", 38);
+		perror(filename);
+		// write(2, "Minishell: No such File or Directory\n", 38);
 		return ;
 	}
 	else if (access(filename, F_OK) == -1 && mode != FILE_NONE
 		&& mode != FILE_OUT_APPEND && mode != FILE_OUT_TRUNC)
 	{
-		write(2, "Minishell: ", 12);
-		write(2, filename, ft_strlen(filename));
-		write(2, ": No such file or directory\n", 29);
+		perror(filename);
+		// write(2, "Minishell: ", 12);
+		// write(2, filename, ft_strlen(filename));
+		// write(2, ": No such file or directory\n", 29);
 	}
 	else if ((mode == FILE_IN_READ) && access(filename, R_OK) == -1)
 	{
-		write(2, "Minishell: ", 12);
-		write(2, filename, ft_strlen(filename));
-		write(2, ": Permission Denied\n", 21);
+		perror(filename);
+		// write(2, "Minishell: ", 12);
+		// write(2, filename, ft_strlen(filename));
+		// write(2, ": Permission Denied\n", 21);
 	}
 }
 
@@ -86,7 +88,7 @@ void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 	{
 		node->redirection[0] = open(node->args[*i], O_RDONLY);
 		if (node->redirection[0] == -1)
-			write(1, "Open() Error\n", 14);
+			perror("Open Infile Error");
 	}
 	if (type == FILE_IN_HEREDOC)
 	{
@@ -95,17 +97,17 @@ void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 	}
 	if (type == FILE_OUT_TRUNC)
 	{
-		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR |  O_TRUNC , 0644);
-		printf("TRUNC\n");
+		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR | O_TRUNC,
+			0644);
 		if (node->redirection[1] == -1)
-			write(1, "Open() Error\n", 14);
+			perror("Open Outfile Error");
 	}
 	if (type == FILE_OUT_APPEND)
 	{
-		node->redirection[1] = open(node->args[*i], O_CREAT | O_WRONLY|	O_APPEND , 0644);
-		printf("Append: %d\n", node->redirection[1]);
+		node->redirection[1] = open(node->args[*i],
+			O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (node->redirection[1] == -1)
-			write(1, "Open() Error\n", 14);
+			perror("Open Outfile Error");
 	}
 	if (type != FILE_NONE)
 		split_str_del(node->args, *i);
