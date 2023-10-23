@@ -11,6 +11,8 @@ OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
 	./$(NAME)
+#@valgrind --leak-check=full env -i ./$(NAME)
+
 
 $(NAME): $(OBJS)
 	@make -C libft/ --no-print
@@ -35,8 +37,7 @@ fclean: clean useless
 	clear \
 
 
-
 re: fclean all
 
+	@valgrind --leak-check=full env -i ./$(NAME)
 valgrind: $(NAME)
-	@valgrind --leak-check=full ./$(NAME)

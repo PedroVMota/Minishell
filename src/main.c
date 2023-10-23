@@ -12,50 +12,56 @@
 
 #include "minishell.h"
 
-struct s_shell g_shell;
-
-void execution(char *input)
+void	execution(char *input, t_shell *sh)
 {
-	t_cmds *cmds;
-
+	sh->cmds = NULL;
 	switch_caracters(input);
-	cmds = ft_buildlst(input);
-	software(cmds);
-	CommandDisplay(cmds);
-	clean_commands(&cmds);
+	sh->cmds = ft_buildlst(input, sh);
+	software(sh);
+	CommandDisplay(sh->cmds);
+	clean_commands(&sh->cmds);
 	free(input);
 }
 
-void prompt(void)
+void	prompt(t_shell *shell)
 {
-	char *input;
+	char	*input;
+	clock_t	start;
+
 	input = NULL;
 	while (1)
 	{
+		start = clock();
 		input = readline("minishell$ ");
-		if (!input)
+		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
 				free(input);
-			ft_env_delete(&g_shell.env);
+			ft_env_delete(&shell->env);
 			write(1, "Exit\n", 6);
 			exit(0);
 		}
 		add_history(input);
-		ft_syntax_checker(input);
-		execution(input);
+		ft_syntax_checker(input, shell);
+		execution(input, shell);
+		clock_t	end = clock();
+		//timer in seconds
+		double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+		printf("%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
 	}
 }
 
-int main(int c, char **v, char **envp)
+int	main(int c, char **v, char **envp)
 {
+	t_shell	shell;
+
 	(void)c;
 	(void)v;
-	g_shell.env = set_env(envp);
-	g_shell.exit = 0;
-	rl_catch_signals = 0;
+	shell.env = set_env(envp);
+	shell.exit = 0;
+	// rl_catch_signals = 0;
 	ft_ml_sigdefault();
-	prompt();
-	printf("%sDIOS%s", GRN, RESET);
+	prompt(&shell);
+	(void)(envp);
 	return (0);
 }

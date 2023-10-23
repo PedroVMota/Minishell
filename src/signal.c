@@ -27,11 +27,6 @@ void	handle_quit(int sig)
 	id = waitpid(-1, &status, 0);
 	if (id == -1)
 		(void)(SIG_IGN);
-	else if (!g_shell.hd)
-	{
-		write(1, "Quit (core dumped)\n", 20);
-		return ;
-	}
 }
 
 void	handle_sign(int sig)
@@ -41,17 +36,11 @@ void	handle_sign(int sig)
 
 	(void)sig;
 	pid = waitpid(-1, &status, 0);
-	g_shell.exit = 130;
 	write(2, "^C", 2);
 	write(2, "\n", 1);
-	if (g_shell.hd)
-	{
-		g_shell.stop = 1;
-		return ;
-	}
 	if (pid == -1)
 	{
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}

@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 #include "defines.h"
+#include "builtins.h"
 #include "libft.h"
 #include "readline/history.h"
 #include "readline/readline.h"
@@ -21,19 +22,20 @@
 #include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
 
-extern t_shell g_shell;
 
 // syntax error msg;
 #define PIPE_SYNTAX_ERROR "Error: syntax error near unexpected token `|'\n"
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
-int software(t_cmds *head);
+bool	permission_tester(t_cmds *head);
+int software(t_shell *sh);
 // Data Type Manipulation
 
 void heredoc(t_cmds *node, char *delimiter);
-void redirection(t_cmds *node);
+void redirection(t_cmds *node, t_shell *sh);
 
 /// @brief Remove an element of a 2D matrix
 /// @param arr the list
@@ -54,10 +56,6 @@ char *replace_var(char *str, char *new_value, char *del);
 /// @return without the variable name
 /// @note Norminette Ok!
 char *delete(char *str);
-/// @brief Replace all the variable depending if exist or not if
-/// 	not then the `$VarName` will be removed
-/// @param str the string will be modified
-void var_replacer(char **str);
 /// @brief Check the number of $ that will be inside the string
 /// @param str The string that will be searched!
 /// @return A integer 32 that will the number of varaible
@@ -67,7 +65,7 @@ int variable_counter(char *str);
 /// variabled founded
 /// @param ptr the string that will be modified
 /// @return the string modified
-char *varcheckvalid(char *ptr);
+char	*varcheckvalid(char *ptr, t_shell *sh);
 
 // enviroment
 void ft_ml_envadd_back(t_env **lst, t_env *new);
@@ -81,15 +79,14 @@ void handle_quit(int sig);
 void handle_sign(int sig);
 
 // syntax
-void ft_syntax_checker(char *input);
-void quote_delete_str(char **input, char c);
-void syntax_report(char *error, char *input, int size);
+void ft_syntax_checker(char *input, t_shell *sh);
+void quote_delete_str(char **input, char c, t_shell *sh);
+void	syntax_report(char *error, char *input, int size, t_shell *sh);
 // ui
-void prompt(void);
+void prompt(t_shell *shell);
 
-void var_replacer(char **str);
 // pase
-void parse(t_cmds *node);
+void parse(t_cmds *node, t_shell *sh);
 bool var_state(char *str);
 // AUX
 
@@ -97,7 +94,7 @@ bool var_state(char *str);
 /// @param input the current input
 /// @param i int position
 /// @param flag arr of sets
-void syntax_quotes(char *input, int i, int *flag);
+void syntax_quotes(char *input, int i, int *flag, t_shell *sh);
 void ft_mode_changer_not_printable(char set, t_mode *stat);
 /// @brief Replace the the `tokens` for the special caracters
 /// @param ptr string that will be modified
@@ -106,7 +103,7 @@ void switch_caracters(char *ptr);
 /// @param str The string will be modiefied!
 void remove_quotes(char *str);
 /// @brief Clean Double pointer
-void free_split(char **split);
+int free_split(char **split, int ret);
 /// @brief Frees the memory used by a command list and closes all
 /// file descriptors.
 /// @param cmds A pointer to the head of the command list.
@@ -115,7 +112,7 @@ void clean_commands(t_cmds **cmds);
 /// @brief prepare all the meta data information.
 /// @param elements The first position of the list
 /// @return Return the head position of the lsit
-t_cmds *ft_buildlst(char *elements);
+t_cmds *ft_buildlst(char *elements, t_shell *sh);
 
 /// @brief Search the last position of the list
 /// @param cmds The first position of the list
@@ -131,11 +128,13 @@ t_cmds *_create_node(char *cmd);
 /// @param SingleComand Will be splitted and give to the nodes->args
 /// @param Head The very first head that will be distribute the done
 /// @return Doesn't return nothing. Instead the head will be updated!
-t_cmds *_add(char *cmd_line, t_cmds **head);
+t_cmds *_add(char *cmd_line, t_cmds **head, t_shell *sh);
 
 void print_special(char *ptr);
 int print_split(char **ptr);
 void CommandDisplay(t_cmds *ptr);
+
+
 
 #endif
 

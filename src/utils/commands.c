@@ -38,13 +38,14 @@ t_cmds	*_create_node(char *str)
 	return (node);
 }
 
-t_cmds	*_add(char *cmd_line, t_cmds **head)
+t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh)
 {
 	t_cmds	*first;
 	t_cmds	*last;
 	t_cmds	*node;
 
 	node = _create_node(cmd_line);
+	node->sh = sh;
 	last = ft_lstpos(*head);
 	first = *head;
 	if (!first)

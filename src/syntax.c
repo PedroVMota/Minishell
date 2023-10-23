@@ -45,7 +45,7 @@ int	ft_valid_sep(char *in, int *data)
 	return (data[0]);
 }
 
-void	syntax_report(char *error, char *input, int size)
+void	syntax_report(char *error, char *input, int size, t_shell *sh)
 {
 	int	i;
 
@@ -60,11 +60,11 @@ void	syntax_report(char *error, char *input, int size)
 	write(2, "\'\n", 2);
 	if (input)
 		free(input);
-	g_shell.exit = 2;
-	prompt();
+	sh->exit = 2;
+	prompt(sh);
 }
 
-void	syntax_sep(char *input, int i, int size)
+void	syntax_sep(char *input, int i, int size, t_shell *sh)
 {
 	int	sep;
 	int	temp;
@@ -76,22 +76,22 @@ void	syntax_sep(char *input, int i, int size)
 	if (input[i] == '|')
 		sep = input[i];
 	if (input[i] == '|' && input[i + 1] == '|')
-		syntax_report("||", input, 2);
+		syntax_report("||", input, 2, sh);
 	else if (input[i] == '|' && !check_next_char(&input[i]))
-		syntax_report("|", input, 1);
+		syntax_report("|", input, 1, sh);
 	else
 		i += size;
 	while (input[i])
 	{
 		if (((!sep && ft_valid_sep(&input[i], &temp)) || (sep
 					&& ft_valid_sep(&input[i], &temp) == 4)) && !w)
-			syntax_report(&input[i], input, temp);
+			syntax_report(&input[i], input, temp, sh);
 		else if (input[i] != 32)
 			w++;
 		i++;
 	}
 	if (!w)
-		syntax_report("newline", input, 8);
+		syntax_report("newline", input, 8, sh);
 }
 
 /*
@@ -101,7 +101,7 @@ void	syntax_sep(char *input, int i, int size)
 	3 = flags
 	4 = seps
 */
-void	ft_syntax_checker(char *in)
+void	ft_syntax_checker(char *in, t_shell *sh)
 {
 	int	flags[5];
 	int	i;
@@ -117,10 +117,10 @@ void	ft_syntax_checker(char *in)
 				|| flags[4] == in[flags[0]]))
 			flags[4] = (in[flags[0]]) * (flags[4] != in[flags[0]]);
 		if (!flags[4] && ft_valid_sep(&in[flags[0]], &(flags[1])))
-			syntax_sep(in, flags[0], flags[1]);
+			syntax_sep(in, flags[0], flags[1], sh);
 		else if ((in[flags[0]] == '\"' && !flags[3]) || (in[flags[0]] == '\''
 				&& !flags[3]))
-			syntax_quotes(in, flags[0], &flags[3]);
+			syntax_quotes(in, flags[0], &flags[3], sh);
 		else if (in[flags[0]] == flags[3])
 			flags[3] = 0;
 		else if (in[flags[0]] != 32)

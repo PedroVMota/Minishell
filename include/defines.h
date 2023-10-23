@@ -35,14 +35,18 @@ typedef struct s_env
 // mode = 1 redirect
 typedef struct s_cmd
 {
-	int redirection_type;
 	int pipe[2];
 	int redirection[2];
-	int redirection_error[2];
+	
+	int (*ft_exec)(struct s_cmd *node);
+
+	struct s_shell *sh;
+
 	char **args;
 	
 	struct s_cmd *prev;
 	struct s_cmd *next;
+
 } t_cmds;
 
 typedef struct s_shell
@@ -51,11 +55,11 @@ typedef struct s_shell
 	int lstsize;
 	int hd;
 	int stop;
+	
+	t_cmds *cmds;
 	t_env *env;
 } t_shell;
 
-#define EXIT_SUCCESS 0
-#define EXIT_FAILURE 1
 #define EXIT_GENERAL_ERROR 2
 #define EXIT_COMMAND_NOT_EXECUTABLE 126
 #define EXIT_COMMAND_NOT_FOUND 127

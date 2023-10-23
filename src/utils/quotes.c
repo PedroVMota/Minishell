@@ -15,7 +15,7 @@
 
 
 
-void	syntax_quotes(char *input, int i, int *flag)
+void	syntax_quotes(char *input, int i, int *flag, t_shell *sh)
 {
 	char	c;
 
@@ -26,5 +26,5 @@ void	syntax_quotes(char *input, int i, int *flag)
 		if (c == input[i])
 			return ;
 	}
-	syntax_report(&c, input, 1);
+	syntax_report(&c, input, 1, sh);
 }
