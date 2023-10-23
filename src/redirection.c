@@ -3,7 +3,8 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                 +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                 +#+  +:+      
+	+#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 13:38:59 by pedro             #+#    #+#             */
 /*   Updated: 2023/10/01 10:52:57 by pedro            ###   ########.fr       */
@@ -19,29 +20,32 @@ typedef enum e_typeschecker
 	FILE_IN_HEREDOC,
 	FILE_OUT_TRUNC,
 	FILE_OUT_APPEND,
-} t_type;
+}			t_type;
 
-t_type red_type_checker(char *str)
+t_type	red_type_checker(char *str)
 {
-	t_type final;
+	t_type	final;
 
 	final = FILE_NONE;
 	if (str[0] == INFILE)
 		final = FILE_IN_READ + (str[1] == INFILE);
 	if (str[0] == OUTTRUC)
+	{
+		
 		final = 3 + (str[1] == OUTTRUC);
-
+		printf("final: %s\n", final == 4 ? "HERE" : "NO");
+	}
 	return (final);
 }
 
-static void check_permissions(char *filename, t_type mode)
+static void	check_permissions(char *filename, t_type mode)
 {
 	if (!filename && mode != FILE_NONE)
 	{
 		write(2, "Minishell: No such File or Directory\n", 38);
-		return;
+		return ;
 	}
-	else if (access(filename, F_OK) == -1 && mode != FILE_NONE \
+	else if (access(filename, F_OK) == -1 && mode != FILE_NONE
 		&& mode != FILE_OUT_APPEND && mode != FILE_OUT_TRUNC)
 	{
 		write(2, "Minishell: ", 12);
@@ -56,7 +60,7 @@ static void check_permissions(char *filename, t_type mode)
 	}
 }
 
-void close_prev_fd(t_type mode, t_cmds *node, int *i)
+void	close_prev_fd(t_type mode, t_cmds *node, int *i)
 {
 	if (mode != FILE_NONE)
 		split_str_del(node->args, *i);
@@ -75,7 +79,7 @@ void close_prev_fd(t_type mode, t_cmds *node, int *i)
 	check_permissions(node->args[*i], mode);
 }
 
-void make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
+void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 {
 	close_prev_fd(type, node, i);
 	if (type == FILE_IN_READ)
@@ -92,14 +96,15 @@ void make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 	if (type == FILE_OUT_TRUNC)
 	{
 		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR,
-									O_TRUNC | 0644);
+			O_TRUNC | 0644);
+		printf("TRUNC\n");
 		if (node->redirection[1] == -1)
 			write(1, "Open() Error\n", 14);
 	}
 	if (type == FILE_OUT_APPEND)
 	{
-		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR,
-									O_APPEND | 0644);
+		node->redirection[1] = open(node->args[*i], O_CREAT | O_WRONLY,	O_APPEND | 0644);
+		printf("Append: %d\n", node->redirection[1]);
 		if (node->redirection[1] == -1)
 			write(1, "Open() Error\n", 14);
 	}
@@ -107,11 +112,11 @@ void make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 		split_str_del(node->args, *i);
 }
 
-void redirection(t_cmds *node, t_shell *sh)
+void	redirection(t_cmds *node, t_shell *sh)
 {
-	char **args;
-	t_type red_mode;
-	int i;
+	char	**args;
+	t_type	red_mode;
+	int		i;
 
 	red_mode = FILE_NONE;
 	i = 0;
@@ -121,14 +126,15 @@ void redirection(t_cmds *node, t_shell *sh)
 		remove_quotes(args[i]);
 		red_mode = red_type_checker(args[i]);
 		make_redirection(red_mode, node, &i, sh);
-		if(red_mode == FILE_NONE)
+		if (red_mode == FILE_NONE)
 			i++;
 	}
 	if (node->next && pipe(node->pipe) == -1)
 		write(2, "Pipe() Error\n", 14);
 	if (node->prev)
 	{
-		if (node->pipe[0] != -1 && node->pipe[0] != 0 && node->pipe[0] != 1 && node->pipe[0] != 2)
+		if (node->pipe[0] != -1 && node->pipe[0] != 0 && node->pipe[0] != 1
+			&& node->pipe[0] != 2)
 			close(node->pipe[0]);
 		node->pipe[0] = node->prev->pipe[0];
 	}

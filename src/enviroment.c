@@ -60,6 +60,8 @@ t_env	*set_env(char **envp)
 
 	env = NULL;
 	i = -1;
+	if(!envp)
+		return (NULL);
 	while (envp[++i])
 		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i])));
 	return (env);

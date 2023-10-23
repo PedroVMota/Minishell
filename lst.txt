@@ -1,0 +1,9 @@
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+Command: 0
+Current command: {
+	Arg[0]: env;
+}
+Pipe[0] = 0
+Pipe[1] = 1
+redi[0] = -1
+redi[1] = 3

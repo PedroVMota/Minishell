@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 #include "defines.h"
+#include "builtins.h"
 #include "libft.h"
 #include "readline/history.h"
 #include "readline/readline.h"
@@ -102,7 +103,7 @@ void switch_caracters(char *ptr);
 /// @param str The string will be modiefied!
 void remove_quotes(char *str);
 /// @brief Clean Double pointer
-void free_split(char **split);
+int free_split(char **split, int ret);
 /// @brief Frees the memory used by a command list and closes all
 /// file descriptors.
 /// @param cmds A pointer to the head of the command list.
@@ -132,6 +133,8 @@ t_cmds *_add(char *cmd_line, t_cmds **head, t_shell *sh);
 void print_special(char *ptr);
 int print_split(char **ptr);
 void CommandDisplay(t_cmds *ptr);
+
+
 
 #endif
 

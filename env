@@ -1,0 +1,13 @@
+PWD=/mini/Minishell
+HOSTNAME=b61a36e012e1
+OLDPWD=/
+MAKEFLAGS=(null)
+MFLAGS=(null)
+SHLVL=1
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+_=/usr/bin/make
+MAKE_TERMOUT=/dev/pts/2
+MAKE_TERMERR=/dev/pts/2
+HOME=/root
+TERM=xterm
+MAKELEVEL=1

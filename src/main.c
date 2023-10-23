@@ -47,7 +47,7 @@ void	prompt(t_shell *shell)
 		clock_t	end = clock();
 		//timer in seconds
 		double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-		printf("Benchmark: %.2fs\n", time_spent);
+		printf("%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
 	}
 }
 
@@ -62,5 +62,6 @@ int	main(int c, char **v, char **envp)
 	// rl_catch_signals = 0;
 	ft_ml_sigdefault();
 	prompt(&shell);
+	(void)(envp);
 	return (0);
 }
