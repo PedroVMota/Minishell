@@ -95,15 +95,14 @@ void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 	}
 	if (type == FILE_OUT_TRUNC)
 	{
-		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR,
-			O_TRUNC | 0644);
+		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR |  O_TRUNC , 0644);
 		printf("TRUNC\n");
 		if (node->redirection[1] == -1)
 			write(1, "Open() Error\n", 14);
 	}
 	if (type == FILE_OUT_APPEND)
 	{
-		node->redirection[1] = open(node->args[*i], O_CREAT | O_WRONLY,	O_APPEND | 0644);
+		node->redirection[1] = open(node->args[*i], O_CREAT | O_WRONLY,	O_APPEND , 0644);
 		printf("Append: %d\n", node->redirection[1]);
 		if (node->redirection[1] == -1)
 			write(1, "Open() Error\n", 14);
