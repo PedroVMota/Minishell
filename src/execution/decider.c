@@ -59,8 +59,8 @@ int	software(t_shell *sh)
 		exec_ptr_chooser(head);
 		permission_tester(head);	
 		processlist[process] = fork();
-		// if (processlist[process] == 0)
-			// head->ft_exec(head);
+		if (processlist[process] == 0)
+			head->ft_exec(head);
 		head = head->next;
 		wait(NULL);
 	}

@@ -14,7 +14,6 @@
 
 int	ft_exec(t_cmds *node)
 {
-	printf("Command Execution: %s\n", node->args[0]);
 	standard_choiser(node);
 	if (execve(node->args[0], node->args, NULL) == -1)
 	{
