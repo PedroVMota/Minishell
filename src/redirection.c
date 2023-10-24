@@ -117,13 +117,4 @@ void	redirection(t_cmds *node, t_shell *sh)
 		if (red_mode == FILE_NONE)
 			i++;
 	}
-	if (node->next && pipe(node->pipe) == -1)
-		write(2, "Pipe() Error\n", 14);
-	if (node->prev)
-	{
-		if (node->pipe[0] != -1 && node->pipe[0] != 0 && node->pipe[0] != 1
-			&& node->pipe[0] != 2)
-			close(node->pipe[0]);
-		node->pipe[0] = node->prev->pipe[0];
-	}
 }

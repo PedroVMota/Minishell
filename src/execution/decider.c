@@ -6,16 +6,17 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/24 00:32:11 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/10/24 19:20:34 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
- void waitallpid(int **pid, int n)
+void	waitallpid(int **pid, int n)
 {
-	while(n-- > 0)
-		wait(NULL);
+
+	while (n > 0)
+		waitpid((*pid)[--n], NULL, 0);
 	free(*pid);
 }
 
@@ -41,7 +42,12 @@ void	exec_ptr_chooser(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-
+void	pipeline(t_cmds *node)
+{
+	if (node->next)
+		if (pipe(node->pipe) == -1)
+			perror("pipe");
+}
 
 int	software(t_shell *sh)
 {
@@ -56,13 +62,20 @@ int	software(t_shell *sh)
 		return (1);
 	while (head)
 	{
+		pipeline(head);
 		exec_ptr_chooser(head);
-		permission_tester(head);	
+		permission_tester(head);
 		processlist[process] = fork();
-		if (processlist[process] == 0)
+		if (processlist[process++] == 0)
 			head->ft_exec(head);
+		fprintf(stderr, "CARALHO %d\n", getpid());
+		if(head->pipe[1] != -1)
+			close(head->pipe[1]);
+		if(head->prev)
+			close(head->prev->pipe[0]);
+		if (!head->next)
+			close(head->pipe[0]);
 		head = head->next;
-		wait(NULL);
 	}
 	waitallpid(&processlist, process);
 	return (0);
