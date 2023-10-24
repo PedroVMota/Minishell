@@ -4,5 +4,6 @@
 		"readline.h": "c",
 		"minishell.h": "c",
 		"random": "c"
-	}
+	},
+	"files.exclude": {}
 }

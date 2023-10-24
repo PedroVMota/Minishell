@@ -130,6 +130,9 @@ void	redirection(t_cmds *node, t_shell *sh)
 		if (red_mode == FILE_NONE)
 			i++;
 	}
+	printf("Command: %s\n", node->args[0]);
+	if(node->prev)
+		printf("Prev Command: %s\n", node->prev->args[0]);
 	if (node->next && pipe(node->pipe) == -1)
 		write(2, "Pipe() Error\n", 14);
 	if (node->prev)

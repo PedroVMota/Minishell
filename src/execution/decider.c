@@ -6,19 +6,16 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/23 21:36:10 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/10/24 00:32:11 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void waitallpid(int **pid, int n)
+ void waitallpid(int **pid, int n)
 {
-	int *tmp;
-
-	tmp = *pid;
 	while(n-- > 0)
-		waitpid(tmp[n], NULL, 0);
+		wait(NULL);
 	free(*pid);
 }
 
@@ -62,9 +59,10 @@ int	software(t_shell *sh)
 		exec_ptr_chooser(head);
 		permission_tester(head);	
 		processlist[process] = fork();
-		if (processlist[process] == 0)
-			head->ft_exec(head);
+		// if (processlist[process] == 0)
+			// head->ft_exec(head);
 		head = head->next;
+		wait(NULL);
 	}
 	waitallpid(&processlist, process);
 	return (0);
