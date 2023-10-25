@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/24 19:07:47 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/10/25 13:53:46 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,10 @@ void	execution(char *input, t_shell *sh)
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	clock_t	start;
 
-	input = NULL;
 	while (1)
 	{
-		printf("RECOMECEI\n");
-		start = clock();
-		input = readline("minishell$ ");
+		input = readline("\n\nminishell$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
@@ -45,10 +41,6 @@ void	prompt(t_shell *shell)
 		add_history(input);
 		ft_syntax_checker(input, shell);
 		execution(input, shell);
-		clock_t	end = clock();
-		//timer in seconds
-		double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-		printf("\n%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
 	}
 }
 

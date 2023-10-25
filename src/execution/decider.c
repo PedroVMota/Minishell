@@ -6,12 +6,11 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/24 20:35:12 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/10/25 14:07:22 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 void	exec_ptr_chooser(t_cmds *node)
 {
@@ -38,8 +37,12 @@ void	exec_ptr_chooser(t_cmds *node)
 void	pipeline(t_cmds *node)
 {
 	if (node->next)
+	{
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
+		else
+			printf("%s has a next command -> %s\n", node->args[0], node->next->args[0]);
+	}
 }
 
 void	close_gen(t_cmds *head)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/02 14:07:36 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/25 13:40:22 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ void	heredoc(t_cmds *node, char *delimiter)
 		return ;
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
+	printf("%sDelimiter: %s%s\n", YEL, delimiter, RESET);
 	while (bytes_read > -1)
 	{
+		write(1, MAG, 5);
 		write(1, "Here_doc >", 11);
+		write(1, RESET, 4);
 		text = get_next_line(0);
 		if (!text)
 		{

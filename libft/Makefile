@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+         #
+#    By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/05 14:49:36 by pvital-m          #+#    #+#              #
-#    Updated: 2023/08/15 14:29:46 by pvital-m         ###   ########.fr        #
+#    Updated: 2023/10/25 15:09:16 by pedromota        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ bonus:		$(NAME) $(BONUS_O)
 			$(LIB2) $(NAME)
 
 %.o : %.c
-			$(CC) -I ../include -c $< -o $(<:.c=.o)
+			$(CC) -I ../inc -c $< -o $(<:.c=.o)
 
 clean:
 			$(RM) $(OBJS) $(BONUS_O)
