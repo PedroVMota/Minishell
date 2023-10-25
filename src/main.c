@@ -18,18 +18,16 @@ void	execution(char *input, t_shell *sh)
 	switch_caracters(input);
 	sh->cmds = ft_buildlst(input, sh);
 	software(sh);
-	// CommandDisplay(sh->cmds);
-	// clean_commands(&sh->cmds);
+	clean_commands(&sh->cmds);
 	free(input);
 }
 
 void	prompt(t_shell *shell)
 {
 	char	*input;
-
 	while (1)
 	{
-		input = readline("\n\nminishell$ ");
+		input = readline("Fodase o minishell: ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)

@@ -37,12 +37,8 @@ void	exec_ptr_chooser(t_cmds *node)
 void	pipeline(t_cmds *node)
 {
 	if (node->next)
-	{
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
-		else
-			printf("%s has a next command -> %s\n", node->args[0], node->next->args[0]);
-	}
 }
 
 void	close_gen(t_cmds *head)

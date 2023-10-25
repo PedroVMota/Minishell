@@ -24,6 +24,28 @@ static int	check_elements(char *input, char *target)
 	return (0);
 }
 
+
+static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
+{
+	int varcounter;
+	int varselector;
+
+	varselector = 0;
+	if(!*text || !delimiter)
+		return true;
+	if (check_elements(*text, delimiter))
+		return true ;
+	varcounter = variable_counter(*text);
+	while (varselector < varcounter)
+	{
+		*text = varcheckvalid(*text, sh);
+		varselector++;
+	}
+	write(fd, *text, ft_strlen(*text));
+	free(*text);
+	return false;
+}
+
 void	heredoc(t_cmds *node, char *delimiter)
 {
 	char	*text;
@@ -35,22 +57,17 @@ void	heredoc(t_cmds *node, char *delimiter)
 		return ;
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
-	printf("%sDelimiter: %s%s\n", YEL, delimiter, RESET);
 	while (bytes_read > -1)
 	{
-		write(1, MAG, 5);
 		write(1, "Here_doc >", 11);
-		write(1, RESET, 4);
 		text = get_next_line(0);
 		if (!text)
 		{
 			free(text);
 			continue ;
 		}
-		if (check_elements(text, delimiter))
-			break ;
-		write(here_doc[1], text, ft_strlen(text));
-		free(text);
+		if(convert_data(&text, delimiter, node->sh, here_doc[1]))
+			break;
 	}
 	close(here_doc[1]);
 }

@@ -35,7 +35,7 @@ bool	permission_tester(t_cmds *head);
 int software(t_shell *sh);
 // Data Type Manipulation
 
-void heredoc(t_cmds *node, char *delimiter);
+void	heredoc(t_cmds *node, char *delimiter);
 void redirection(t_cmds *node, t_shell *sh);
 
 /// @brief Remove an element of a 2D matrix
@@ -130,6 +130,14 @@ t_cmds *_create_node(char *cmd);
 /// @param Head The very first head that will be distribute the done
 /// @return Doesn't return nothing. Instead the head will be updated!
 t_cmds *_add(char *cmd_line, t_cmds **head, t_shell *sh);
+
+
+/// @brief Check position index of the variable
+/// @param ptr string that will be searched
+/// @return return a integer if exit otherwise -1
+int	var_pos(char *ptr);
+
+
 
 void print_special(char *ptr);
 int print_split(char **ptr);

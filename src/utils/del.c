@@ -41,14 +41,6 @@ void	clean_commands(t_cmds **cmds)
 	{
 		if (ptr->args)
 			free_split(ptr->args, 1);
-		// if (ptr->pipe[0] != -1)
-			// close(ptr->pipe[0]);
-		// if (ptr->pipe[1] != -1)
-			// close(ptr->pipe[1]);
-		// if (ptr->redirection[0] != -1)
-			// close(ptr->redirection[0]);
-		// if (ptr->redirection[1] != -1)
-			// close(ptr->redirection[1]);
 		next = ptr->next;
 		free(ptr);
 		ptr = next;
