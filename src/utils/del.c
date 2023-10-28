@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/21 18:03:43 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/24 19:06:19 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int free_split(char **split, int ret)
+int	free_split(char **split, int ret)
 {
-	char **ptr;
+	char	**ptr;
 
 	ptr = split;
 	if (!split)
-		return 1;
+		return (1);
 	while (*ptr)
 	{
 		free(*ptr);
@@ -28,36 +28,28 @@ int free_split(char **split, int ret)
 	return (ret);
 }
 
-void clean_commands(t_cmds **cmds)
+void	clean_commands(t_cmds **cmds)
 {
-	t_cmds *ptr;
-	t_cmds *next;
+	t_cmds	*ptr;
+	t_cmds	*next;
 
 	next = NULL;
 	ptr = *cmds;
 	if (!ptr)
-		return;
+		return ;
 	while (ptr)
 	{
 		if (ptr->args)
 			free_split(ptr->args, 1);
-		if (ptr->pipe[0] != -1 && ptr->pipe[0] != 0 && ptr->pipe[0] != 1 && ptr->pipe[0] != 2)
-			close(ptr->pipe[0]);
-		if (ptr->pipe[1] != -1 && ptr->pipe[1] != 0 && ptr->pipe[1] != 1 && ptr->pipe[1] != 2)
-			close(ptr->pipe[1]);
-		if (ptr->redirection[0] != -1 && ptr->redirection[0] != 0 && ptr->redirection[0] != 1 && ptr->redirection[0] != 2)
-			close(ptr->redirection[0]);
-		if (ptr->redirection[1] != -1 && ptr->redirection[1] != 0 && ptr->redirection[1] != 1 && ptr->redirection[1] != 2)
-			close(ptr->redirection[1]);
 		next = ptr->next;
 		free(ptr);
 		ptr = next;
 	}
 }
 
-int ft_env_delete(t_env **env)
+int	ft_env_delete(t_env **env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while ((*env))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:25:43 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/09/22 08:53:16 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/28 18:44:09 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	ft_ml_envadd_back(t_env **lst, t_env *new)
 	}
 	last = get_last(*lst);
 	last->next = new;
+	
+	// printf("\n\n\nnew: %s\n", last->next->vars[0]);
 }
 
 t_env	*set_env(char **envp)

@@ -1,0 +1,9 @@
+Makefile
+MinishellEn.pdf
+README.md
+inc
+libft
+lst.txt
+minishell
+ola.txt
+src

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/02 14:07:36 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/25 13:40:22 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@ static int	check_elements(char *input, char *target)
 	if (ft_strncmp(input, target, target_len) == 0 && input_len == target_len)
 		return (1);
 	return (0);
+}
+
+
+static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
+{
+	int varcounter;
+	int varselector;
+
+	varselector = 0;
+	if(!*text || !delimiter)
+		return true;
+	if (check_elements(*text, delimiter))
+		return true ;
+	varcounter = variable_counter(*text);
+	while (varselector < varcounter)
+	{
+		*text = varcheckvalid(*text, sh);
+		varselector++;
+	}
+	write(fd, *text, ft_strlen(*text));
+	free(*text);
+	return false;
 }
 
 void	heredoc(t_cmds *node, char *delimiter)
@@ -44,10 +66,8 @@ void	heredoc(t_cmds *node, char *delimiter)
 			free(text);
 			continue ;
 		}
-		if (check_elements(text, delimiter))
-			break ;
-		write(here_doc[1], text, ft_strlen(text));
-		free(text);
+		if(convert_data(&text, delimiter, node->sh, here_doc[1]))
+			break;
 	}
 	close(here_doc[1]);
 }

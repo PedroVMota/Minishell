@@ -43,7 +43,7 @@ int	var_pos(char *ptr)
 	{
 		if (ptr[index] == QUOTE)
 			return (-1);
-		if (ptr[index] == '$')
+		if (ptr[index] == '$' && ptr[index + 1] != '?')
 			return (index);
 		index++;
 	}
@@ -62,7 +62,7 @@ bool	check_variable(char *str)
 	{
 		if (str[second_layer] == QUOTE)
 			return (false);
-		if (str[second_layer] == '$' && str[second_layer + 1] != 0)
+		if (str[second_layer] == '$' && (str[second_layer + 1] != 0 || str[second_layer + 1] != '?'))
 			return (true);
 		second_layer++;
 	}
@@ -120,7 +120,7 @@ int	variable_counter(char *str)
 	{
 		if (str[second_layer] == QUOTE)
 			return (-1);
-		if (str[second_layer] == '$')
+		if (str[second_layer] == '$' && (str[second_layer + 1] != 0 || str[second_layer + 1] != '?'))
 			counter++;
 		second_layer++;
 	}

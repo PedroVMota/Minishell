@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 21:11:33 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 15:12:38 by oharoon          ###   ########.fr       */
+/*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
+/*   Updated: 2023/10/28 16:18:41 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(t_cmds *node)
+int	ft_exec(t_cmds *node)
 {
-	(void)node;
-	char path[1024]; // Allocate space for the path
-
-    if (getcwd(path, sizeof(path)) != NULL) {
-        printf("%s\n", path); // Print the current working directory
-    } else {
-        perror("getcwd() error");
-        return 1;
-    }
+	standard_choiser(node);
+	if (execve(node->args[0], node->args, node->sh->env->vars) == -1)
+	{
+		perror(node->args[0]);
+        clean_commands(&node->sh->cmds);
+		exit(1);
+	}
 	return (0);
 }

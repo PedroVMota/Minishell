@@ -1,48 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   decider.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
+/*   Updated: 2023/10/28 16:08:40 by oharoon          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-int	ft_echo(t_cmds *node)
-{
-	builtin_echo(node);
-	return (0);
-}
-int	ft_cd(t_cmds *node)
-{
-	builtin_cd(node);
-	return (0);
-}
-int	ft_pwd(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-/*int	ft_export(t_shell *sh)
-{
-	builtin_export(node);
-	return (0);
-}*/
-/*int	ft_unset(t_cmds *node)
-{
-	builtin_unset(node);
-	return (0);
-}
-*/
-int	ft_exit(t_cmds *node)
-{
-	(void)node;
-	return (0);
-}
-int	ft_exec(t_cmds *node)
-{
-	standard_choiser(node);
-	if (execve(node->args[0], node->args, NULL) == -1)
-	{
-		perror("execve");
-		exit(1);
-	}
-	return (0);
-}
-
-void	decider(t_cmds *node)
+void	exec_ptr_chooser(t_cmds *node)
 {
 	if (!node || !node->args)
 		return ;
@@ -52,10 +22,10 @@ void	decider(t_cmds *node)
 		node->ft_exec = &ft_cd;
 	else if (!ft_strcmp(node->args[0], "pwd"))
 		node->ft_exec = &ft_pwd;
-	/*else if (!ft_strcmp(node->args[0], "export"))
-		node->ft_exec = &ft_export;*/
-	/*else if (!ft_strcmp(node->args[0], "unset"))
-		node->ft_exec = &ft_unset;*/
+	else if (!ft_strcmp(node->args[0], "export"))
+		node->ft_exec = &ft_export;
+	else if (!ft_strcmp(node->args[0], "unset"))
+		node->ft_exec = &ft_unset;
 	else if (!ft_strcmp(node->args[0], "env"))
 		node->ft_exec = &ft_env;
 	else if (!ft_strcmp(node->args[0], "exit"))
@@ -64,63 +34,46 @@ void	decider(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-bool	isbuiltin(t_cmds *cmd)
+void	pipeline(t_cmds *node)
 {
-	if (!ft_strcmp(cmd->args[0], "echo"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "cd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "pwd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "export"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "unset"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "env"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "exit"))
-		return (true);
-	return (false);
+	if (node->next)
+		if (pipe(node->pipe) == -1)
+			perror("pipe");
 }
 
+void	close_gen(t_cmds *head)
+{
+	if (head->pipe[1] != -1)
+		close(head->pipe[1]);
+	if (head->prev)
+		close(head->prev->pipe[0]);
+	if (!head->next)
+		close(head->pipe[0]);
+}
 int	software(t_shell *sh)
 {
 	int		*processlist;
 	int		process;
 	t_cmds	*head;
-	int		child_status;
 
 	process = 0;
-	child_status = 0;
 	head = sh->cmds;
 	processlist = ft_calloc(sh->lstsize, sizeof(int));
 	if (!processlist)
 		return (1);
 	while (head)
 	{
-		decider(head);
-		if (isbuiltin(head) || permission_tester(head))
-		{
-//			processlist[process] = fork();
-			if (processlist[process] == 0)
-				head->ft_exec(head);
-			head = head->next;
-			continue ;
-		}
-			processlist[process] = fork();
-			if (processlist[process] == 0)
-				head->ft_exec(head);
+		pipeline(head);
+		exec_ptr_chooser(head);
+		permission_tester(head);
+		processlist[process] = fork();
+		if (processlist[process++] == 0)
+			head->ft_exec(head);
+		close_gen(head);
 		head = head->next;
 	}
-	while (process-- > 0)
-	{
-		printf("Waiting for process %d\n", processlist[process]);
-		waitpid(processlist[process], NULL, 0);
-		if (WIFEXITED(child_status))
-		   sh->exit = WEXITSTATUS(child_status);
-		if (child_status == 0)
-			printf("\nit worked i guess\n");
-	}
+	while (process > 0)
+		waitpid(processlist[--process], NULL, 0);
 	free(processlist);
 	return (0);
 }

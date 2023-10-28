@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/25 13:13:22 by pedro            ###   ########.fr       */
+/*   Updated: 2023/10/28 16:32:28 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ void	execution(char *input, t_shell *sh)
 	sh->cmds = NULL;
 	switch_caracters(input);
 	sh->cmds = ft_buildlst(input, sh);
-	software(sh);
 	CommandDisplay(sh->cmds);
-//	execute_single_comand(sh);
+	software(sh);
 	clean_commands(&sh->cmds);
 	free(input);
 }
@@ -27,13 +26,9 @@ void	execution(char *input, t_shell *sh)
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	clock_t	start;
-
-	input = NULL;
 	while (1)
 	{
-		start = clock();
-		input = readline("minishell$ ");
+		input = readline("Fodase o minishell: ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
@@ -45,10 +40,6 @@ void	prompt(t_shell *shell)
 		add_history(input);
 		ft_syntax_checker(input, shell);
 		execution(input, shell);
-		clock_t	end = clock();
-		//timer in seconds
-		double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
-		printf("%sBenchmark: %.2fs%s\n",HBLU, time_spent, RESET);
 	}
 }
 
