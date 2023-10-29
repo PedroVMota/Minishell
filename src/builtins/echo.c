@@ -65,6 +65,7 @@ int ft_echo(t_cmds *node)
 
 	i = 0;
 	br = check_options(node, &word);
+	word++;
 	outfile(node);
 	while (node->args[word])
 	{

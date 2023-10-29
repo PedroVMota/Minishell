@@ -1,7 +1,8 @@
 _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 Command: 0
 Current command: {
-	Arg[0]: export;
+	Arg[0]: echo;
+	Arg[1]: /home/oharoon/pedro_shell;
 }
 Pipe[0] = -1
 Pipe[1] = -1
