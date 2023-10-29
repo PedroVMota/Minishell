@@ -3,61 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 15:12:03 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/10/29 21:51:19 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(t_cmds *node)
+void outfile(t_cmds *node)
 {
-    int i;
-	int	word;
+	int fd;
 
-	word = 1;
-    i = 0;
-    if (!ft_strncmp(node->args[0], "echo", ft_strlen("echo")))
+	fd = 1;
+	if (node->next)
+		fd = node->pipe[1];
+	if (node->redirection[1] != -1)
+		fd = node->redirection[1];
+	if (dup2(fd, 1) == -1)
 	{
-		int break_line = 0;
-		if (!node->args[1])
+		write(2, "Minishell: ", 12);
+		perror("dup2");
+		exit(1);
+	}
+	if (node->prev)
+		close(node->prev->pipe[0]);
+	if (node->pipe[0] != -1)
+		close(node->pipe[0]);
+	if (node->pipe[1] != -1)
+		close(node->pipe[1]);
+	if (node->redirection[0] != -1)
+		close(node->redirection[0]);
+	if (node->redirection[1] != -1)
+		close(node->redirection[1]);
+}
+
+static int check_options(t_cmds *node, int *word)
+{
+	int break_line;
+
+	break_line = 0;
+	*word = 0;
+	if (!node->args[1])
+	{
+		write(1, "\n", 1);
+		exit(0);
+	}
+	if (node->args[*word][0] == '-' && node->args[*word][1] == 'n')
+	{
+		break_line = 1;
+		(*word)++;
+	}
+	return break_line;
+}
+int ft_echo(t_cmds *node)
+{
+	int i;
+	int word;
+	int br;
+
+	i = 0;
+	br = check_options(node, &word);
+	outfile(node);
+	while (node->args[word])
+	{
+		while (node->args[word][i])
 		{
-			printf("\n");
-			return (1);
+			if (node->args[word][i] == '$' && node->args[word][i + 1] == '?')
+				i += printf("%d", node->sh->exit) + 1;
+			else
+				i += write(1, node->args[word], ft_strlen(node->args[word]));
 		}
-		else 
-		{
-			if (node->args[word][i] == '-' && node->args[word][i+1] == 'n')
-			{
-				break_line = 1;
-				i = 0;
-				word++;
-			}
-			while(node->args[word])
-			{
-				while(node->args[word][i])
-				{
-					if (node->args[word][i] == '$' && node->args[word][i + 1] == '?')
-					{
-						printf("%d", node->sh->exit);
-						i += 2;
-					}
-					else
-					{
-						printf("%c",node->args[word][i]);
-						i++;
-					}
-				}
-				printf(" ");
-				word++;
-				i = 0;
-			}
-			if (break_line == 0)
-				printf("\n");
-			return (1);
-		}
-    }
+		printf(" ");
+		word++;
+		i = 0;
+	}
+	if (br == 0)
+		printf("\n");
+	exit(1);
 	return (0);
 }
