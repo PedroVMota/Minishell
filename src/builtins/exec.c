@@ -11,18 +11,49 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-char	**list_2_matrix(t_env *env)
+
+char **list_2_matrix(t_env *env)
 {
-	void(*env);
-	return(NULL);
+    int count;
+    t_env *temp;
+	int i;
+
+	i = 0;
+	count = 0;
+	temp = env;
+    while (temp)
+	{
+        count++;
+        temp = temp->next;
+    }
+    char **matrix = malloc((count + 1) * sizeof(char *));
+    if (!matrix)
+        return NULL;
+    temp = env;
+    while (i < count)
+	{
+        if (temp->vars[0] && temp->vars[1])
+		{
+            matrix[i] = malloc((strlen(temp->vars[0]) + strlen(temp->vars[1]) + 2) * sizeof(char));
+            if (!matrix[i]) {
+                return NULL;
+            }
+            strcpy(matrix[i], temp->vars[0]);
+            strcat(matrix[i], "=");
+            strcat(matrix[i], temp->vars[1]);
+        }
+        temp = temp->next;
+		i++;
+    }
+    matrix[count] = NULL;
+    return matrix;
 }
-*/
+
 
 int	ft_exec(t_cmds *node)
 {
 	standard_choiser(node);
-	if (execve(node->args[0], node->args, (node->sh->env->vars)) == -1)
+	if (execve(node->args[0], node->args, list_2_matrix(node->sh->env)) == -1)
 	{
 		perror(node->args[0]);
         clean_commands(&node->sh->cmds);
