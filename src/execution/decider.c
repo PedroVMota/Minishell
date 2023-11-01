@@ -45,9 +45,9 @@ void	close_gen(t_cmds *head)
 {
 	if (head->pipe[1] != -1)
 		close(head->pipe[1]);
-	if (head->prev)
+	if (head->prev && head->prev->pipe[0] != -1)
 		close(head->prev->pipe[0]);
-	if (!head->next)
+	if (!head->next && head->pipe[0] != -1)
 		close(head->pipe[0]);
 }
 int	software(t_shell *sh)

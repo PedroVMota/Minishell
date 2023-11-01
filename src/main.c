@@ -22,12 +22,27 @@ void	execution(char *input, t_shell *sh)
 	free(input);
 }
 
+
+char *bash_prompt_replicate()
+{
+	char *final;
+
+	final = ft_strjoin(getenv("USER"), " ");
+	final = ft_strjoin(final, getenv("PWD"));
+
+	return final;
+}
+
 void	prompt(t_shell *shell)
 {
 	char	*input;
+	char *promp;
+
 	while (1)
 	{
-		input = readline("Fodase o minishell: ");
+		promp = bash_prompt_replicate();
+		input = readline(promp);
+		free(promp);
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)

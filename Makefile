@@ -17,7 +17,6 @@ OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
 	./$(NAME)
-		@valgrind --track-fds=yes --trace-children=yes --leak-check=full ./$(NAME)
 
 
 $(NAME): $(OBJS)
@@ -33,9 +32,8 @@ clean:
 	@rm -f $(OBJS)
 	@rm -rf  *.log */*.log */*/*.log log.*
 
-fclean: clean useless
-	@rm -f $(NAME) lst lst.txt
-	rm -rf *.log *.del *.ign
+fclean: clean 
+	@rm -f $(NAME) lst lst.txt *.log *.del *.ign
 	@make fclean -C libft/ --no-print
 	clear \
 

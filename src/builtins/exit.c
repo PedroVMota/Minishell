@@ -15,5 +15,6 @@
 int	ft_exit(t_cmds *node)
 {
 	(void)node;
+	exit(0);
 	return (0);
 }
