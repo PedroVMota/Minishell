@@ -14,14 +14,15 @@
 
 int	ft_pwd(t_cmds *node)
 {
-	(void)node;
-	char path[1024]; // Allocate space for the path
+	char	path[1024];
 
-    if (getcwd(path, sizeof(path)) != NULL) {
-        printf("%s\n", path); // Print the current working directory
-    } else {
-        perror("getcwd() error");
-        return 1;
-    }
+	(void)node;
+	if (getcwd(path, sizeof(path)) != NULL)
+		printf("%s\n", path);
+	else
+	{
+		perror("getcwd() error");
+		return (1);
+	}
 	return (0);
 }

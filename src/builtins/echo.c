@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-void outfile(t_cmds *node)
+void	outfile(t_cmds *node)
 {
-	int fd;
+	int	fd;
 
 	fd = 1;
 	if (node->next)
@@ -39,9 +39,9 @@ void outfile(t_cmds *node)
 		close(node->redirection[1]);
 }
 
-static int check_options(t_cmds *node, int *word)
+static int	check_options(t_cmds *node, int *word)
 {
-	int break_line;
+	int	break_line;
 
 	break_line = 0;
 	*word = 0;
@@ -55,13 +55,14 @@ static int check_options(t_cmds *node, int *word)
 		break_line = 1;
 		(*word)++;
 	}
-	return break_line;
+	return (break_line);
 }
-int ft_echo(t_cmds *node)
+
+int	ft_echo(t_cmds *node)
 {
-	int i;
-	int word;
-	int br;
+	int	i;
+	int	word;
+	int	br;
 
 	i = 0;
 	br = check_options(node, &word);

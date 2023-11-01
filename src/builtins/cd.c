@@ -12,18 +12,44 @@
 
 #include "minishell.h"
 
-void remove_part_str(char *str, const char *remove)
+void	remove_part_str(char *str, const char *remove)
 {
-	char *pos = strstr(str, remove);
-	if (pos != NULL) {
+	char	*pos;
+
+	pos = strstr(str, remove);
+	if (pos != NULL)
 		ft_memmove(pos, pos + strlen(remove), strlen(pos + strlen(remove)) + 1);
+}
+
+int	cd_aux(t_cmds *node)
+{
+	if (node->args[2])
+	{
+		printf("cd: too many arguments\n");
+		return (1);
 	}
+	else if (node->args[1][0] == '~')
+	{
+		chdir(getenv("HOME"));
+		if (node->args[1][1])
+		{
+			remove_part_str(node->args[1], "~/");
+			if (chdir(node->args[1]))
+				printf("error changing directory\n");
+		}
+		return (1);
+	}
+	else if (node->args[1][0] == '-')
+	{
+		if (chdir(getenv("OLDPWD")))
+			printf("error changing directory\n");
+		return (1);
+	}
+	return (0);
 }
 
 int	ft_cd(t_cmds *node)
 {
-//OLDPWD working, but need to change oldpwd, it doesnt change for some reason
-
 	if (!node->args || !node->args[0])
 	{
 		printf("\n");
@@ -33,28 +59,8 @@ int	ft_cd(t_cmds *node)
 	{
 		if (!node->args[1])
 			chdir(getenv("HOME"));
-		else if (node->args[2])
-		{
-			printf("cd: too many arguments\n");
+		else if (cd_aux(node) == 1)
 			return (1);
-		}
-		else if (node->args[1][0] == '~')
-		{
-			chdir(getenv("HOME"));
-			if (node->args[1][1])
-			{
-				remove_part_str(node->args[1], "~/");
-				if (chdir(node->args[1]))
-					printf("error changing directory\n");
-			}
-			return (1);
-		}
-		else if (node->args[1][0] == '-')
-		{
-			if (chdir(getenv("OLDPWD")))
-				printf("error changing directory\n");
-			return (1);
-		}
 		else
 		{
 			if (chdir(node->args[1]))

@@ -12,38 +12,39 @@
 
 #include "minishell.h"
 
-
-
-int check_repetition(t_env *new, t_env **env) {
-    t_env *temp = *env;
-    int i = 0;
-
-    if (new->vars[0][0] == '=') {
-        printf("minishell: %s is not a valid identifier\n", new->vars[0]);
-        return 1;
-    }
-
-    while (temp) {
-        printf("i: %d\n", i);
-        printf("Comparing %s and %s\n", temp->vars[0], new->vars[0]);
-        if (strcmp(temp->vars[0], new->vars[0]) == 0) {
-            printf("Found repetition. Replacing value.\n");
-            printf("Before replacement: %s\n", temp->vars[1]);
-            if (temp->vars[1] == NULL) 
-                temp->vars[1] = (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char)); // Allocate memory for temp->vars[1]
-            strcpy(temp->vars[1], new->vars[1]); // Copy the contents of new->vars[1] to temp->vars[1]
-            printf("After replacement: %s\n", temp->vars[1]);
-            return 1;
-        }
-        temp = temp->next;
-        i++;
-    }
-    return 0;
-}
-		
-void print_export_env(t_cmds *node)
+int	check_repetition(t_env *new, t_env **env)
 {
-	t_env *env = node->sh->env;
+	t_env	*temp;	
+	int		i;
+
+	temp = *env;
+	i = 0;
+	if (new->vars[0][0] == '=')
+	{
+		printf("minishell: %s is not a valid identifier\n", new->vars[0]);
+		return (1);
+	}
+	while (temp)
+	{
+		if (strcmp(temp->vars[0], new->vars[0]) == 0)
+		{
+			if (temp->vars[1] == NULL)
+				temp->vars[1]
+					= (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char));
+			strcpy(temp->vars[1], new->vars[1]);
+			return (1);
+		}
+		temp = temp->next;
+		i++;
+	}
+	return (0);
+}
+
+void	print_export_env(t_cmds *node)
+{
+	t_env	*env;
+
+	env = node->sh->env;
 	standard_choiser(node);
 	while (env)
 	{
@@ -56,8 +57,10 @@ void print_export_env(t_cmds *node)
 
 int	ft_export(t_cmds *node)
 {
-	int i = 1;
+	int		i;
 	t_env	*new;
+
+	i = 1;
 	if (!node->args[i])
 	{
 		print_export_env(node);

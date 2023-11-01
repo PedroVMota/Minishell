@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-void remove_node(t_env **head, char *content)
+void	remove_node(t_env **head, char *content)
 {
-	t_env *current = *head;
-	t_env *previous = NULL;
+	t_env	*current;
+	t_env	*previous;
 
-	// Find the node with the given value
+	previous = NULL;
+	current = *head;
 	while (current->next != NULL && ft_strcmp(current->vars[0], content))
 	{
 		previous = current;
 		current = current->next;
 	}
-	// If the node was found, update pointers to remove it
 	if (current != NULL)
 	{
 		if (previous != NULL)
@@ -36,8 +36,9 @@ void remove_node(t_env **head, char *content)
 
 int	ft_unset(t_cmds *node)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (ft_strncmp(node->args[0], "unset", 6))
 		return (0);
 	if (!node->args[i])

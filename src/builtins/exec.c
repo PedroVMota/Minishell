@@ -12,43 +12,53 @@
 
 #include "minishell.h"
 
-char **list_2_matrix(t_env *env)
+int	pass_values(t_env **temp, int *count, char ***matrix)
 {
-    int count;
-    t_env *temp;
-	int i;
+	int	i;
 
 	i = 0;
-	count = 0;
-	temp = env;
-    while (temp)
+	while (i < *count)
 	{
-        count++;
-        temp = temp->next;
-    }
-    char **matrix = malloc((count + 1) * sizeof(char *));
-    if (!matrix)
-        return NULL;
-    temp = env;
-    while (i < count)
-	{
-        if (temp->vars[0] && temp->vars[1])
+		if ((*temp)->vars[0] && (*temp)->vars[1])
 		{
-            matrix[i] = malloc((strlen(temp->vars[0]) + strlen(temp->vars[1]) + 2) * sizeof(char));
-            if (!matrix[i]) {
-                return NULL;
-            }
-            strcpy(matrix[i], temp->vars[0]);
-            strcat(matrix[i], "=");
-            strcat(matrix[i], temp->vars[1]);
-        }
-        temp = temp->next;
+			(*matrix)[i] = malloc((strlen((*temp)->vars[0])
+						+ strlen((*temp)->vars[1]) + 2) * sizeof(char));
+			if (!(*matrix)[i])
+				return (1);
+			ft_strlcpy((*matrix)[i], (*temp)->vars[0],
+				ft_strlen((*temp)->vars[0]) + 1);
+			ft_strlcat((*matrix)[i], "=", ft_strlen((*matrix)[i]) + 2);
+			ft_strlcat((*matrix)[i], (*temp)->vars[1],
+				ft_strlen((*matrix)[i]) + strlen((*temp)->vars[1]) + 1);
+		}
+		(*temp) = (*temp)->next;
 		i++;
-    }
-    matrix[count] = NULL;
-    return matrix;
+	}
+	return (0);
 }
 
+char	**list_2_matrix(t_env *env)
+{
+	int		count;
+	t_env	*temp;
+	char	**matrix;
+
+	count = 0;
+	temp = env;
+	while (temp)
+	{
+		count++;
+		temp = temp->next;
+	}
+	matrix = malloc((count + 1) * sizeof(char *));
+	if (!matrix)
+		return (NULL);
+	temp = env;
+	if (pass_values(&temp, &count, &matrix))
+		return (NULL);
+	matrix[count] = NULL;
+	return (matrix);
+}
 
 int	ft_exec(t_cmds *node)
 {
@@ -56,7 +66,7 @@ int	ft_exec(t_cmds *node)
 	if (execve(node->args[0], node->args, list_2_matrix(node->sh->env)) == -1)
 	{
 		perror(node->args[0]);
-        clean_commands(&node->sh->cmds);
+		clean_commands(&node->sh->cmds);
 		exit(1);
 	}
 	return (0);
