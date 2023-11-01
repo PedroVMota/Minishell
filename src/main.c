@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/25 13:53:46 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/01 20:41:44 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,34 @@ void	execution(char *input, t_shell *sh)
 	free(input);
 }
 
-
-char *bash_prompt_replicate()
+char	*bash_prompt_replicate(void)
 {
-	char *final;
+	char	cwd[1024];
+	char	*prompt;
+	int		size;
 
-	final = ft_strjoin(getenv("USER"), " ");
-	final = ft_strjoin(final, getenv("PWD"));
-
-	return final;
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return "Minishell $:";
+	size =	(int)ft_strlen("Minishell") + ft_strlen(cwd) + ft_strlen("\033[1;32m")
+		+ ft_strlen("\033[0m") + 4;
+	prompt = ft_calloc(size + 1, sizeof(char));
+	if (!prompt)
+		return ("Minishell $:");
+	ft_strlcat(prompt, "\033[1;32m", size + 1);
+	ft_strlcat(prompt, "Minishell", size + 1);
+	ft_strlcat(prompt, "\033[0m", size + 1);
+	ft_strlcat(prompt, ":", size + 1);
+	ft_strlcat(prompt, "\033[1;34m", size + 1);
+	ft_strlcat(prompt, &cwd[0], (ft_strlen(cwd) + 1));
+	ft_strlcat(prompt, "\033[0m", size + 1);
+	ft_strlcat(prompt, "$ ", size + 1);
+	return (prompt);
 }
 
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	char *promp;
+	char	*promp;
 
 	while (1)
 	{
