@@ -134,8 +134,15 @@ void print_special(char *ptr);
 int print_split(char **ptr);
 void CommandDisplay(t_cmds *ptr);
 
+int		check_repetition(t_env *new, t_env **env);
+int		count_nodes(t_env *env);
+void	fill_matrix(t_env *temp, char **matrix, int count);
+char	**list_2_matrix(t_env *env);
+int		ft_exec(t_cmds *node);
 
-
+char	*get_pwd_from_list(t_env *env);
+void	update_pwd_values(t_env **env, char *oldpwd, char *pwd);
+void	remove_part_str(char *str, const char *remove);
 #endif
 
 #define displayerror(err) printf("%s%s%s\n", RED, err, RESET);

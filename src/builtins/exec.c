@@ -10,38 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "/home/oharoon/pedro_shell/include/minishell.h"
 
-int	pass_values(t_env **temp, int *count, char ***matrix)
-{
-	int	i;
-
-	i = 0;
-	while (i < *count)
-	{
-		if ((*temp)->vars[0] && (*temp)->vars[1])
-		{
-			(*matrix)[i] = malloc((strlen((*temp)->vars[0])
-						+ strlen((*temp)->vars[1]) + 2) * sizeof(char));
-			if (!(*matrix)[i])
-				return (1);
-			ft_strlcpy((*matrix)[i], (*temp)->vars[0],
-				ft_strlen((*temp)->vars[0]) + 1);
-			ft_strlcat((*matrix)[i], "=", ft_strlen((*matrix)[i]) + 2);
-			ft_strlcat((*matrix)[i], (*temp)->vars[1],
-				ft_strlen((*matrix)[i]) + strlen((*temp)->vars[1]) + 1);
-		}
-		(*temp) = (*temp)->next;
-		i++;
-	}
-	return (0);
-}
-
-char	**list_2_matrix(t_env *env)
+int	count_nodes(t_env *env)
 {
 	int		count;
 	t_env	*temp;
-	char	**matrix;
 
 	count = 0;
 	temp = env;
@@ -50,12 +24,42 @@ char	**list_2_matrix(t_env *env)
 		count++;
 		temp = temp->next;
 	}
+	return (count);
+}
+
+void	fill_matrix(t_env *temp, char **matrix, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (temp->vars[0] && temp->vars[1])
+		{
+			matrix[i] = malloc((strlen(temp->vars[0])
+						+ strlen(temp->vars[1]) + 2) * sizeof(char));
+			if (!matrix[i])
+				return ;
+			ft_strlcpy(matrix[i], temp->vars[0], ft_strlen(temp->vars[0]) + 1);
+			ft_strlcat(matrix[i], "=", strlen(temp->vars[0]) + strlen("=") + 1);
+			ft_strlcat(matrix[i], temp->vars[1], strlen(matrix[i])
+				+ strlen(temp->vars[1]) + 1);
+		}
+		temp = temp->next;
+		i++;
+	}
+}
+
+char	**list_2_matrix(t_env *env)
+{
+	int		count;
+	char	**matrix;
+
+	count = count_nodes(env);
 	matrix = malloc((count + 1) * sizeof(char *));
 	if (!matrix)
 		return (NULL);
-	temp = env;
-	if (pass_values(&temp, &count, &matrix))
-		return (NULL);
+	fill_matrix(env, matrix, count);
 	matrix[count] = NULL;
 	return (matrix);
 }

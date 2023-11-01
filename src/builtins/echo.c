@@ -84,5 +84,4 @@ int	ft_echo(t_cmds *node)
 	if (br == 0)
 		printf("\n");
 	exit(1);
-	return (0);
 }

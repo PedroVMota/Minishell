@@ -1,0 +1,9 @@
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
+Command: 0
+Current command: {
+	Arg[0]: cd;
+}
+Pipe[0] = -1
+Pipe[1] = -1
+redi[0] = -1
+redi[1] = -1

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "/home/oharoon/pedro_shell/include/minishell.h"
 
 int	check_repetition(t_env *new, t_env **env)
 {

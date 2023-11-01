@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_utils.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,46 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "/home/oharoon/pedro_shell/include/minishell.h"
 
-void	remove_part_str(char *str, const char *remove)
+void	change_to_home(void)
 {
-	char	*pos;
-
-	pos = strstr(str, remove);
-	if (pos != NULL)
-		ft_memmove(pos, pos + strlen(remove), strlen(pos + strlen(remove)) + 1);
+	if (chdir(getenv("HOME")) < 0)
+		write(2, "Minishell: cd: HOME not set\n", 28);
 }
 
-int	cd_aux(t_cmds *node)
+void	change_to_oldpwd(void)
 {
-	if (node->args[2])
-	{
-		printf("cd: too many arguments\n");
-		return (1);
-	}
-	else if (node->args[1][0] == '~')
-	{
-		chdir(getenv("HOME"));
-		if (node->args[1][1])
-		{
-			remove_part_str(node->args[1], "~/");
-			if (chdir(node->args[1]))
-				printf("error changing directory\n");
-		}
-		return (1);
-	}
-	else if (node->args[1][0] == '-')
-	{
-		if (chdir(getenv("OLDPWD")))
-			printf("error changing directory\n");
-		return (1);
-	}
-	return (0);
+	if (chdir(getenv("OLDPWD")))
+		printf("error changing directory OLDPWD\n");
+}
+
+void	change_to_directory(char *dir)
+{
+	if (chdir(dir))
+		printf("error changing directory\n");
 }
 
 int	ft_cd(t_cmds *node)
 {
+	char	*pwd;
+	char	*oldpwd;
+
+	oldpwd = get_pwd_from_list(node->sh->env);
 	if (!node->args || !node->args[0])
 	{
 		printf("\n");
@@ -57,16 +43,17 @@ int	ft_cd(t_cmds *node)
 	}
 	if (!ft_strncmp(node->args[0], "cd", 2))
 	{
-		if (!node->args[1])
-			chdir(getenv("HOME"));
-		else if (cd_aux(node) == 1)
-			return (1);
+		if (!node->args[1] || node->args[1][0] == '~')
+			change_to_home();
+		else if (node->args[2])
+			write(2, "Minishell: cd : too many arguments\n", 35);
+		else if (node->args[1][0] == '-')
+			change_to_oldpwd();
 		else
-		{
-			if (chdir(node->args[1]))
-				printf("error changing directory\n");
-		}
+			change_to_directory(node->args[1]);
+		pwd = getcwd(NULL, 0);
+		update_pwd_values(&node->sh->env, oldpwd, pwd);
 		return (1);
 	}
-	return (0);
+	exit(0);
 }

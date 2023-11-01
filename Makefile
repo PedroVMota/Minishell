@@ -6,14 +6,14 @@ EXT_LIBRARY = libft/libft.a
 
 
 FILES = src/build.c src/builtins/cd.c src/builtins/echo.c src/builtins/env.c \
-		src/builtins/exec.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c \
+		src/builtins/exec.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c srcs/builtins/cd_utils.c  \
 		src/builtins/unset.c src/enviroment.c src/execution/decider.c src/execution/dups.c \
 		src/execution/heredoc.c src/main.c src/parse.c src/execution/redirection.c \
 		src/signal.c src/syntax.c src/utils/.utils.c src/utils/Permissions/perm.c \
 		src/utils/commands.c src/utils/del.c src/utils/manipulation.c src/utils/quotes.c \
-		src/utils/search.c src/utils/switchchar.c src/utils/t_mode.c src/utils/var.c
+		src/utils/search.c src/utils/switchchar.c src/utils/t_mode.c src/utils/var.c \
 
-OBJS = $(FILES:.c=.o)
+OBJS = $(FILES:.c=.o) 
 
 all: $(NAME)
 	./$(NAME)
