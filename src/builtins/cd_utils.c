@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../..include/minishell.h"
+#include "../../include/minishell.h"
 
 char	*get_pwd_from_list(t_env *env)
 {
