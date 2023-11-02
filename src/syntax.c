@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:55:52 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/22 08:56:41 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/02 21:58:12 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	syntax_report(char *error, char *input, int size, t_shell *sh)
 	int	i;
 
 	i = -1;
-	printf("Size: %d\n", size);
 	write(2, "minishell: syntax error near unexpected token \'", 47);
 	while (size && error[++i])
 	{

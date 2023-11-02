@@ -11,7 +11,8 @@ FILES = src/build.c src/builtins/cd.c src/builtins/echo.c src/builtins/env.c \
 		src/execution/heredoc.c src/main.c src/parse.c src/execution/redirection.c \
 		src/signal.c src/syntax.c src/utils/.utils.c src/utils/Permissions/perm.c \
 		src/utils/commands.c src/utils/del.c src/utils/manipulation.c src/utils/quotes.c \
-		src/utils/search.c src/utils/switchchar.c src/utils/t_mode.c src/utils/var.c
+		src/utils/search.c src/utils/switchchar.c src/utils/t_mode.c src/utils/var.c \
+		src/builtins/cd_utils.c
 
 OBJS = $(FILES:.c=.o)
 

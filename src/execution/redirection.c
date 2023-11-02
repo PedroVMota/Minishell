@@ -76,7 +76,8 @@ void	close_prev_fd(t_type mode, t_cmds *node, int *i)
 			close(node->redirection[1]);
 		node->redirection[1] = -1;
 	}
-	check_permissions(node->args[*i], mode, node->sh);
+	if(mode == FILE_IN_READ)
+		check_permissions(node->args[*i], mode, node->sh);
 }
 
 void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
@@ -84,16 +85,17 @@ void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 	close_prev_fd(type, node, i);
 	if (type == FILE_IN_READ)
 		node->redirection[0] = open(node->args[*i], O_RDONLY);
-	if (type == FILE_IN_HEREDOC)
+	else if (type == FILE_IN_HEREDOC)
 	{
 		sh->hd = 1;
 		heredoc(node, node->args[*i]);
+		split_str_del(node->args, *i);
 	}
-	if (type == FILE_OUT_TRUNC)
+	else if (type == FILE_OUT_TRUNC)
 		node->redirection[1] = open(node->args[*i], O_CREAT | O_RDWR | O_TRUNC,
 			0644);
 
-	if (type == FILE_OUT_APPEND)
+	else if (type == FILE_OUT_APPEND)
 		node->redirection[1] = open(node->args[*i],
 			O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (type != FILE_NONE)

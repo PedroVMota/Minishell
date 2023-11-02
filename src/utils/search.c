@@ -6,11 +6,13 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:08:35 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/02 20:35:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 21:25:06 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	*get_variable(char *str);
 
 void	remove_quotes(char *str)
 {
@@ -70,20 +72,6 @@ bool	check_variable(char *str)
 	return (false);
 }
 
-char	*get_variable(char *str)
-{
-	char	*var;
-
-	int start, end;
-	start = var_pos(str) + 1;
-	end = start;
-	if (start == -1)
-		return (NULL);
-	while (str[end] && !(str[end] == ' ' || str[end] == '$'))
-		end++;
-	var = ft_substr(str, start, end - start);
-	return (var);
-}
 
 /// @brief This will search and replac or delete the string
 /// @param str String Modified
@@ -107,7 +95,7 @@ char	*manage(char *str, t_shell *sh)
 		free(var);
 		vars = vars->next;
 	}
-	return (delete(str));
+	return (delete (str));
 }
 
 char	*varcheckvalid(char *ptr, t_shell *sh)
@@ -119,11 +107,7 @@ char	*varcheckvalid(char *ptr, t_shell *sh)
 		return (ptr);
 	else
 	{
-		char *var = get_variable(ptr);
-		printf("Manage: %s\n", var);
 		final = manage(ptr, sh);
-		printf("Final: %s\n", final);
-		free(var);
 		return (final);
 	}
 	return (ptr);

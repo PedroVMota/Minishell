@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/10/25 14:10:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 22:35:49 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ t_env *set_env(char **envp);
 
 // signals
 void ft_ml_sigdefault(void);
-void handle_quit(int sig);
-void handle_sign(int sig);
+void handle_quit(int sig, t_shell *sh);
+void handle_sign(int sig, t_shell *sh);
 
 // syntax
 void ft_syntax_checker(char *input, t_shell *sh);

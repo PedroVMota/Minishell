@@ -1,0 +1,10 @@
+VSCODE_GIT_ASKPASS_MAIN=/Applications/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/askpass-main.js
+SHELL=/bin/zsh
+_=/usr/bin/make
+VSCODE_INJECTION=1
+__CFBundleIdentifier=com.microsoft.VSCode
+INFOPATH=/opt/homebrew/share/info:/opt/homebrew/share/info:/opt/homebrew/share/info:/opt/homebrew/share/info:
+PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/Users/pedromota/.pyenv/shims:/opt/homebrew/opt/python@3.9/libexec/bin:/opt/homebrew/opt/python@3.9/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/python@3.9/libexec/bin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/opt/local/bin:/opt/local/sbin:/Users/pedromota/.fzf/bin
+LSCOLORS=Gxfxcxdxbxegedabagacad
+ZDOTDIR=/Users/pedromota
+PYENV_ROOT=/Users/pedromota/.pyenv

@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/02 19:52:09 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 22:35:22 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	main(int c, char **v, char **envp)
 	shell.env = set_env(envp);
 	shell.exit = 0;
 	// rl_catch_signals = 0;
+	handle_quit(0, &shell);
+	handle_sign(0, &shell);
 	ft_ml_sigdefault();
 	prompt(&shell);
 	(void)(envp);

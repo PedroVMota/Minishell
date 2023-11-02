@@ -6,17 +6,16 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/02 19:32:50 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 21:29:10 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 void	remove_part_str(char *str, const char *remove);
 void	update_pwd_values(t_env **env, char *oldpwd, char *pwd);
 char	*get_pwd_from_list(t_env *env);
-int check_repetition(t_env *new, t_env **env);
+int		check_repetition(t_env *new, t_env **env);
 
 void	change_to_home(void)
 {
@@ -38,8 +37,8 @@ void	change_to_directory(char *dir)
 
 int	ft_cd(t_cmds *node)
 {
-	char	*pwd;
-	char	*oldpwd;
+	char *pwd;
+	char *oldpwd;
 
 	oldpwd = get_pwd_from_list(node->sh->env);
 	if (!node->args || !node->args[0])

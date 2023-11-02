@@ -6,11 +6,26 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/02 20:39:44 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 21:24:29 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	*get_variable(char *str)
+{
+	char	*var;
+
+	int start, end;
+	start = var_pos(str) + 1;
+	end = start;
+	if (start == -1)
+		return (NULL);
+	while (str[end] && !(str[end] == ' ' || str[end] == '$'))
+		end++;
+	var = ft_substr(str, start, end - start);
+	return (var);
+}
 
 char	*replace_var(char *str, char *new_value, char *del)
 {
@@ -51,7 +66,7 @@ char	*replace_var(char *str, char *new_value, char *del)
 	return (result);
 }
 
-char *delete (char *str)
+char *delete(char *str)
 {
 	char *result;
 	char *p;
