@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/01 20:41:44 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/02 19:52:09 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	execution(char *input, t_shell *sh)
 	switch_caracters(input);
 	sh->cmds = ft_buildlst(input, sh);
 	software(sh);
+	CommandDisplay(sh->cmds);
 	clean_commands(&sh->cmds);
 	free(input);
 }

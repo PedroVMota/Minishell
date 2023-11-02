@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/21 18:14:54 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/02 20:39:44 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ char	*replace_var(char *str, char *new_value, char *del)
 	return (result);
 }
 
-char *delete(char *str)
+char *delete (char *str)
 {
-	char	*result;
-	char	*p;
-	char	*q;
+	char *result;
+	char *p;
+	char *q;
+
 
 	result = malloc(ft_strlen(str) + 1);
 	p = str;
@@ -65,7 +66,7 @@ char *delete(char *str)
 	while (*p != '\0')
 	{
 		if (*p == '$')
-			while (*p != QUOTE && *p != '\0')
+			while (*p != QUOTE && *p != ' ' && *p + 1 != '$' && *p != '\0')
 				p++;
 		else
 			*q++ = *p++;

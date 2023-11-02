@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:08:35 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/25 12:16:32 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/02 20:35:55 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,27 @@ bool	check_variable(char *str)
 	{
 		if (str[second_layer] == QUOTE)
 			return (false);
-		if (str[second_layer] == '$' && (str[second_layer + 1] != 0 || str[second_layer + 1] != '?'))
+		if (str[second_layer] == '$' && (str[second_layer + 1] != 0
+				|| str[second_layer + 1] != '?'))
 			return (true);
 		second_layer++;
 	}
 	return (false);
+}
+
+char	*get_variable(char *str)
+{
+	char	*var;
+
+	int start, end;
+	start = var_pos(str) + 1;
+	end = start;
+	if (start == -1)
+		return (NULL);
+	while (str[end] && !(str[end] == ' ' || str[end] == '$'))
+		end++;
+	var = ft_substr(str, start, end - start);
+	return (var);
 }
 
 /// @brief This will search and replac or delete the string
@@ -85,13 +101,13 @@ char	*manage(char *str, t_shell *sh)
 		return (str);
 	while (vars)
 	{
-		var = ft_substr(&str[pos + 1], 0, ft_strlen(vars->vars[0]));
+		var = get_variable(str);
 		if (!ft_strcmp(var, vars->vars[0]))
 			return (replace_var(str, vars->vars[1], var));
 		free(var);
 		vars = vars->next;
 	}
-	return (delete (str));
+	return (delete(str));
 }
 
 char	*varcheckvalid(char *ptr, t_shell *sh)
@@ -103,7 +119,11 @@ char	*varcheckvalid(char *ptr, t_shell *sh)
 		return (ptr);
 	else
 	{
+		char *var = get_variable(ptr);
+		printf("Manage: %s\n", var);
 		final = manage(ptr, sh);
+		printf("Final: %s\n", final);
+		free(var);
 		return (final);
 	}
 	return (ptr);
@@ -120,7 +140,8 @@ int	variable_counter(char *str)
 	{
 		if (str[second_layer] == QUOTE)
 			return (-1);
-		if (str[second_layer] == '$' && (str[second_layer + 1] != 0 || str[second_layer + 1] != '?'))
+		if (str[second_layer] == '$' && (str[second_layer + 1] != 0
+				|| str[second_layer + 1] != '?'))
 			counter++;
 		second_layer++;
 	}
