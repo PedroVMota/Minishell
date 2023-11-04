@@ -6,58 +6,12 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 09:28:04 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:14:45 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int pass_values(t_env **temp, int *count, char ***matrix)
-{
-	int i;
-
-	i = 0;
-	while (i < *count)
-	{
-		if ((*temp)->vars[0] && (*temp)->vars[1])
-		{
-			(*matrix)[i] = malloc((strlen((*temp)->vars[0]) + strlen((*temp)->vars[1]) + 2) * sizeof(char));
-			if (!(*matrix)[i])
-				return (1);
-			ft_strlcpy((*matrix)[i], (*temp)->vars[0],
-					   ft_strlen((*temp)->vars[0]) + 1);
-			ft_strlcat((*matrix)[i], "=", ft_strlen((*matrix)[i]) + 2);
-			ft_strlcat((*matrix)[i], (*temp)->vars[1],
-					   ft_strlen((*matrix)[i]) + strlen((*temp)->vars[1]) + 1);
-		}
-		(*temp) = (*temp)->next;
-		i++;
-	}
-	return (0);
-}
-
-char **list_2_matrix(t_env *env)
-{
-	int count;
-	t_env *temp;
-	char **matrix;
-
-	count = 0;
-	temp = env;
-	while (temp)
-	{
-		count++;
-		temp = temp->next;
-	}
-	matrix = malloc((count + 1) * sizeof(char *));
-	if (!matrix)
-		return (NULL);
-	temp = env;
-	if (pass_values(&temp, &count, &matrix))
-		return (NULL);
-	matrix[count] = NULL;
-	return (matrix);
-}
 
 int ft_exec(t_cmds *node)
 {
@@ -68,6 +22,5 @@ int ft_exec(t_cmds *node)
 		clean_commands(&node->sh->cmds);
 		exit(1);
 	}
-	exit(0);
 	return (0);
 }

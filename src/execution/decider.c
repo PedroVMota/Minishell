@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 09:32:08 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 14:08:29 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	exec_ptr_chooser(t_cmds *node)
 {
-	if (!node || !node->args)
-		return ;
-	if(!node->args[0])
+	if (!node->args[0][0])
 		return ;
 	if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;
@@ -41,6 +39,29 @@ void	pipeline(t_cmds *node)
 	if (node->next)
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
+}
+
+static void	execute_command(t_cmds *head, int *pl, int *pid)
+{
+	bool		forked;
+	pid_t		pid_val;
+	const char	*notforked[7] = {"echo", "cd", "pwd", "export", "unset"};
+	forked = true;
+	pid_val = -1;
+	for (int index = 0; index < 5 && forked == true; index++)
+		if (!ft_strcmp(head->args[0], notforked[index]))
+			forked = false;
+	
+	if (forked)
+		pid_val = fork();
+	if (pid_val == 0)
+	{
+		head->ft_exec(head);
+		exit(0);
+	}
+	else if (pid_val == -1)
+		head->ft_exec(head);
+	pl[(*pid)++] = pid_val;
 }
 
 void	close_gen(t_cmds *head)
@@ -68,9 +89,7 @@ int	software(t_shell *sh)
 		pipeline(head);
 		exec_ptr_chooser(head);
 		permission_tester(head);
-		processlist[process] = fork();
-		if (processlist[process++] == 0)
-			head->ft_exec(head);
+		execute_command(head, processlist, &process);
 		close_gen(head);
 		head = head->next;
 	}

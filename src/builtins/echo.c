@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/02 19:39:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:13:59 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int ft_echo(t_cmds *node)
 	i = 0;
 	br = check_options(node, &word);
 	outfile(node);
+
 	while (node->args[word])
 	{
 		while (node->args[word][i])
@@ -82,6 +83,5 @@ int ft_echo(t_cmds *node)
 	}
 	if (br == 0)
 		printf("\n");
-	exit(0);
 	return (0);
 }

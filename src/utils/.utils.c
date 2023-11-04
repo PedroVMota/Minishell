@@ -27,19 +27,21 @@ void	CommandDisplay(t_cmds *ptr)
 			printf("Dup2Error\n");
 			exit(1);
 		}
-		while (ptr)
+		t_cmds *head = ptr;
+		while (head)
 		{
 			printf("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*\n");
 			printf("Command: %d\n", command);
 			printf("Current command: ");
-			print_split(ptr->args);
-			printf("Pipe[0] = %d\n", ptr->pipe[0]);
-			printf("Pipe[1] = %d\n", ptr->pipe[1]);
-			printf("redi[0] = %d\n", ptr->redirection[0]);
-			printf("redi[1] = %d\n", ptr->redirection[1]);
-			ptr = ptr->next;
+			print_split(head->args);
+			printf("Pipe[0] = %d\n", head->pipe[0]);
+			printf("Pipe[1] = %d\n", head->pipe[1]);
+			printf("redi[0] = %d\n", head->redirection[0]);
+			printf("redi[1] = %d\n", head->redirection[1]);
+			head = head->next;
 			command++;
 		}
+		printf("Exit Status: %d\n", ptr->sh->exit);
 		unlink("List.txt");
 		close(report); // Close the file descriptor
 		exit(0);

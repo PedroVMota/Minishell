@@ -38,24 +38,19 @@ static void	check_permissions(char *filename, t_type mode, t_shell *sh)
 {
 	if (!filename && mode != FILE_NONE)
 	{
-		write(2, "Minishell: ", 12);
-		perror(filename);
 		// write(2, "Minishell: No such File or Directory\n", 38);
 		return ;
 	}
 	else if (access(filename, F_OK) == -1 && mode != FILE_NONE
 		&& mode != FILE_OUT_APPEND && mode != FILE_OUT_TRUNC)
 	{
-		write(2, "Minishell: ", 12);
-		perror(filename);
 		// write(2, "Minishell: ", 12);
 		// write(2, filename, ft_strlen(filename));
 		// write(2, ": No such file or directory\n", 29);
+		sh->exit = 1;
 	}
 	else if ((mode == FILE_IN_READ) && access(filename, R_OK) == -1)
 	{
-		write(2, "Minishell: ", 12);
-		perror(filename);
 		sh->exit = 1;
 	}
 }
@@ -87,7 +82,7 @@ void	make_redirection(t_type type, t_cmds *node, int *i, t_shell *sh)
 		node->redirection[0] = open(node->args[*i], O_RDONLY);
 	else if (type == FILE_IN_HEREDOC)
 	{
-		sh->hd = 1;
+		sh->hd = false;
 		heredoc(node, node->args[*i]);
 		split_str_del(node->args, *i);
 	}

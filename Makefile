@@ -1,6 +1,6 @@
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g -fsanitize=address
+CFLAGS_EXTRA = -g #-fsanitize=address
 INC = -I inc/
 EXT_LIBRARY = libft/libft.a
 
@@ -17,7 +17,7 @@ FILES = src/init/main.c src/init/build.c src/init/syntax.c src/init/signal.c \
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
-	./$(NAME)
+	valgrind --track-fds=yes ./$(NAME)
 
 
 $(NAME): $(OBJS)

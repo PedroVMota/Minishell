@@ -66,11 +66,13 @@ int	find_command(t_cmds *cmd)
 	char	*new_command;
 
 	index = -1;
+	if (!access(cmd->args[0], F_OK))
+		return (0);
+	if (!cmd->args[0][0])
+		return (24);
 	paths = getpaths(cmd->sh);
 	if (!paths)
 		return (write(2, "Minishell: PATH not set\n", 24));
-	if (!access(cmd->args[0], F_OK))
-		return (0);
 	while (paths && paths[++index])
 	{
 		new_command = ft_strjoin(paths[index], cmd->args[0]);
@@ -93,21 +95,21 @@ bool	permission_tester(t_cmds *head)
 	if (isbuiltin(head))
 		return (false);
 	result_find = find_command(head);
-	if (result_find == 24)
+	if (!head->args[0][0])
+	{
+		write(2, "Minishell: \"\" : No such file or directory\n", 42);
+		head->sh->exit = 127;
 		return (true);
+	}
 	else if (result_find != 24 && result_find != 0)
 	{
-		// write(2, "Minishell: ", 12);
-		// write(2, head->args[0], ft_strlen(head->args[0]));
-		// write(2, " : Command not found\n", 22);
+		// perror(head->args[0]);
 		head->sh->exit = 127;
 		return (true);
 	}
 	if (-1 == access(head->args[0], X_OK))
 	{
-		// write(2, "Minishell: ", 12);
-		// write(2, head->args[0], ft_strlen(head->args[0]));
-		// write(2, " : Permission denied\n", 22);
+		// perror(head->args[0]);
 		head->sh->exit = 126;
 		return (true);
 	}

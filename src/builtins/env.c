@@ -41,6 +41,5 @@ int	ft_env(t_cmds *node)
 		printf("%s=%s\n", env->vars[0], env->vars[1]);
 		env = env->next;
 	}
-	exit(0);
 	return (0);
 }

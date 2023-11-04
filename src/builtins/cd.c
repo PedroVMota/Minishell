@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/02 21:29:10 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 13:14:03 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,5 @@ int	ft_cd(t_cmds *node)
 		update_pwd_values(&node->sh->env, oldpwd, pwd);
 		return (1);
 	}
-	exit(0);
 	return (0);
 }
