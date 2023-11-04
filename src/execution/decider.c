@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/25 14:07:22 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 09:32:08 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	exec_ptr_chooser(t_cmds *node)
 {
 	if (!node || !node->args)
+		return ;
+	if(!node->args[0])
 		return ;
 	if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;

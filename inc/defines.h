@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/02 21:25:37 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 09:26:14 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
+	char **envp;
 	int exit;
 	int lstsize;
 	int hd;

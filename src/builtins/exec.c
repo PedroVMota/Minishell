@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 21:47:40 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/04 09:28:04 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char **list_2_matrix(t_env *env)
 int ft_exec(t_cmds *node)
 {
 	standard_choiser(node);
-	if (execve(node->args[0], node->args, list_2_matrix(node->sh->env)) == -1)
+	if (execve(node->args[0], node->args, node->sh->envp) == -1)
 	{
 		perror(node->args[0]);
 		clean_commands(&node->sh->cmds);

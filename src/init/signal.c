@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:54:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/02 22:37:52 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 10:24:03 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,45 +20,36 @@ void	ft_ml_sigdefault(void)
 
 void	handle_quit(int sig, t_shell *sh)
 {
-	pid_t id;
-    int status;
-	static t_shell *fodase;
+	pid_t			id;
+	static t_shell	*center;
+	int				status;
 
-    (void)sig;
-    id = waitpid(-1, &status, 0);
-	if (!fodase)
+	(void)sig;
+	if (!center)
 	{
-		fodase = sh;
+		center = sh;
 		return ;
 	}
-    if (id == -1)
-        SIG_IGN;
-    else if(!fodase->hd)
-    {
-        write(1, "Quit (core dumped)\n", 20);
-        return;
-    }
+	id = waitpid(-1, &status, 0);
+	if (id == -1)
+		(void)(SIG_IGN);
 }
 
 void	handle_sign(int sig, t_shell *sh)
 {
 	pid_t			pid;
-	static t_shell	*fodase;
+	static t_shell	*center;
 	int				status;
 
 	(void)sig;
+	if (!center)
+	{
+		center = sh;
+		return ;
+	}
 	pid = waitpid(-1, &status, 0);
-	if (!fodase)
-	{
-		fodase = sh;
-		return ;
-	}
-	write(2, "^C\n", 3);
-	if (sh->hd)
-	{
-		sh->stop = 1;
-		return ;
-	}
+	write(2, "^C", 2);
+	write(2, "\n", 1);
 	if (pid == -1)
 	{
 		rl_replace_line("", 0);

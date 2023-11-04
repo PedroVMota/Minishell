@@ -1,18 +1,18 @@
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g
+CFLAGS_EXTRA = -g -fsanitize=address
 INC = -I inc/
 EXT_LIBRARY = libft/libft.a
 
 
-FILES = src/build.c src/builtins/cd.c src/builtins/echo.c src/builtins/env.c \
-		src/builtins/exec.c src/builtins/exit.c src/builtins/export.c src/builtins/pwd.c \
-		src/builtins/unset.c src/enviroment.c src/execution/decider.c src/execution/dups.c \
-		src/execution/heredoc.c src/main.c src/parse.c src/execution/redirection.c \
-		src/signal.c src/syntax.c src/utils/.utils.c src/utils/Permissions/perm.c \
-		src/utils/commands.c src/utils/del.c src/utils/manipulation.c src/utils/quotes.c \
-		src/utils/search.c src/utils/switchchar.c src/utils/t_mode.c src/utils/var.c \
-		src/builtins/cd_utils.c
+FILES = src/init/main.c src/init/build.c src/init/syntax.c src/init/signal.c \
+		src/init/parse.c src/init/enviroment.c src/utils/manipulation.c src/utils/del.c \
+		src/utils/Permissions/perm.c src/utils/search.c src/utils/t_mode.c src/utils/quotes.c \
+		src/utils/.utils.c src/utils/var.c src/utils/switchchar.c src/utils/commands.c \
+		src/builtins/exec.c src/builtins/cd_utils.c src/builtins/exit.c src/builtins/unset.c \
+		src/builtins/env.c src/builtins/pwd.c src/builtins/export.c src/builtins/cd.c \
+		src/builtins/echo.c src/execution/redirection.c src/execution/decider.c src/execution/heredoc.c \
+		src/execution/dups.c src/init/prompt.c
 
 OBJS = $(FILES:.c=.o)
 

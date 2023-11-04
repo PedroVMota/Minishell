@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/25 13:40:22 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 10:12:35 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	check_elements(char *input, char *target)
 	target_len = ft_strlen(target);
 	input_len = ft_strlen(input) - 1;
 	if (ft_strncmp(input, target, target_len) == 0 && input_len == target_len)
+	{
+		free(input);
 		return (1);
+	}
 	return (0);
 }
 
@@ -57,17 +60,13 @@ void	heredoc(t_cmds *node, char *delimiter)
 		return ;
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
-	while (bytes_read > -1)
+	while (bytes_read > -1 && node->sh->stop != 1)
 	{
 		write(1, "Here_doc >", 11);
 		text = get_next_line(0);
-		if (!text)
-		{
-			free(text);
-			continue ;
-		}
 		if(convert_data(&text, delimiter, node->sh, here_doc[1]))
 			break;
 	}
+	free(text);
 	close(here_doc[1]);
 }

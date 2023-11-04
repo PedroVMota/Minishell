@@ -24,7 +24,9 @@
 		"system_error": "c",
 		"unordered_map": "c",
 		"variant": "c",
-		"vector": "c"
+		"vector": "c",
+		"libft.h": "c",
+		"builtins.h": "c"
 	},
 	"files.exclude": {}
 }

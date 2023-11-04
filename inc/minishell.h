@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/02 22:35:49 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/04 09:17:45 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
+
+char	*bash_prompt_replicate(void);
 bool	permission_tester(t_cmds *head);
 int software(t_shell *sh);
 // Data Type Manipulation
