@@ -1,6 +1,6 @@
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g #-fsanitize=address
+CFLAGS = #-Wall -Wextra -Werror 
+CFLAGS_EXTRA = -g -fsanitize=address
 INC = -I inc/
 EXT_LIBRARY = libft/libft.a
 
@@ -17,7 +17,7 @@ FILES = src/init/main.c src/init/build.c src/init/syntax.c src/init/signal.c \
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
-	valgrind --track-fds=yes ./$(NAME)
+	
 
 
 $(NAME): $(OBJS)
@@ -26,7 +26,7 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	@printf "\033[0;32mMinishell: \033[0;33mTaking care of the software...\033[0m\r"
-	@$(CC) $(CFLAGS) -D MAIN $(CFLAGS_EXTRA) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) $(INC) -c $< -o $@
 
 clean:
 	@make clean -C libft/ --no-print
@@ -38,5 +38,8 @@ fclean: clean
 	@make fclean -C libft/ --no-print
 	clear \
 
+v:
+#	make && valgrind --log-file="val.log" --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
+	make && ./minishell
 
 re: fclean all

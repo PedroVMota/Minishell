@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/04 11:03:40 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/05 18:26:51 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 		*text = varcheckvalid(*text, sh);
 		varselector++;
 	}
-	write(fd, *text, ft_strlen(*text));
+	if(write(fd, *text, ft_strlen(*text)) == -1)
+	{
+		free(*text);
+		return true;
+	}
 	free(*text);
 	return false;
 }
@@ -66,7 +70,7 @@ void	heredoc(t_cmds *node, char *delimiter)
 		text = get_next_line(0);
 		if(convert_data(&text, delimiter, node->sh, here_doc[1]))
 			break;
+
 	}
-	free(text);
 	close(here_doc[1]);
 }

@@ -52,14 +52,32 @@ void	CommandDisplay(t_cmds *ptr)
 		printf("List Command Error: ");
 }
 
+static char *convert_char(char a)
+{
+	if(a == '\1')
+		return ("\e[0;31mDQUOTE\e[0;36m");
+
+
+	if(a == '\2')
+		return ("\e[0;31mSQUOTE\e[0;36m");
+	if(a == '\3')
+		return ("\e[0;35mPIPE\e[0;36m");
+	if(a == '\4')
+		return ("\e[0;36mSPACE\e[0;36m");
+	if (a == '\6')
+		return ("\e[0;37mOUTTRUC\e[0;36m");
+	if (a == '\7')
+		return ("\e[0;37mINFILE\e[0;36m");
+	if (a == '\b')
+		return ("\e[0;37mHEREDOC\e[0;36m");
+}
+
 void	print_special(char *ptr)
 {
 	while (*ptr)
 	{
-		if (*ptr == PIPE || *ptr == OUTAPP || *ptr == INFILE
-			|| *ptr == SEMI_COLOM || *ptr == SPACE
-			|| *ptr == DQUOTE || *ptr == QUOTE)
-			printf("[%d]", *ptr);
+		if (*ptr == '\1' || *ptr == '\2' || *ptr == '\3' || *ptr == '\4' || *ptr == '\6' || *ptr == '\7' || *ptr == '\b')
+			printf("%s[%s]%s", CYN, convert_char(*ptr), RESET);
 		else
 			printf("%c", *ptr);
 		ptr++;

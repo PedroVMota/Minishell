@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/04 09:17:45 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/05 20:06:22 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@
 #include <string.h>
 
 
+
 // syntax error msg;
 #define PIPE_SYNTAX_ERROR "Error: syntax error near unexpected token `|'\n"
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
-
+int	clean(t_shell *sh, bool _exit, int status);
 char	*bash_prompt_replicate(void);
 bool	permission_tester(t_cmds *head);
 int software(t_shell *sh);
@@ -103,7 +104,7 @@ void ft_mode_changer_not_printable(char set, t_mode *stat);
 /// @param ptr string that will be modified
 void switch_caracters(char *ptr);
 /// @brief Remove all the Special Quotes
-/// @param str The string will be modiefied!
+/// @param str ThPe string will be modiefied!
 void remove_quotes(char *str);
 /// @brief Clean Double pointer
 int free_split(char **split, int ret);

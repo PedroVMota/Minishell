@@ -2,6 +2,8 @@ _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 Command: 0
 Current command: {
 	Arg[0]: export;
+	Arg[1]: a=b;
+	Arg[2]: b=c;
 }
 Pipe[0] = -1
 Pipe[1] = -1

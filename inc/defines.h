@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/04 09:26:14 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/06 07:58:19 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,8 @@ typedef struct s_shell
 #define QUOTE '\2'
 #define PIPE '\3'
 #define SPACE '\4'
-#define SEMI_COLOM '\5'
-
 #define OUTTRUC '\6'
-#define OUTAPP '\7'
-
-#define INFILE '\a'
+#define INFILE '\7'
 #define HEREDOC '\b'
-#define ERRFILE '\f'
-#define MASTER '\b'
 
 #endif

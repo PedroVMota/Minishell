@@ -6,30 +6,32 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/04 10:36:25 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/06 21:14:19 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(char *input, t_shell *sh)
+void	init(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
 	switch_caracters(input);
 	sh->cmds = ft_buildlst(input, sh);
-	software(sh);
 	CommandDisplay(sh->cmds);
-	clean_commands(&sh->cmds);
+	software(sh);
+	clean(sh, false, sh->exit);
 	free(input);
+	(void)sh;
 }
 
 void	prompt(t_shell *shell)
 {
 	char	*input;
 	char	*promp;
-
+	
 	while (1)
 	{
+		printf("%sProcess : %d%s\n", MAG, getpid(), RESET);
 		promp = bash_prompt_replicate();
 		input = readline(promp);
 		if (!(ft_strcmp(promp, "Minishell $> ") == 0))
@@ -44,7 +46,7 @@ void	prompt(t_shell *shell)
 		}
 		add_history(input);
 		ft_syntax_checker(input, shell);
-		execution(input, shell);
+		init(input, shell);
 	}
 }
 
@@ -56,6 +58,7 @@ int	main(int c, char **v, char **envp)
 	(void)v;
 	shell.env = set_env(envp);
 	shell.exit = 0;
+	shell.stop = 0;
 	shell.envp = envp;
 	handle_quit(0, &shell);
 	handle_sign(0, &shell);

@@ -33,7 +33,9 @@ static void	outfile(t_cmds *node)
 int	ft_env(t_cmds *node)
 {
 	t_env *env;
+	t_shell *head_master;
 
+	head_master = node->sh;
 	env = node->sh->env;
 	outfile(node);
 	while (env)
@@ -41,5 +43,6 @@ int	ft_env(t_cmds *node)
 		printf("%s=%s\n", env->vars[0], env->vars[1]);
 		env = env->next;
 	}
+	clean(head_master, true, 0);
 	return (0);
 }

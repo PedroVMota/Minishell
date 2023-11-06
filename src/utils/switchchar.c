@@ -6,57 +6,68 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:05:29 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/04 12:02:57 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/06 20:53:36 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_mode_changer_ascii(char set, t_mode *stat);
-
-char	replace(char c)
+char replace(char c)
 {
+	if (c <= 0)
+		return (c);
+	else if (c > 127)
+		return (c);
 	if (c == '|')
-		return (PIPE);
+		return ('\3');
 	if (c == '>')
-		return (OUTTRUC);
+		return ('\6');
 	if (c == '<')
-		return (INFILE);
-	if (c == ';')
-		return (SEMI_COLOM);
+		return ('\7');
 	if (c == ' ')
-		return (SPACE);
+		return ('\4');
 	if (c == '\"')
-		return (DQUOTE);
+		return ('\1');
 	if (c == '\'')
-		return (QUOTE);
+		return ('\1');
 	return (c);
 }
 
-void	switch_caracters(char *ptr)
+void inside_string_skip(char *beg, int *pos, bool *change)
 {
-	t_mode	arr[2];
-	int		i;
+	char whatChar;
 
-	i = -1;
-	arr[0] = ENV_MODE_TOKEN;
-	arr[1] = ENV_MODE_TOKEN;
-	if (!ptr)
-		return ;
-	while (ptr[++i])
+	whatChar = 0;
+	if (beg[*pos] == '\"' || beg[*pos] == '\'')
 	{
-		arr[1] = arr[0];
-		ft_mode_changer_ascii(ptr[i], &arr[0]);
-		if ((arr[0] == ENV_MODE_TOKEN && arr[1] == ENV_MODE_TOKEN))
-			ptr[i] = replace(ptr[i]);
-		else if ((arr[0] == ENV_MODE_TOKEN && arr[1] == ENV_MODE_DQUOTE)
-			|| (arr[0] == ENV_MODE_DQUOTE && arr[1] == ENV_MODE_TOKEN))
-			ptr[i] = replace(ptr[i]);
-		else if ((arr[0] == ENV_MODE_TOKEN && arr[1] == ENV_MODE_QUOTE)
-			|| (arr[0] == ENV_MODE_QUOTE && arr[1] == ENV_MODE_TOKEN))
-			ptr[i] = replace(ptr[i]);
-		else if ((arr[0] != ENV_MODE_TOKEN && arr[1] != ENV_MODE_TOKEN))
-			continue;
+		whatChar = beg[*pos];
+		beg[*pos] = replace(beg[*pos]);
+		*change = !(*change);
 	}
+	if (!*change)
+	{
+		while (beg[*pos])
+		{
+			if(beg[*pos] == whatChar)
+			{
+				beg[*pos] = replace(beg[*pos]);
+				*change = !(*change);
+				break;
+			}
+			(*pos)++;
+		}
+	}
+}
 
+void switch_caracters(char *ptr)
+{
+	int main = 0;
+	bool change = true;
+	while (ptr[main])
+	{
+		inside_string_skip(ptr, &main, &change);
+		if(change)
+			ptr[main] = replace(ptr[main]);
+		main++;
+	}
 }

@@ -6,16 +6,16 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 14:08:29 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/05 18:49:40 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	exec_ptr_chooser(t_cmds *node)
+void exec_ptr_chooser(t_cmds *node)
 {
 	if (!node->args[0][0])
-		return ;
+		node->ft_exec = NULL;
 	if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;
 	else if (!ft_strcmp(node->args[0], "cd"))
@@ -34,37 +34,15 @@ void	exec_ptr_chooser(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-void	pipeline(t_cmds *node)
+void pipeline(t_cmds *node)
 {
+
 	if (node->next)
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
 }
 
-static void	execute_command(t_cmds *head, int *pl, int *pid)
-{
-	bool		forked;
-	pid_t		pid_val;
-	const char	*notforked[7] = {"echo", "cd", "pwd", "export", "unset"};
-	forked = true;
-	pid_val = -1;
-	for (int index = 0; index < 5 && forked == true; index++)
-		if (!ft_strcmp(head->args[0], notforked[index]))
-			forked = false;
-	
-	if (forked)
-		pid_val = fork();
-	if (pid_val == 0)
-	{
-		head->ft_exec(head);
-		exit(0);
-	}
-	else if (pid_val == -1)
-		head->ft_exec(head);
-	pl[(*pid)++] = pid_val;
-}
-
-void	close_gen(t_cmds *head)
+void close_gen(t_cmds *head)
 {
 	if (head->pipe[1] != -1)
 		close(head->pipe[1]);
@@ -73,11 +51,46 @@ void	close_gen(t_cmds *head)
 	if (!head->next && head->pipe[0] != -1)
 		close(head->pipe[0]);
 }
-int	software(t_shell *sh)
+static void run(t_cmds *head, int *processlist, int *process)
 {
-	int		*processlist;
-	int		process;
-	t_cmds	*head;
+	char *builtin[7] = {"echo", "cd", "export", "unset", "exit"};
+	bool isFork = true;
+	for (int i = -1; ++i < 5;)
+		if (!ft_strcmp(head->args[0], builtin[i]) && !(head->next || head->prev))
+			isFork = false;
+	if (!isFork)
+	{
+		printf("%s======== PARENT PROCESS ========%s\n", YEL, RESET);
+		printf("Process Id: %s%d%s\n", YEL, getpid(), RESET);
+		printf("Parent Process Id: %s%d%s\n", YEL, getppid(), RESET);
+		printf("Command to run %s%s%s\n", YEL, head->args[0], RESET);
+		printf("%s==============================%s\n", YEL, RESET);
+		head->ft_exec(head);
+	}
+	else if (isFork)
+	{
+		processlist[(*process)] = fork();
+		if (processlist[(*process)] == 0)
+		{
+			free(processlist);
+			printf("%s======== CHILD PROCESS ========%s\n", CYN, RESET);
+			printf("Process Id: %s%d%s\n", CYN, getpid(), RESET);
+			printf("Parent Process Id: %s%d%s\n", CYN, getppid(), RESET);
+			printf("Command to run %s%s%s\n", CYN, head->args[0], RESET);
+			printf("%s==============================%s\n", CYN, RESET);
+			if (head->ft_exec)
+				head->ft_exec(head);
+			clean(head->sh, true, 0);
+		}
+		(*process)++;
+	}
+}
+
+int software(t_shell *sh)
+{
+	int *processlist;
+	int process;
+	t_cmds *head;
 
 	process = 0;
 	head = sh->cmds;
@@ -89,7 +102,7 @@ int	software(t_shell *sh)
 		pipeline(head);
 		exec_ptr_chooser(head);
 		permission_tester(head);
-		execute_command(head, processlist, &process);
+		run(head, processlist, &process);
 		close_gen(head);
 		head = head->next;
 	}

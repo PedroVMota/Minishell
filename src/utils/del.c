@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/24 19:06:19 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/05 20:38:43 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,39 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
-void	clean_commands(t_cmds **cmds)
+static void close_fds(t_cmds *cmds)
 {
-	t_cmds	*ptr;
-	t_cmds	*next;
+	if(cmds->pipe[0] != -1)
+		close(cmds->pipe[0]);
+	if(cmds->pipe[1] != -1)
+		close(cmds->pipe[1]);
+	if(cmds->redirection[0] != -1)
+		close(cmds->redirection[0]);
+	if(cmds->redirection[1] != -1)
+		close(cmds->redirection[1]);
+}	
+int	clean(t_shell *sh, bool _exit, int status)
+{
+	t_cmds	*cmds;
+	t_cmds	*tmp;
 
-	next = NULL;
-	ptr = *cmds;
-	if (!ptr)
-		return ;
-	while (ptr)
+	tmp = NULL;
+	cmds = sh->cmds;
+	while (cmds)
 	{
-		if (ptr->args)
-			free_split(ptr->args, 1);
-		next = ptr->next;
-		free(ptr);
-		ptr = next;
+		close_fds(cmds);
+		free_split(cmds->args, 1);
+		tmp = cmds->next;
+		free(cmds);
+		cmds = tmp;
 	}
+	if (_exit)
+	{
+		printf("%s{%d} > Leaving with %d%s\n", RED, getpid(), status, RESET);
+		ft_env_delete(&sh->env);
+		exit(status);
+	}
+	return (0);
 }
 
 int	ft_env_delete(t_env **env)

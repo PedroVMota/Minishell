@@ -37,7 +37,7 @@ void	add_directory(char **cmd)
 	}
 }
 
-static char	**getpaths(t_shell *sh)
+char	**getpaths(t_shell *sh)
 {
 	t_env	*list;
 	char	**paths;
@@ -59,59 +59,60 @@ static char	**getpaths(t_shell *sh)
 	return (NULL);
 }
 
-int	find_command(t_cmds *cmd)
-{
-	char	**paths;
-	int		index;
-	char	*new_command;
+int	check_all_paths(char **paths, t_cmds *head, int *err)
+{ 
+	int		i;
+	char	*cmd_path;
 
-	index = -1;
-	if (!access(cmd->args[0], F_OK))
-		return (0);
-	if (!cmd->args[0][0])
-		return (24);
-	paths = getpaths(cmd->sh);
-	if (!paths)
-		return (write(2, "Minishell: PATH not set\n", 24));
-	while (paths && paths[++index])
+	i = -1;
+	cmd_path = NULL;
+	if (!head->args[0][0])
 	{
-		new_command = ft_strjoin(paths[index], cmd->args[0]);
-		if (!new_command)
-			return (free_split(paths, 1));
-		if (!access(new_command, F_OK))
-		{
-			split_str_replace(&cmd->args[0], 0, new_command);
-			return (free_split(paths, 0));
-		}
-		free(new_command);
+		*err = 127;
+		return (0);
 	}
-	return (free_split(paths, 2));
+	while (paths[++i])
+	{
+		cmd_path = ft_strjoin(paths[i], head->args[0]);
+		if (access(cmd_path, F_OK) == 0)
+		{
+			if (access(cmd_path, X_OK) == 0)
+			{
+				split_str_replace(&head->args[0], 0, cmd_path);
+				*err = 0;
+				return (0);
+			}
+			else
+			{
+				*err = 126;
+				free(cmd_path);
+				return (0);
+			}
+		}
+		else
+			*err = 127;
+		free(cmd_path);
+	}
+	return (0);
 }
 
 bool	permission_tester(t_cmds *head)
 {
-	int	result_find;
+	char	**paths;
 
 	if (isbuiltin(head))
 		return (false);
-	result_find = find_command(head);
-	if (!head->args[0][0])
+	paths = getpaths(head->sh);
+	if (!paths)
+		return (false);
+	check_all_paths(paths, head, &head->sh->exit);
+	if (head->sh->exit == 126 || head->sh->exit == 127)
 	{
-		write(2, "Minishell: \"\" : No such file or directory\n", 42);
-		head->sh->exit = 127;
+		write(2, "Minishell: ", 12);
+		perror(head->args[0]);
+		free_split(paths, 1);
 		return (true);
 	}
-	else if (result_find != 24 && result_find != 0)
-	{
-		// perror(head->args[0]);
-		head->sh->exit = 127;
-		return (true);
-	}
-	if (-1 == access(head->args[0], X_OK))
-	{
-		// perror(head->args[0]);
-		head->sh->exit = 126;
-		return (true);
-	}
+	free_split(paths, 1);
 	return (false);
 }

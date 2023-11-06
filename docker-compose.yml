@@ -1,0 +1,9 @@
+version: '3'
+services:
+  linux:
+    image: linux_env
+    volumes:
+      - .:/Minishell
+    stdin_open: true
+    tty: true
+    container_name: Linux

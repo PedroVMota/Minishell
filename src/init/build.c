@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:53:23 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/27 16:56:29 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/05 20:42:19 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static t_cmds *setup(char **nodes, t_shell *sh)
 	parse(lst, sh);
 	return (lst);
 }
+
 
 t_cmds *ft_buildlst(char *elements, t_shell *sh)
 {
