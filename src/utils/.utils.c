@@ -44,6 +44,7 @@ void	CommandDisplay(t_cmds *ptr)
 		printf("Exit Status: %d\n", ptr->sh->exit);
 		unlink("List.txt");
 		close(report); // Close the file descriptor
+		clean(ptr->sh, true, ptr->sh->exit);
 		exit(0);
 	}
 	stat = 0;

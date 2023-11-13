@@ -6,7 +6,7 @@
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/06 21:16:18 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/11 14:53:15 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_cmds	*_create_node(char *str)
 	node->prev = NULL;
 	node->next = NULL;
 	node->args = ft_split(str, '\4');
-	print_split(node->args);
 	return (node);
 }
 

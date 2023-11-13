@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 14:56:28 by pedro             #+#    #+#             */
-/*   Updated: 2023/09/26 08:44:53 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/11 14:29:15 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,28 @@ char	**split_str_copy(char **src)
 	while (--len >= 0)
 		dest[len] = ft_strdup(src[len]);
 	return (dest);
+}
+
+char	**split_str_add(char **arr, char *str, int index)
+{
+	int		len;
+	char	**new;
+	int		i;
+
+	i = -1;
+	len = 0;
+	if (!arr)
+		return (NULL);
+	while (arr[len])
+		len++;
+	new = malloc(sizeof(char *) * (len + 2));
+	if (!new)
+		return (NULL);
+	new[len + 1] = NULL;
+	while (++i < index)
+		new[i] = ft_strdup(arr[i]);
+	new[i] = ft_strdup(str);
+	while (++i <= len)
+		new[i] = ft_strdup(arr[i - 1]);
+	return (new);
 }
