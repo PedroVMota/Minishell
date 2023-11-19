@@ -1,7 +1,7 @@
 _*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*
 Command: 0
 Current command: {
-	Arg[0]: clear;
+	Arg[0]: export;
 }
 Pipe[0] = -1
 Pipe[1] = -1

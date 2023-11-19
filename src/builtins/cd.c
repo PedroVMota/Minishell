@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/home/oharoon/pedro_shell/include/minishell.h"
-
+#include "../../include/minishell.h"
 void	change_to_home(void)
 {
 	if (chdir(getenv("HOME")) < 0)

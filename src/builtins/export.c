@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/home/oharoon/pedro_shell/include/minishell.h"
+#include "../../include/minishell.h"
 
 int	check_repetition(t_env *new, t_env **env)
 {
@@ -55,6 +55,33 @@ void	print_export_env(t_cmds *node)
 	exit(0);
 }
 
+void	listOrder(t_cmds *node)
+{
+	t_env	*temp;
+	t_env	*temp2;
+	char	*aux;
+
+	temp = node->sh->env;
+	while (temp)
+	{
+		temp2 = temp->next;
+		while (temp2)
+		{
+			if (strcmp(temp->vars[0], temp2->vars[0]) > 0)
+			{
+				aux = temp->vars[0];
+				temp->vars[0] = temp2->vars[0];
+				temp2->vars[0] = aux;
+				aux = temp->vars[1];
+				temp->vars[1] = temp2->vars[1];
+				temp2->vars[1] = aux;
+			}
+			temp2 = temp2->next;
+		}
+		temp = temp->next;
+	}
+}
+
 int	ft_export(t_cmds *node)
 {
 	int		i;
@@ -76,5 +103,6 @@ int	ft_export(t_cmds *node)
 		}
 		i++;
 	}
+	listOrder(node);
 	return (1);
 }

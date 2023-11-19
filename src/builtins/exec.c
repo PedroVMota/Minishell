@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/home/oharoon/pedro_shell/include/minishell.h"
-
+#include "../../include/minishell.h"
 int	count_nodes(t_env *env)
 {
 	int		count;
