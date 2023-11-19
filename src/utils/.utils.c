@@ -1,19 +1,19 @@
 #include <minishell.h>
 
-void	CommandDisplay(t_cmds *ptr)
+void CommandDisplay(t_cmds *ptr)
 {
-	pid_t	id;
-	int		command;
-	int		report;
-	int		stat;
+	pid_t id;
+	int command;
+	int report;
+	int stat;
 
-	if(!ptr)
-		return ;
+	if (!ptr)
+		return;
 	id = fork();
 
 	if (id == 0)
 	{
-		if(!ptr)
+		if (!ptr)
 			exit(1);
 		command = 0;
 		report = open("lst.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -55,15 +55,13 @@ void	CommandDisplay(t_cmds *ptr)
 
 static char *convert_char(char a)
 {
-	if(a == '\1')
+	if (a == '\1')
 		return ("\e[0;31mDQUOTE\e[0;36m");
-
-
-	if(a == '\2')
+	if (a == '\2')
 		return ("\e[0;31mSQUOTE\e[0;36m");
-	if(a == '\3')
+	if (a == '\3')
 		return ("\e[0;35mPIPE\e[0;36m");
-	if(a == '\4')
+	if (a == '\4')
 		return ("\e[0;36mSPACE\e[0;36m");
 	if (a == '\6')
 		return ("\e[0;37mOUTTRUC\e[0;36m");
@@ -73,7 +71,7 @@ static char *convert_char(char a)
 		return ("\e[0;37mHEREDOC\e[0;36m");
 }
 
-void	print_special(char *ptr)
+void print_special(char *ptr)
 {
 	while (*ptr)
 	{
@@ -85,11 +83,13 @@ void	print_special(char *ptr)
 	}
 }
 
-int	print_split(char **ptr)
+int print_split(char **ptr)
 {
-	int	i;
+	int i;
 
 	i = -1;
+	if (!ptr)
+		return printf("%sThere is no char **%s\n", RED, RESET);
 	printf("{\n");
 	while (ptr && ptr[++i])
 	{

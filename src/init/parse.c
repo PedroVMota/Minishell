@@ -12,53 +12,49 @@
 
 #include <minishell.h>
 
-void var_replacer(char **str, t_shell *sh)
+static int getSplitSize(char **str)
 {
-	int varcounter;
-	int varselector;
-	int strselector;
+	int i;
 
-	varselector = 0;
-	varcounter = 0;
-	strselector = 0;
-	while (str[strselector])
-	{
-		varcounter = variable_counter(str[strselector]);
-		varselector = 0;
-		while (varselector < varcounter)
-		{
-			str[strselector] = varcheckvalid(str[strselector], sh);
-			varselector++;
-		}
-		strselector++;
-	}
+	i = 0;
+	if (!str)
+		return 0;
+	while (str[i])
+		i++;
+	return i;
 }
 
-static void reparcing(t_cmds *cmd)
+char **split_append_new_split(char **arr, char **n_arr, int index)
 {
-	char **center[24];
-
-	for (int i = 0; i < 24; i++)
-		center[i] = NULL;
-	for (int i = 0; cmd->args[i]; i++)
-		switch_caracters(cmd->args[i]);
-	for (int x = 0; cmd->args[x]; x++)
-		center[x] = ft_split(cmd->args[x], ' ');
-	for(int x = 0; x < 23; x++)
+	int i = 0, j = 0, k = 0;
+	i = getSplitSize(arr);
+	j = getSplitSize(n_arr);
+	char **new_arr = (char **)malloc((i + j) * sizeof(char *));
+	if (new_arr == NULL)
+		return NULL;
+	k = -1;
+	while (++k < index)
+		new_arr[k] = strdup(arr[k]);
+	k = -1;
+	while (++k < j)
+		new_arr[index + k] = strdup(n_arr[k]);
+	k = index + 1;
+	while (k < i)
 	{
-		if(!center[x])
-			continue;
+		new_arr[j + k - 1] = strdup(arr[k]);
+		k++;
 	}
-	print_split(cmd->args);
+	new_arr[i + j - 1] = NULL;
+	free_split(arr, 0);
+	return new_arr;
 }
+char *join_str(char **arr, char delimiter);
 
 void parse(t_cmds *node, t_shell *sh)
 {
 	char **old;
 	while (node)
 	{
-		var_replacer(node->args, sh);
-		reparcing(node);
 		redirection(node, sh);
 		node = node->next;
 	}

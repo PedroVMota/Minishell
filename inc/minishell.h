@@ -13,8 +13,14 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+
+// Sub Libraried 
+
+#include <Vars.h>
+#include <builtins.h>
+#include <defines.h>
+
 #include "defines.h"
-#include "builtins.h"
 #include "libft.h"
 #include "readline/history.h"
 #include "readline/readline.h"
@@ -25,20 +31,18 @@
 #include <time.h>
 #include <string.h>
 
-
-
 // syntax error msg;
 #define PIPE_SYNTAX_ERROR "Error: syntax error near unexpected token `|'\n"
 #define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 #define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
-int	clean(t_shell *sh, bool _exit, int status);
-char	*bash_prompt_replicate(void);
-bool	permission_tester(t_cmds *head);
+int clean(t_shell *sh, bool _exit, int status);
+char *bash_prompt_replicate(void);
+bool permission_tester(t_cmds *head);
 int software(t_shell *sh);
 // Data Type Manipulation
 
-void	heredoc(t_cmds *node, char *delimiter);
+void heredoc(t_cmds *node, char *delimiter);
 void redirection(t_cmds *node, t_shell *sh);
 
 /// @brief Remove an element of a 2D matrix
@@ -49,27 +53,7 @@ void split_str_move(char **src, int src_index, char **dest,
 					int dest_index);
 void split_str_replace(char **str, int index, char *new);
 char **split_str_copy(char **src);
-/// @brief Replace the content.
-/// @param str The first position of the str
-/// @param new_value the new content
-/// @param del Is gonna be the content that will be replaced;
-/// @return Return the head position of the lsit
-char *replace_var(char *str, char *new_value, char *del);
-/// @brief Replace the content.
-/// @param str The content
-/// @return without the variable name
-/// @note Norminette Ok!
-char *delete(char *str);
-/// @brief Check the number of $ that will be inside the string
-/// @param str The string that will be searched!
-/// @return A integer 32 that will the number of varaible
-/// inside the current variable
-int variable_counter(char *str);
-/// @brief Choose between replace and delete function depending the
-/// variabled founded
-/// @param ptr the string that will be modified
-/// @return the string modified
-char	*varcheckvalid(char *ptr, t_shell *sh);
+
 
 // enviroment
 void ft_ml_envadd_back(t_env **lst, t_env *new);
@@ -85,13 +69,12 @@ void handle_sign(int sig, t_shell *sh);
 // syntax
 void ft_syntax_checker(char *input, t_shell *sh);
 void quote_delete_str(char **input, char c, t_shell *sh);
-void	syntax_report(char *error, char *input, int size, t_shell *sh);
+void syntax_report(char *error, char *input, int size, t_shell *sh);
 // ui
 void prompt(t_shell *shell);
 
 // pase
 void parse(t_cmds *node, t_shell *sh);
-bool var_state(char *str);
 // AUX
 
 /// @brief Simulate the Bash terminal Syntax
@@ -102,7 +85,7 @@ void syntax_quotes(char *input, int i, int *flag, t_shell *sh);
 void ft_mode_changer_not_printable(char set, t_mode *stat);
 /// @brief Replace the the `tokens` for the special caracters
 /// @param ptr string that will be modified
-void switch_caracters(char *ptr);
+void switch_caracters(char **ptr, t_shell *sh);
 /// @brief Remove all the Special Quotes
 /// @param str ThPe string will be modiefied!
 void remove_quotes(char *str);
@@ -134,20 +117,8 @@ t_cmds *_create_node(char *cmd);
 /// @return Doesn't return nothing. Instead the head will be updated!
 t_cmds *_add(char *cmd_line, t_cmds **head, t_shell *sh);
 
-
-/// @brief Check position index of the variable
-/// @param ptr string that will be searched
-/// @return return a integer if exit otherwise -1
-int	var_pos(char *ptr);
-
-
-
 void print_special(char *ptr);
 int print_split(char **ptr);
 void CommandDisplay(t_cmds *ptr);
 
-
-
 #endif
-
-#define displayerror(err) printf("%s%s%s\n", RED, err, RESET);

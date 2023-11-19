@@ -38,12 +38,6 @@ static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 		return true;
 	if (check_elements(*text, delimiter))
 		return true ;
-	varcounter = variable_counter(*text);
-	while (varselector < varcounter)
-	{
-		*text = varcheckvalid(*text, sh);
-		varselector++;
-	}
 	if(write(fd, *text, ft_strlen(*text)) == -1)
 	{
 		free(*text);

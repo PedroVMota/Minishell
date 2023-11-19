@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   switchchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:05:29 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/06 20:53:36 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/19 13:53:25 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char replace(char c)
+char	replace(char c)
 {
 	if (c <= 0)
 		return (c);
@@ -29,18 +29,18 @@ char replace(char c)
 	if (c == '\"')
 		return ('\1');
 	if (c == '\'')
-		return ('\1');
+		return ('\2');
 	return (c);
 }
 
-void inside_string_skip(char *beg, int *pos, bool *change)
+void	inside_string_skip(char *beg, int *pos, bool *change)
 {
-	char whatChar;
+	char	what_char;
 
-	whatChar = 0;
+	what_char = 0;
 	if (beg[*pos] == '\"' || beg[*pos] == '\'')
 	{
-		whatChar = beg[*pos];
+		what_char = beg[*pos];
 		beg[*pos] = replace(beg[*pos]);
 		*change = !(*change);
 	}
@@ -48,26 +48,29 @@ void inside_string_skip(char *beg, int *pos, bool *change)
 	{
 		while (beg[*pos])
 		{
-			if(beg[*pos] == whatChar)
+			if (beg[*pos] == what_char)
 			{
 				beg[*pos] = replace(beg[*pos]);
 				*change = !(*change);
-				break;
+				break ;
 			}
 			(*pos)++;
 		}
 	}
 }
 
-void switch_caracters(char *ptr)
+void	switch_caracters(char **ptr, t_shell *sh)
 {
-	int main = 0;
-	bool change = true;
-	while (ptr[main])
+	int		main;
+	bool	change;
+
+	main = 0;
+	change = true;
+	while ((*ptr)[main])
 	{
-		inside_string_skip(ptr, &main, &change);
-		if(change)
-			ptr[main] = replace(ptr[main]);
+		inside_string_skip((*ptr), &main, &change);
+		if (change)
+			(*ptr)[main] = replace((*ptr)[main]);
 		main++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/11 14:37:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/19 20:29:56 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	init(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
-	switch_caracters(input);
+	input = varlib_execute(input, sh);
+	switch_caracters(&input, sh);
 	sh->cmds = ft_buildlst(input, sh);
-	CommandDisplay(sh->cmds);
 	software(sh);
 	clean(sh, false, sh->exit);
 	free(input);
@@ -27,15 +27,11 @@ void	init(char *input, t_shell *sh)
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	char	*promp;
 	
 	while (1)
 	{
 		printf("%sProcess : %d%s\n", MAG, getpid(), RESET);
-		promp = bash_prompt_replicate();
-		input = readline(promp);
-		if (!(ft_strcmp(promp, "Minishell $> ") == 0))
-			free(promp);
+		input = readline("MInishell $>");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
