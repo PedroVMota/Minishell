@@ -55,7 +55,7 @@ void	print_export_env(t_cmds *node)
 	exit(0);
 }
 
-void	listOrder(t_cmds *node)
+void	list_order(t_cmds *node)
 {
 	t_env	*temp;
 	t_env	*temp2;

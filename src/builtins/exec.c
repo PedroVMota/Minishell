@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
 int	count_nodes(t_env *env)
 {
 	int		count;
