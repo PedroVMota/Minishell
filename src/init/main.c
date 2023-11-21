@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/19 20:29:56 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/21 20:10:22 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	init(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
 	input = varlib_execute(input, sh);
+	printf("Final Manipulation %s{%s%s%s}%s", HBLU, RESET, input, HBLU, RESET);
 	switch_caracters(&input, sh);
-	sh->cmds = ft_buildlst(input, sh);
-	software(sh);
+	// sh->cmds = ft_buildlst(input, sh);
+	// CommandDisplay(sh->cmds);
+	// software(sh);
 	clean(sh, false, sh->exit);
 	free(input);
 	(void)sh;
@@ -27,7 +29,7 @@ void	init(char *input, t_shell *sh)
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	
+
 	while (1)
 	{
 		printf("%sProcess : %d%s\n", MAG, getpid(), RESET);

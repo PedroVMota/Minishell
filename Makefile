@@ -1,6 +1,6 @@
 NAME = minishell
 CFLAGS = #-Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g #-fsanitize=address
+CFLAGS_EXTRA = -g -fsanitize=address
 INC = -I inc/ -I inc/lib/Builtin/ -Iinc/lib/Var/ -Iinc/lib/Libft
 libft = inc/lib/Libft/utils
 
@@ -33,8 +33,8 @@ fclean: clean
 	@make fclean -C $(libft) --no-print
 
 v:
-	make && valgrind  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
-# make && ./minishell
+# make && valgrind  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
+	make && ./minishell
 #--log-file="val.log"
 
 re: fclean all

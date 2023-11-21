@@ -1,59 +1,30 @@
 #include <minishell.h>
 
-void CommandDisplay(t_cmds *ptr)
+void	CommandDisplay(t_cmds *ptr)
 {
-	pid_t id;
-	int command;
-	int report;
-	int stat;
+	t_cmds	*head;
 
-	if (!ptr)
-		return;
-	id = fork();
-
-	if (id == 0)
+	head = ptr;
+	if (!head)
 	{
-		if (!ptr)
-			exit(1);
-		command = 0;
-		report = open("lst.txt", O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (report == -1)
-		{
-			printf("No file\n");
-			exit(1);
-		}
-		if (dup2(report, STDOUT_FILENO) == -1) // Check for error
-		{
-			printf("Dup2Error\n");
-			exit(1);
-		}
-		t_cmds *head = ptr;
-		while (head)
-		{
-			printf("_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*\n");
-			printf("Command: %d\n", command);
-			printf("Current command: ");
-			print_split(head->args);
-			printf("Pipe[0] = %d\n", head->pipe[0]);
-			printf("Pipe[1] = %d\n", head->pipe[1]);
-			printf("redi[0] = %d\n", head->redirection[0]);
-			printf("redi[1] = %d\n", head->redirection[1]);
-			head = head->next;
-			command++;
-		}
-		printf("Exit Status: %d\n", ptr->sh->exit);
-		unlink("List.txt");
-		close(report); // Close the file descriptor
-		clean(ptr->sh, true, ptr->sh->exit);
-		exit(0);
+		printf("There is no t_cmds\n");
+		return ;
 	}
-	stat = 0;
-	waitpid(id, &stat, 0);
-	if (stat != 0)
-		printf("List Command Error: ");
+	while (head)
+	{
+		if (!head)
+			break ;
+		printf("%s_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*%s\n", YEL, RESET);
+		printf("%sCommand%s = %s\n", MAG, RESET, head->args[0]);
+		printf("%sPipe[0]%s = %d\n", MAG, RESET, head->pipe[0]);
+		printf("%sPipe[1]%s = %d\n", MAG, RESET, head->pipe[1]);
+		printf("%sredi[0]%s = %d\n", MAG, RESET, head->redirection[0]);
+		printf("%sredi[1]%s = %d\n", MAG, RESET, head->redirection[1]);
+		head = head->next;
+	}
+	printf("%sExit Status%s: %d\n", HBLU, RESET, ptr->sh->exit);
 }
-
-static char *convert_char(char a)
+static char	*convert_char(char a)
 {
 	if (a == '\1')
 		return ("\e[0;31mDQUOTE\e[0;36m");
@@ -71,11 +42,12 @@ static char *convert_char(char a)
 		return ("\e[0;37mHEREDOC\e[0;36m");
 }
 
-void print_special(char *ptr)
+void	print_special(char *ptr)
 {
 	while (*ptr)
 	{
-		if (*ptr == '\1' || *ptr == '\2' || *ptr == '\3' || *ptr == '\4' || *ptr == '\6' || *ptr == '\7' || *ptr == '\b')
+		if (*ptr == '\1' || *ptr == '\2' || *ptr == '\3' || *ptr == '\4'
+			|| *ptr == '\6' || *ptr == '\7' || *ptr == '\b')
 			printf("%s[%s]%s", CYN, convert_char(*ptr), RESET);
 		else
 			printf("%c", *ptr);
@@ -83,13 +55,13 @@ void print_special(char *ptr)
 	}
 }
 
-int print_split(char **ptr)
+int	print_split(char **ptr)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	if (!ptr)
-		return printf("%sThere is no char **%s\n", RED, RESET);
+		return (printf("%sThere is no char **%s\n", RED, RESET));
 	printf("{\n");
 	while (ptr && ptr[++i])
 	{

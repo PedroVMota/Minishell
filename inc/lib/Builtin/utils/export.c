@@ -59,10 +59,7 @@ int	ft_export(t_cmds *node)
 	{
 		new = ft_env_add(ft_strdup(node->args[i]));
 		if (check_repetition(new, &node->sh->env) == 0)
-		{
-			printf("\nno reps\n");
 			ft_ml_envadd_back(&node->sh->env, new);
-		}
 		i++;
 	}
 	
