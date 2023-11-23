@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:12:23 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 10:44:46 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/23 22:49:40 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	outfile(t_cmds *node)
 
 int	ft_unset(t_cmds *node)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	outfile(node);

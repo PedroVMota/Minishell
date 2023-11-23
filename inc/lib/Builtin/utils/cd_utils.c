@@ -1,14 +1,12 @@
-#include "minishell.h"
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 16:02:33 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/23 22:48:12 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +15,7 @@
 void	remove_part_str(char *str, const char *remove);
 void	update_pwd_values(t_env **env, char *oldpwd, char *pwd);
 char	*get_pwd_from_list(t_env *env);
-int check_repetition(t_env *new, t_env **env);
+int		check_repetition(t_env *new, t_env **env);
 
 char	*get_pwd_from_list(t_env *env)
 {

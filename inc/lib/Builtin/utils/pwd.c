@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:33 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 13:14:09 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/23 22:51:47 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 int	ft_pwd(t_cmds *node)
 {
-	(void)node;
-	char path[1024];
+	char	path[1024];
 
-    if (getcwd(path, sizeof(path)) != NULL) {
-        printf("%s\n", path);
-    } else {
-        perror("getcwd() error");
-        return 1;
-    }
+	if (getcwd(path, sizeof(path)) != NULL)
+		printf("%s\n", path);
+	else
+	{
+		perror("getcwd() error");
+		if (node->next)
+			clean(node->sh, true, 1, NULL);
+		return (1);
+	}
+	(void)node;
 	return (0);
 }

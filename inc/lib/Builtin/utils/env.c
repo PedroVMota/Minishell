@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
+/*   Updated: 2023/11/23 22:52:14 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	outfile(t_cmds *node)
@@ -32,8 +44,8 @@ static void	outfile(t_cmds *node)
 /// @return exit status
 int	ft_env(t_cmds *node)
 {
-	t_env *env;
-	t_shell *head_master;
+	t_env		*env;
+	t_shell		*head_master;
 
 	head_master = node->sh;
 	env = node->sh->env;
@@ -43,6 +55,7 @@ int	ft_env(t_cmds *node)
 		printf("%s=%s\n", env->vars[0], env->vars[1]);
 		env = env->next;
 	}
-	clean(head_master, true, 0);
+	if (node->next)
+		clean(head_master, true, 0, NULL);
 	return (0);
 }

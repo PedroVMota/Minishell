@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 13:14:03 by pedromota        ###   ########.fr       */
+/*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
+/*   Updated: 2023/11/23 22:47:40 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	change_to_directory(char *dir)
 
 int	ft_cd(t_cmds *node)
 {
-	char *pwd;
-	char *oldpwd;
+	char	*pwd;
+	char	*oldpwd;
 
 	oldpwd = get_pwd_from_list(node->sh->env);
 	if (!node->args || !node->args[0])

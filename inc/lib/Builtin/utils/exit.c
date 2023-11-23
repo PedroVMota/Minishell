@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/04 13:14:41 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/23 22:49:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_exit(t_cmds *node)
 {
-	(void)node;
+	if (node->next)
+		clean(node->sh, true, 0, NULL);
 	return (0);
 }
