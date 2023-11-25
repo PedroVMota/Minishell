@@ -16,7 +16,7 @@ FILES = src/init/signal.c src/init/syntax.c src/init/enviroment.c src/init/build
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
-	
+
 $(NAME): $(OBJS)
 	@make -C $(libft) --no-print
 	@$(CC) $(CFLAGS) $(CFLAGS_EXTRA) $(INC) $(OBJS) inc/lib/Libft/utils/libft.a -lreadline  -lncurses -o $(NAME)
