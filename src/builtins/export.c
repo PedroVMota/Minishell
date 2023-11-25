@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:54 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 21:42:21 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/25 15:13:43 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,6 @@ int	ft_export(t_cmds *node)
 		}
 		i++;
 	}
-	listOrder(node);
+	list_order(node);
 	return (1);
 }

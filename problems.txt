@@ -1,0 +1,2 @@
+history adds '\n' FIX
+signal ctrl-D doesnt quit immediatly
