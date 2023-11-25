@@ -3,77 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/06 07:58:19 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/24 12:56:18 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
-#define DEFINES_H
+# define DEFINES_H
 
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef enum token_status
 {
 	ENV_MODE_TOKEN,
 	ENV_MODE_QUOTE,
 	ENV_MODE_DQUOTE,
-} t_mode;
+}					t_mode;
 
 typedef struct s_env
 {
-	char **vars;
-	struct s_env *next;
-} t_env;
+	char			**vars;
+	struct s_env	*next;
+}					t_env;
 
 // mode = -1 command
 // mode = 0 pipe
 // mode = 1 redirect
 typedef struct s_cmd
 {
-	int pipe[2];
-	int redirection[2];
-	
-	int (*ft_exec)(struct s_cmd *node);
+	int				pipe[2];
+	int				redirection[2];
 
-	struct s_shell *sh;
+	int				(*ft_exec)(struct s_cmd *node);
 
-	char **args;
-	
-	struct s_cmd *prev;
-	struct s_cmd *next;
+	struct s_shell	*sh;
 
-} t_cmds;
+	char			**args;
+
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+
+}					t_cmds;
 
 typedef struct s_shell
 {
-	char **envp;
-	int exit;
-	int lstsize;
-	int hd;
-	int stop;
-	
-	t_cmds *cmds;
-	t_env *env;
-} t_shell;
+	char			**envp;
+	int				exit;
+	int				lstsize;
+	int				hd;
+	int				stop;
 
-#define EXIT_GENERAL_ERROR 2
-#define EXIT_COMMAND_NOT_EXECUTABLE 126
-#define EXIT_COMMAND_NOT_FOUND 127
-#define EXIT_INVALID_ARGUMENT 128
-#define EXIT_INTERRUPTED_BY_CTRL_C 130
-#define EXIT_STATUS_OUT_OF_RANGE 255
+	t_cmds			*cmds;
+	t_env			*env;
+}					t_shell;
 
-#define DQUOTE '\1'
-#define QUOTE '\2'
-#define PIPE '\3'
-#define SPACE '\4'
-#define OUTTRUC '\6'
-#define INFILE '\7'
-#define HEREDOC '\b'
+# define EXIT_GENERAL_ERROR 2
+# define EXIT_COMMAND_NOT_EXECUTABLE 126
+# define EXIT_COMMAND_NOT_FOUND 127
+# define EXIT_INVALID_ARGUMENT 128
+# define EXIT_INTERRUPTED_BY_CTRL_C 130
+# define EXIT_STATUS_OUT_OF_RANGE 255
+
+# define DQUOTE '\1'
+# define QUOTE '\2'
+# define PIPE '\3'
+# define SPACE '\4'
+# define OUTTRUC '\6'
+# define INFILE '\7'
+# define HEREDOC '\b'
 
 #endif

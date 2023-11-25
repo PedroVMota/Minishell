@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/05 20:38:43 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/24 12:35:10 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,28 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
-static void close_fds(t_cmds *cmds)
+static void	close_fds(t_cmds *cmds)
 {
-	if(cmds->pipe[0] != -1)
+	if (cmds->pipe[0] != -1)
 		close(cmds->pipe[0]);
-	if(cmds->pipe[1] != -1)
+	if (cmds->pipe[1] != -1)
 		close(cmds->pipe[1]);
-	if(cmds->redirection[0] != -1)
+	if (cmds->redirection[0] != -1)
 		close(cmds->redirection[0]);
-	if(cmds->redirection[1] != -1)
+	if (cmds->redirection[1] != -1)
 		close(cmds->redirection[1]);
-}	
-int	clean(t_shell *sh, bool _exit, int status)
+}
+
+int	clean(t_shell *sh, bool _exit, int status, char *msg)
 {
 	t_cmds	*cmds;
 	t_cmds	*tmp;
 
 	tmp = NULL;
-	cmds = sh->cmds;
-	while (cmds)
+	cmds = NULL;
+	if (sh)
+		cmds = sh->cmds;
+	while (sh && cmds)
 	{
 		close_fds(cmds);
 		free_split(cmds->args, 1);
@@ -56,7 +59,8 @@ int	clean(t_shell *sh, bool _exit, int status)
 	}
 	if (_exit)
 	{
-		printf("%s{%d} > Leaving with %d%s\n", RED, getpid(), status, RESET);
+		if (msg)
+			ft_putstr_fd(msg, 2);
 		ft_env_delete(&sh->env);
 		exit(status);
 	}

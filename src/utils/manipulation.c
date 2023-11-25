@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manipulation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 14:56:28 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/11 14:29:15 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/24 12:33:15 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,64 +15,64 @@
 /// @brief Remove an element of a 2d matrix
 /// @param arr the list
 /// @param index the position that will be removed;
-void split_str_del(char **arr, int index)
+void	split_str_del(char **arr, int index)
 {
-	int len;
-	int i;
+	int	len;
+	int	i;
 
 	i = index - 1;
 	len = 0;
 	if (!arr || index < 0)
-		return;
+		return ;
 	while (arr[len])
 		len++;
 	if (index >= len)
-		return;
+		return ;
 	free(arr[index]);
 	while (++i < len - 1)
 		arr[i] = arr[i + 1];
 	arr[len - 1] = NULL;
 }
 
-void split_str_move(char **src, int src_index, char **dest, int dest_index)
+void	split_str_move(char **src, int src_index, char **dest, int dest_index)
 {
-	int dest_len;
-	int src_len;
+	int	dest_len;
+	int	src_len;
 
 	dest_len = 0;
 	src_len = 0;
 	if (!src || !dest || src_index < 0 || dest_index < 0)
-		return;
+		return ;
 	while (src[src_len])
 		src_len++;
 	while (dest[dest_len])
 		dest_len++;
 	if (src_index >= src_len || dest_index >= dest_len)
-		return;
+		return ;
 	dest[dest_index] = src[src_index];
 	src[src_index] = NULL;
 }
 
-void split_str_replace(char **str, int index, char *new)
+void	split_str_replace(char **str, int index, char *new)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	if (!str)
-		return;
+		return ;
 	while (str[len])
 		len++;
 	if (index >= len)
-		return;
+		return ;
 	if (str[index])
 		free(str[index]);
 	str[index] = new;
 }
 
-char **split_str_copy(char **src)
+char	**split_str_copy(char **src)
 {
-	int len;
-	char **dest;
+	int		len;
+	char	**dest;
 
 	len = 0;
 	if (!src)
@@ -88,11 +88,11 @@ char **split_str_copy(char **src)
 	return (dest);
 }
 
-char **split_str_add(char **arr, char *str, int index)
+char	**split_str_add(char **arr, char *str, int index)
 {
-	int len;
-	char **new;
-	int i;
+	int		len;
+	char	**new;
+	int		i;
 
 	i = -1;
 	len = 0;
@@ -110,39 +110,4 @@ char **split_str_add(char **arr, char *str, int index)
 	while (++i <= len)
 		new[i] = ft_strdup(arr[i - 1]);
 	return (new);
-}
-
-char *join_str(char **strs, char sep)
-{
-	int total_len = 0;
-	int i = 0;
-	while (strs[i] != NULL)
-	{
-		total_len += strlen(strs[i]) + 1; // +1 for the separator
-		i++;
-	}
-
-	char *result = malloc(total_len + 1); // +1 for the null terminator
-	if (result == NULL)
-	{
-		return NULL;
-	}
-
-	i = 0;
-	int j = 0;
-	while (strs[i] != NULL)
-	{
-		int len = strlen(strs[i]);
-		memcpy(result + j, strs[i], len);
-		j += len;
-		if (strs[i + 1] != NULL)
-		{
-			result[j] = sep;
-			j++;
-		}
-		i++;
-	}
-	result[j] = '\0'; // null terminate the result
-
-	return result;
 }

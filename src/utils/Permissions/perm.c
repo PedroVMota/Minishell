@@ -6,11 +6,14 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:02:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/18 16:02:16 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/24 12:32:40 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void		set_relative_path(t_cmds *head, int *err);
+void		set_absolute_path(t_cmds *head, int *err);
 
 static bool	isbuiltin(t_cmds *cmd)
 {
@@ -31,100 +34,43 @@ static bool	isbuiltin(t_cmds *cmd)
 	return (false);
 }
 
-void	add_directory(char **cmd)
+int	check_all_paths(t_cmds *head, int *err, int *type)
 {
-	int		i;
-	char	*old_cmd;
-
-	i = -1;
-	while (cmd[++i])
+	*type = 1;
+	if (ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",
+			3))
+		*type = 2;
+	if (*type == 1)
+		set_relative_path(head, err);
+	else if (*type == 2 || !isbuiltin(head))
+		set_absolute_path(head, err);
+	if (*err != 0)
 	{
-		old_cmd = cmd[i];
-		if (cmd[i][ft_strlen(cmd[i]) - 1] == '/')
-			continue ;
-		cmd[i] = ft_strjoin(cmd[i], "/");
-		if (!cmd[i])
-			return ;
-		free(old_cmd);
-	}
-}
-
-char	**getpaths(t_shell *sh)
-{
-	t_env	*list;
-	char	**paths;
-
-	list = sh->env;
-	paths = NULL;
-	while (list)
-	{
-		if (!ft_strcmp("PATH", list->vars[0]))
-		{
-			paths = ft_split(list->vars[1], ':');
-			add_directory(paths);
-			return (paths);
-		}
-		list = list->next;
-	}
-	free_split(paths, 1);
-	list = NULL;
-	return (NULL);
-}
-
-int	check_all_paths(char **paths, t_cmds *head, int *err)
-{ 
-	int		i;
-	char	*cmd_path;
-
-	i = -1;
-	cmd_path = NULL;
-	if (!head->args[0][0])
-	{
-		*err = 127;
-		return (0);
-	}
-	while (paths[++i])
-	{
-		cmd_path = ft_strjoin(paths[i], head->args[0]);
-		if (access(cmd_path, F_OK) == 0)
-		{
-			if (access(cmd_path, X_OK) == 0)
-			{
-				split_str_replace(&head->args[0], 0, cmd_path);
-				*err = 0;
-				return (0);
-			}
-			else
-			{
-				*err = 126;
-				free(cmd_path);
-				return (0);
-			}
-		}
-		else
-			*err = 127;
-		free(cmd_path);
+		write(2, "Error: Minishell: ", 19);
+		write(2, head->args[0], ft_strlen(head->args[0]));
 	}
 	return (0);
 }
 
 bool	permission_tester(t_cmds *head)
 {
-	char	**paths;
+	int	type;
 
-	if (isbuiltin(head))
-		return (false);
-	paths = getpaths(head->sh);
-	if (!paths)
-		return (false);
-	check_all_paths(paths, head, &head->sh->exit);
-	if (head->sh->exit == 126 || head->sh->exit == 127)
+	check_all_paths(head, &head->sh->exit, &type);
+	if (head->sh->exit == 127 && type == 1)
 	{
-		write(2, "Minishell: ", 12);
-		perror(head->args[0]);
-		free_split(paths, 1);
+		write(2, ": command not found\n", 20);
 		return (true);
 	}
-	free_split(paths, 1);
+	else if (head->sh->exit == 127 && type == 2)
+	{
+		write(2, ": No such file or directory\n", 28);
+		return (true);
+	}
+	else if (head->sh->exit == 126)
+	{
+		write(2, ": Permission denied\n", 20);
+		return (true);
+	}
 	return (false);
 }

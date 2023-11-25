@@ -6,35 +6,19 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/21 22:21:47 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/24 11:24:03 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-
-int	varlib_start_position(char *ptr)
-{
-	int	index;
-
-	index = 0;
-	if (!ptr)
-		return (0);
-	while (ptr[index])
-	{
-		if (ptr[index] == QUOTE)
-			return (-1);
-		if (ptr[index] == '$' && ptr[index + 1] != '$')
-			return (index);
-		index++;
-	}
-	return (-1);
-}
+#include "minishell.h"
+#include "vars.h"
 
 char	*varlib_obtain(char *str)
 {
 	char	*var;
+	int		start;
+	int		end;
 
-	int start, end;
 	start = varlib_start_position(str) + 1;
 	end = start;
 	if (start == -1)
@@ -48,68 +32,59 @@ char	*varlib_obtain(char *str)
 	return (var);
 }
 
-char	*varlib_replace(char **str, char *new_value, char *del)
+char	*varlib_replace(char *str, char *new_value, char *del)
 {
-	int		flag;
 	char	*result;
-	char	*p;
-	char	*q;
+	size_t	i;
+	size_t	j;
 
-	printf("%s Function is being called with sucess %s\n", HBLU, RESET);
-	printf("%sString%s: %s\n", HBLU, RESET, *str);
-	printf("%sNew Value%s: %s\n", HBLU, RESET, new_value);
-	flag = 0;
-	result = malloc(ft_strlen(*str) + ft_strlen(new_value) + 1);
-	p = *str;
-	q = result;
-	flag = 0;
-	if (result == NULL)
+	i = 0;
+	j = 0;
+	result = (char *)malloc(ft_strlen(str) - ft_strlen(del)
+			+ ft_strlen(new_value) + 1);
+	if (!result)
+		return (free_array((char *[]){str, new_value, del, NULL}));
+	while (i < ft_strlen(str))
 	{
-		if (del)
-			free(del);
-		return (*str);
-	}
-	while (*p != '\0')
-	{
-		if (*p == '$' && flag == 0)
+		if (str[i] == '$' && strncmp(str + i + 1, del, ft_strlen(del)) == 0)
 		{
-			if (ft_strncmp(p + 1, del, ft_strlen(del)) == 0)
-			{
-				ft_strlcpy(q, new_value, ft_strlen(new_value) + 1);
-				q += ft_strlen(new_value);
-				p += ft_strlen(del) + 1;
-			}
-			flag = 1;
+			strcpy(result + j, new_value);
+			j += ft_strlen(new_value);
+			i += ft_strlen(del) + 1;
 		}
 		else
-			*q++ = *p++;
+			result[j++] = str[i++];
 	}
-	*q = '\0';
-	free(del);
-	free(new_value);
+	result[j] = '\0';
+	free_array((char *[]){str, new_value, del, NULL});
 	return (result);
 }
 
 char	*varlib_delete_unknown(char *str)
 {
+	size_t	len;
+	size_t	newlen;
+	int		start;
+	int		end;
 	char	*result;
-	char	*p;
-	char	*q;
 
-	result = malloc(ft_strlen(str) + 1);
-	p = str;
-	q = result;
-	if (result == NULL)
-		return (str);
-	while (*p != '\0')
+	len = ft_strlen(str);
+	start = varlib_start_position(str);
+	end = start + 1;
+	while (str[end] && !(str[end] == ' ' || str[end] == '$'
+			|| !ft_isalnum(str[end])))
+		end++;
+	newlen = len - (end - start);
+	if (newlen == 0)
+		return (NULL);
+	result = (char *)malloc(newlen + 1);
+	if (!result)
 	{
-		if (*p == '$')
-			while (*p != QUOTE && *p != ' ' && *p + 1 != '$' && *p != '\0')
-				p++;
-		else
-			*q++ = *p++;
+		free(str);
+		return (NULL);
 	}
-	*q = '\0';
+	ft_strlcpy(result, str, start + 1);
+	ft_strlcpy(result + start, str + end, len - end + 1);
 	free(str);
 	return (result);
 }
@@ -117,9 +92,8 @@ char	*varlib_delete_unknown(char *str)
 /// @brief This will search and replac or delete the string
 /// @param str String Modified
 /// @return the final string
-char	*varlib_decide(char *str, t_shell *sh, int position)
+char	*varlib_decide(char *str, t_shell *sh, int pos)
 {
-	int		pos;
 	t_env	*vars;
 	char	*var;
 
@@ -133,11 +107,10 @@ char	*varlib_decide(char *str, t_shell *sh, int position)
 		var = varlib_obtain(str);
 		if (!var)
 			return (str);
-		printf("First Char %c\n", var[0]);
 		if (!ft_strcmp(var, vars->vars[0]))
-			return (varlib_replace(&str, ft_strdup(vars->vars[1]), var));
+			return (varlib_replace(str, ft_strdup(vars->vars[1]), var));
 		if (var[0] == '?')
-			return (varlib_replace(&str, ft_itoa(sh->exit), var));
+			return (varlib_replace(str, ft_itoa(sh->exit), var));
 		free(var);
 		vars = vars->next;
 	}
@@ -146,21 +119,26 @@ char	*varlib_decide(char *str, t_shell *sh, int position)
 
 char	*varlib_execute(char *s, t_shell *h)
 {
-	int index;
-	char quote;
+	int		index;
+	int		loop;
+	char	quote;
 
+	loop = 0;
 	index = 0;
 	quote = 0;
 	if (!s)
 		return (s);
-	while (s[index] && index < strlen(s))
+	while (s[index])
 	{
+		if (!does_have_var(s))
+			return (s);
 		if (s[index] == '\'' && quote == 0)
 			quote = s[index];
 		else if (s[index] == '\'' && quote != 0)
 			quote = 0;
 		else if (s[index] == '$' && !quote)
 			s = varlib_decide(s, h, index);
+		loop++;
 		index++;
 	}
 	return (s);

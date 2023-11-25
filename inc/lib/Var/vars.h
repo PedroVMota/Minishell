@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search.c                                           :+:      :+:    :+:   */
+/*   vars.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 18:08:35 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:34:27 by pedro            ###   ########.fr       */
+/*   Created: 2023/11/23 22:38:12 by pedro             #+#    #+#             */
+/*   Updated: 2023/11/24 11:24:14 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef VARS_H
+# define VARS_H
 
-void	remove_quotes(char *str)
-{
-	int	i;
-	int	j;
+# include <defines.h>
+# include <libft.h>
+# include <stdlib.h>
+# include <stdbool.h>
 
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '\1' || str[i] == '\2')
-			i++;
-		else
-			str[j++] = str[i++];
-	}
-	str[j] = '\0';
-}
+char	*varlib_execute(char *s, t_shell *h);
+void	*free_array(char **array);
+bool	does_have_var(char *s);
+int		varlib_start_position(char *ptr);
+
+#endif

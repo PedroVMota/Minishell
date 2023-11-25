@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/21 20:10:22 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/24 12:24:46 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ void	init(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
 	input = varlib_execute(input, sh);
-	printf("Final Manipulation %s{%s%s%s}%s", HBLU, RESET, input, HBLU, RESET);
-	switch_caracters(&input, sh);
-	// sh->cmds = ft_buildlst(input, sh);
-	// CommandDisplay(sh->cmds);
-	// software(sh);
-	clean(sh, false, sh->exit);
+	switch_caracters(&input);
+	sh->cmds = ft_buildlst(input, sh);
+	software(sh);
+	clean(sh, false, sh->exit, NULL);
 	free(input);
 	(void)sh;
 }
@@ -32,8 +30,7 @@ void	prompt(t_shell *shell)
 
 	while (1)
 	{
-		printf("%sProcess : %d%s\n", MAG, getpid(), RESET);
-		input = readline("MInishell $>");
+		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:25:43 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/05 20:13:52 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/24 12:47:16 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_env	*set_env(char **envp)
 
 	env = NULL;
 	i = -1;
-	if(!envp)
+	if (!envp)
 		return (NULL);
 	while (envp[++i])
 		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i])));

@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:05:29 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/19 13:53:25 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/22 20:29:48 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	replace(char c)
 {
 	if (c <= 0)
 		return (c);
-	else if (c > 127)
+	else if (c > 126)
 		return (c);
 	if (c == '|')
 		return ('\3');
@@ -59,7 +59,7 @@ void	inside_string_skip(char *beg, int *pos, bool *change)
 	}
 }
 
-void	switch_caracters(char **ptr, t_shell *sh)
+void	switch_caracters(char **ptr)
 {
 	int		main;
 	bool	change;

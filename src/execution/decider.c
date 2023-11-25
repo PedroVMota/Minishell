@@ -6,11 +6,13 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/21 19:47:33 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/24 12:56:08 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+bool		isbuiltin(t_cmds *cmd);
 
 void	exec_ptr_chooser(t_cmds *node)
 {
@@ -50,19 +52,17 @@ void	close_gen(t_cmds *head)
 	if (!head->next && head->pipe[0] != -1)
 		close(head->pipe[0]);
 }
+
 static void	run(t_cmds *head, int *processlist, int *process)
 {
-	char	*builtin[7] = {"echo", "cd", "export", "unset", "exit"};
-	bool	isFork;
+	bool	isfork;
 
-	isFork = true;
-	for (int i = -1; ++i < 5;)
-		if (!ft_strcmp(head->args[0], builtin[i]) && !(head->next
-				|| head->prev))
-			isFork = false;
-	if (!isFork)
+	isfork = true;
+	if (isbuiltin(head))
+		isfork = false;
+	if (!isfork)
 		head->ft_exec(head);
-	else if (isFork)
+	else if (isfork)
 	{
 		processlist[(*process)] = fork();
 		if (processlist[(*process)] == 0)
@@ -70,7 +70,7 @@ static void	run(t_cmds *head, int *processlist, int *process)
 			free(processlist);
 			if (head->ft_exec)
 				head->ft_exec(head);
-			clean(head->sh, true, 0);
+			clean(head->sh, true, 0, NULL);
 		}
 		(*process)++;
 	}

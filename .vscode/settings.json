@@ -27,7 +27,9 @@
 		"vector": "c",
 		"libft.h": "c",
 		"builtins.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"functional": "c",
+		"vars.h": "c"
 	},
 	"files.exclude": {}
 }

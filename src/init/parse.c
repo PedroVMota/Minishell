@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:52:30 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/11 16:19:59 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/24 12:47:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int getSplitSize(char **str)
+static int	get_split_size(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
-		return 0;
+		return (0);
 	while (str[i])
 		i++;
-	return i;
+	return (i);
 }
 
-char **split_append_new_split(char **arr, char **n_arr, int index)
+char	**split_append_new_split(char **arr, char **n_arr, int index)
 {
-	int i = 0, j = 0, k = 0;
-	i = getSplitSize(arr);
-	j = getSplitSize(n_arr);
-	char **new_arr = (char **)malloc((i + j) * sizeof(char *));
+	int		i;
+	int		j;
+	int		k;
+	char	**new_arr;
+
+	i = get_split_size(arr);
+	j = get_split_size(n_arr);
+	new_arr = (char **)malloc((i + j) * sizeof(char *));
 	if (new_arr == NULL)
-		return NULL;
+		return (NULL);
 	k = -1;
 	while (++k < index)
 		new_arr[k] = strdup(arr[k]);
@@ -46,13 +50,11 @@ char **split_append_new_split(char **arr, char **n_arr, int index)
 	}
 	new_arr[i + j - 1] = NULL;
 	free_split(arr, 0);
-	return new_arr;
+	return (new_arr);
 }
-char *join_str(char **arr, char delimiter);
 
-void parse(t_cmds *node, t_shell *sh)
+void	parse(t_cmds *node, t_shell *sh)
 {
-	char **old;
 	while (node)
 	{
 		redirection(node, sh);

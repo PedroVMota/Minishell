@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/05 18:26:51 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/22 20:28:39 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,20 @@ static int	check_elements(char *input, char *target)
 	return (0);
 }
 
-
-static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
+static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 {
-	int varcounter;
-	int varselector;
-
-	varselector = 0;
-	if(!*text || !delimiter)
-		return true;
+	(void)sh;
+	if (!*text || !delimiter)
+		return (true);
 	if (check_elements(*text, delimiter))
-		return true ;
-	if(write(fd, *text, ft_strlen(*text)) == -1)
+		return (true);
+	if (write(fd, *text, ft_strlen(*text)) == -1)
 	{
 		free(*text);
-		return true;
+		return (true);
 	}
 	free(*text);
-	return false;
+	return (false);
 }
 
 void	heredoc(t_cmds *node, char *delimiter)
@@ -62,9 +58,8 @@ void	heredoc(t_cmds *node, char *delimiter)
 	{
 		write(1, "Here_doc >", 11);
 		text = get_next_line(0);
-		if(convert_data(&text, delimiter, node->sh, here_doc[1]))
-			break;
-
+		if (convert_data(&text, delimiter, node->sh, here_doc[1]))
+			break ;
 	}
 	close(here_doc[1]);
 }

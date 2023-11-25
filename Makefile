@@ -1,6 +1,6 @@
 NAME = minishell
-CFLAGS = #-Wall -Wextra -Werror 
-CFLAGS_EXTRA = -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror 
+CFLAGS_EXTRA = -g #-fsanitize=address
 INC = -I inc/ -I inc/lib/Builtin/ -Iinc/lib/Var/ -Iinc/lib/Libft
 libft = inc/lib/Libft/utils
 
@@ -10,7 +10,8 @@ FILES = src/init/signal.c src/init/syntax.c src/init/enviroment.c src/init/build
 		src/utils/Permissions/perm.c src/utils/.utils.c src/utils/search.c src/utils/t_mode.c \
 		src/utils/commands.c src/utils/manipulation.c src/utils/switchchar.c inc/lib/Builtin/utils/env.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/exit.c \
 		inc/lib/Builtin/utils/exec.c inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/cd_utils.c inc/lib/Builtin/utils/cd.c \
-		inc/lib/Builtin/utils/export.c inc/lib/Var/utils/var.c 
+		inc/lib/Builtin/utils/export.c inc/lib/Var/utils/var.c inc/lib/Var/utils/var_utils.c src/utils/Permissions/perm_utils.c \
+		src/execution/decider_utils.c src/init/syntax_utils.c
 
 OBJS = $(FILES:.c=.o)
 
@@ -33,8 +34,8 @@ fclean: clean
 	@make fclean -C $(libft) --no-print
 
 v:
-# make && valgrind  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
-	make && ./minishell
+	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
+# make && ./minishell
 #--log-file="val.log"
 
 re: fclean all

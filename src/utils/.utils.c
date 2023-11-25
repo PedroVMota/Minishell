@@ -40,6 +40,7 @@ static char	*convert_char(char a)
 		return ("\e[0;37mINFILE\e[0;36m");
 	if (a == '\b')
 		return ("\e[0;37mHEREDOC\e[0;36m");
+	return ("");
 }
 
 void	print_special(char *ptr)
