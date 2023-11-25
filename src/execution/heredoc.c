@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/10/25 13:40:22 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/11/25 16:33:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	heredoc(t_cmds *node, char *delimiter)
 	int		bytes_read;
 	int		here_doc[2];
 
+	ft_ml_sigdefault();
 	text = NULL;
 	if (pipe(here_doc) == -1)
 		return ;

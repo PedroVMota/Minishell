@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 15:38:16 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/25 16:24:24 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ void	prompt(t_shell *shell)
 			if (input)
 				free(input);
 			ft_env_delete(&shell->env);
+			rl_clear_history();
 			write(1, "Exit\n", 6);
-			exit(0);
+			exit(shell->exit);
 		}
-		add_history(input);
+		if(*input)
+			add_history(input);
 		ft_syntax_checker(input, shell);
 		execution(input, shell);
 	}

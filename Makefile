@@ -17,8 +17,6 @@ OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
 	./$(NAME)
-		@valgrind --track-fds=yes --trace-children=yes --leak-check=full ./$(NAME)
-
 
 $(NAME): $(OBJS)
 	@make -C libft/ --no-print
