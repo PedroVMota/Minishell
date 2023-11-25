@@ -1,79 +1,87 @@
-==354890== Memcheck, a memory error detector
-==354890== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==354890== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==354890== Command: ./minishell
-==354890== Parent PID: 354885
-==354890== 
-==354890== 
-==354890== FILE DESCRIPTORS: 19 open at exit.
-==354890== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 48: /usr/share/code/resources/app/node_modules.asar
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 46: /nfs/homes/oharoon/.config/Code/logs/20231125T190039/ptyhost.log
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 43: /usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 42: /usr/share/code/resources/app/node_modules.asar
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 41: /dev/shm/.org.chromium.Chromium.qh9VLf (deleted)
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 40: /dev/shm/.org.chromium.Chromium.MBUKyh (deleted)
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open AF_UNIX socket 39: <unknown>
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 34: /tmp/.org.chromium.Chromium.uinyIh (deleted)
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 33: /proc/352741/status
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 32: /nfs/homes/oharoon/.config/Code/Dictionaries/en-US-10-1.bdic
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 31: /dev/shm/.org.chromium.Chromium.ZSrpCe (deleted)
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 30: /proc/352741/statm
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open AF_UNIX socket 29: <unknown>
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 20: /usr/share/code/v8_context_snapshot.bin
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 3: /nfs/homes/oharoon/Desktop/PEDRO/val.log
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 2: /dev/pts/1
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 1: /dev/pts/1
-==354890==    <inherited from parent>
-==354890== 
-==354890== Open file descriptor 0: /dev/pts/1
-==354890==    <inherited from parent>
-==354890== 
-==354890== 
-==354890== HEAP SUMMARY:
-==354890==     in use at exit: 204,658 bytes in 218 blocks
-==354890==   total heap usage: 991 allocs, 773 frees, 239,097 bytes allocated
-==354890== 
-==354890== LEAK SUMMARY:
-==354890==    definitely lost: 0 bytes in 0 blocks
-==354890==    indirectly lost: 0 bytes in 0 blocks
-==354890==      possibly lost: 0 bytes in 0 blocks
-==354890==    still reachable: 0 bytes in 0 blocks
-==354890==         suppressed: 204,658 bytes in 218 blocks
-==354890== 
-==354890== For lists of detected and suppressed errors, rerun with: -s
-==354890== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==357105== Memcheck, a memory error detector
+==357105== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==357105== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==357105== Command: ./minishell
+==357105== Parent PID: 357103
+==357105== 
+==357169== 
+==357169== FILE DESCRIPTORS: 19 open at exit.
+==357169== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 48: /usr/share/code/resources/app/node_modules.asar
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 46: /nfs/homes/oharoon/.config/Code/logs/20231125T190039/ptyhost.log
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 43: /usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 42: /usr/share/code/resources/app/node_modules.asar
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 41: /dev/shm/.org.chromium.Chromium.qh9VLf (deleted)
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 40: /dev/shm/.org.chromium.Chromium.MBUKyh (deleted)
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open AF_UNIX socket 39: <unknown>
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 34: /tmp/.org.chromium.Chromium.uinyIh (deleted)
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 33: /proc/352741/status
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 32: /nfs/homes/oharoon/.config/Code/Dictionaries/en-US-10-1.bdic
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 31: /dev/shm/.org.chromium.Chromium.ZSrpCe (deleted)
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 30: /proc/352741/statm
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open AF_UNIX socket 29: <unknown>
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 20: /usr/share/code/v8_context_snapshot.bin
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 3: /nfs/homes/oharoon/Desktop/PEDRO/val.log
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 2: /dev/pts/1
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 1: /dev/pts/1
+==357169==    <inherited from parent>
+==357169== 
+==357169== Open file descriptor 0: /dev/pts/1
+==357169==    <inherited from parent>
+==357169== 
+==357169== 
+==357169== HEAP SUMMARY:
+==357169==     in use at exit: 204,673 bytes in 220 blocks
+==357169==   total heap usage: 961 allocs, 741 frees, 238,610 bytes allocated
+==357169== 
+==357169== 8 bytes in 1 blocks are still reachable in loss record 3 of 63
+==357169==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==357169==    by 0x40641D: ft_calloc (in /nfs/homes/oharoon/Desktop/PEDRO/minishell)
+==357169==    by 0x402600: software (decider.c:83)
+==357169==    by 0x402096: init (main.c:21)
+==357169==    by 0x402181: prompt (main.c:45)
+==357169==    by 0x4021F0: main (main.c:62)
+==357169== 
+==357169== LEAK SUMMARY:
+==357169==    definitely lost: 0 bytes in 0 blocks
+==357169==    indirectly lost: 0 bytes in 0 blocks
+==357169==      possibly lost: 0 bytes in 0 blocks
+==357169==    still reachable: 8 bytes in 1 blocks
+==357169==         suppressed: 204,665 bytes in 219 blocks
+==357169== 
+==357169== For lists of detected and suppressed errors, rerun with: -s
+==357169== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
