@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/24 12:56:18 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 12:53:17 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_cmd
 
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
+
+	int shouldrun;
 
 }					t_cmds;
 

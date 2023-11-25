@@ -3,47 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   perm.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:02:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:32:40 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 13:21:38 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		set_relative_path(t_cmds *head, int *err);
-void		set_absolute_path(t_cmds *head, int *err);
+void set_relative_path(t_cmds *head, int *err);
+void set_absolute_path(t_cmds *head, int *err);
 
-static bool	isbuiltin(t_cmds *cmd)
+int check_all_paths(t_cmds *head, int *err, int *type)
 {
-	if (!ft_strcmp(cmd->args[0], "echo"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "cd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "pwd"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "export"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "unset"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "env"))
-		return (true);
-	if (!ft_strcmp(cmd->args[0], "exit"))
-		return (true);
-	return (false);
-}
-
-int	check_all_paths(t_cmds *head, int *err, int *type)
-{
-	*type = 1;
-	if (ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",
-			3))
-		*type = 2;
-	if (*type == 1)
+	*type = 1; // relative
+	if (ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../", 3))
+		*type = 2; // absolute
+	if (!isbuiltin(head) && *type == 1)
+	{
+		printf("%s%s%s\n", YEL, __func__, RESET);
 		set_relative_path(head, err);
-	else if (*type == 2 || !isbuiltin(head))
+	}
+	else if (*type == 2)
+	{
+		printf("%s%s%s", RED, __func__, RESET);
 		set_absolute_path(head, err);
+	}
+
 	if (*err != 0)
 	{
 		write(2, "Error: Minishell: ", 19);
@@ -52,25 +39,30 @@ int	check_all_paths(t_cmds *head, int *err, int *type)
 	return (0);
 }
 
-bool	permission_tester(t_cmds *head)
+bool permission_tester(t_cmds *head)
 {
-	int	type;
+	int type;
 
 	check_all_paths(head, &head->sh->exit, &type);
 	if (head->sh->exit == 127 && type == 1)
 	{
 		write(2, ": command not found\n", 20);
-		return (true);
+		return (false);
+	}
+	else if (head->sh->exit == 126 && type == 1)
+	{
+		write(2, ": Cannot execute binary files\n", 31);
+		return (false);
 	}
 	else if (head->sh->exit == 127 && type == 2)
 	{
 		write(2, ": No such file or directory\n", 28);
-		return (true);
+		return (false);
 	}
 	else if (head->sh->exit == 126)
 	{
 		write(2, ": Permission denied\n", 20);
-		return (true);
+		return (false);
 	}
-	return (false);
+	return (true);
 }

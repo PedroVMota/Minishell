@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:35:10 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 13:17:29 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	free_split(char **split, int ret)
+int free_split(char **split, int ret)
 {
-	char	**ptr;
+	char **ptr;
 
 	ptr = split;
 	if (!split)
@@ -28,7 +28,7 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
-static void	close_fds(t_cmds *cmds)
+static void close_fds(t_cmds *cmds)
 {
 	if (cmds->pipe[0] != -1)
 		close(cmds->pipe[0]);
@@ -40,10 +40,10 @@ static void	close_fds(t_cmds *cmds)
 		close(cmds->redirection[1]);
 }
 
-int	clean(t_shell *sh, bool _exit, int status, char *msg)
+int clean(t_shell *sh, bool _exit, int status, char *msg)
 {
-	t_cmds	*cmds;
-	t_cmds	*tmp;
+	t_cmds *cmds;
+	t_cmds *tmp;
 
 	tmp = NULL;
 	cmds = NULL;
@@ -59,17 +59,17 @@ int	clean(t_shell *sh, bool _exit, int status, char *msg)
 	}
 	if (_exit)
 	{
-		if (msg)
-			ft_putstr_fd(msg, 2);
+		if(msg)
+			write(2, msg, ft_strlen(msg));
 		ft_env_delete(&sh->env);
 		exit(status);
 	}
 	return (0);
 }
 
-int	ft_env_delete(t_env **env)
+int ft_env_delete(t_env **env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	while ((*env))
 	{

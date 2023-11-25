@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   perm_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:47:46 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:23:35 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 12:48:21 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void shell_update_exit_status_error(int _new_err, t_shell *sh, char *msg)
+{
+	if(!sh)
+		clean(sh, true, 1, msg);
+	sh->exit = _new_err;
+	return ;
+}
 
 static void	add_directory(char **cmd)
 {
@@ -52,13 +60,21 @@ static char	**getpaths(t_shell *sh)
 	return (NULL);
 }
 
+bool	isbuiltin(t_cmds *cmd);
+
 void	set_relative_path(t_cmds *head, int *err)
 {
 	int		i;
 	char	*tmp;
 	char	**paths;
 
+
+	printf("%s%s%s\n", YEL, __func__, RESET);
+	if(isbuiltin(head))
+		return ;
 	paths = getpaths(head->sh);
+	if(!paths)
+		return shell_update_exit_status_error(126, head->sh, "Cannot Execute Binary files");
 	i = -1;
 	while (paths[++i])
 	{
@@ -87,9 +103,9 @@ void	set_relative_path(t_cmds *head, int *err)
 */
 void	set_absolute_path(t_cmds *head, int *err)
 {
+	printf("%s%s%s\n", YEL, __func__, RESET);
 	if (access(head->args[0], X_OK) == -1)
 	{
-		printf("\n%s Permission does not Exists\n", head->args[0]);
 		*err = 126;
 		return ;
 	}

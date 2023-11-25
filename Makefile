@@ -11,7 +11,7 @@ FILES = src/init/signal.c src/init/syntax.c src/init/enviroment.c src/init/build
 		src/utils/commands.c src/utils/manipulation.c src/utils/switchchar.c inc/lib/Builtin/utils/env.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/exit.c \
 		inc/lib/Builtin/utils/exec.c inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/cd_utils.c inc/lib/Builtin/utils/cd.c \
 		inc/lib/Builtin/utils/export.c inc/lib/Var/utils/var.c inc/lib/Var/utils/var_utils.c src/utils/Permissions/perm_utils.c \
-		src/execution/decider_utils.c src/init/syntax_utils.c
+		src/execution/decider_utils.c
 
 OBJS = $(FILES:.c=.o)
 
@@ -33,7 +33,13 @@ fclean: clean
 	@rm -f $(NAME) lst lst.txt *.log *.del *.ign
 	@make fclean -C $(libft) --no-print
 
-v:
+e:
+	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" env -i ./minishell
+
+d:
+	make && valgrind --log-file="val.log"  --track-fds=yes ./minishell
+
+f:
 	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
 # make && ./minishell
 #--log-file="val.log"

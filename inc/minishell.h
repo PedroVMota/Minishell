@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/24 11:21:15 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 12:45:55 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,23 @@
 # include <string.h>
 # include <time.h>
 
+
+
 // syntax error msg;
 # define PIPE_SYNTAX_ERROR "Error: syntax error near unexpected token `|'\n"
 # define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 # define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
+
+//Detect if is a builtin;
+bool	isbuiltin(t_cmds *cmd);
+
+// Sh is the shell content
+// exit is a boolean if you what exit
+// status will update the exit status,
+// msg is the menssage that you want to print
 int		clean(t_shell *sh, bool _exit, int status, char *msg);
-char	*bash_prompt_replicate(void);
+
 bool	permission_tester(t_cmds *head);
 int		software(t_shell *sh);
 // Data Type Manipulation

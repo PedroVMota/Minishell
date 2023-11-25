@@ -30,6 +30,7 @@ void	prompt(t_shell *shell)
 
 	while (1)
 	{
+		printf("Main Process: %d\n", getpid());
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{

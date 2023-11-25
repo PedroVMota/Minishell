@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   decider_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:46:17 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/25 13:26:49 by pvital-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool	isbuiltin(t_cmds *cmd)
+bool	builtin_detector(t_cmds *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], "echo"))
-		return (true);
+		return (true);			
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		return (true);
 	if (!ft_strcmp(cmd->args[0], "pwd"))
