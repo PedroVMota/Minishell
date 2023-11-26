@@ -58,14 +58,21 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
 		isfork = false;
 	if (!isfork)
+	{
+		printf("%s================= PARENT PROCESS %d =================%s\n", MAG, getpid(), RESET);
+		printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
+		printf("%s================= PARENT PROCESS %d =================%s\n", MAG, getpid(), RESET);
 		cmd->ft_exec(cmd);
-	else if((isfork))
+	}
+	else if ((isfork))
 	{
 		ps[*p] = fork();
-		if(ps[*p] == 0)
+		if (ps[*p] == 0)
 		{
 			free(ps);
-			printf("Processs : %d\n", getpid());
+			printf("%s================= CHILD PROCESS %d =================%s\n", MAG, getpid(), RESET);
+			printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
+			printf("%s================= CHILD PROCESS %d =================%s\n", MAG, getpid(), RESET);
 			cmd->ft_exec(cmd);
 			exit(0);
 		}
