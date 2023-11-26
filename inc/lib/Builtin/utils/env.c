@@ -54,9 +54,7 @@ int ft_env(t_cmds *node)
 	head_master = node->sh;
 	env = node->sh->env;
 	if (standard_choiser(node))
-	{
 		clean(node->sh, true, 1, "DETE IS A ERROR");
-	}
 	while (env)
 	{
 		printf("%s=%s\n", env->vars[0], env->vars[1]);
