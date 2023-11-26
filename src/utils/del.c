@@ -28,6 +28,21 @@ int free_split(char **split, int ret)
 	return (ret);
 }
 
+static void clean_redirection(t_redirections **head)
+{
+	t_redirections *local;
+	t_redirections *next;
+
+	local = *head;
+	while(local)
+	{
+		free_split(local->element, 0);
+		next = local->next;
+		free(local);
+		local = next;
+	}
+}
+
 static void close_fds(t_cmds *cmds)
 {
 	if (cmds->pipe[0] != -1)
@@ -51,6 +66,8 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 		cmds = sh->cmds;
 	while (sh && cmds)
 	{
+		if(cmds->reds)
+			clean_redirection(&cmds->reds);
 		close_fds(cmds);
 		free_split(cmds->args, 1);
 		tmp = cmds->next;
