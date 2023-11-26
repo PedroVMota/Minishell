@@ -25,11 +25,10 @@ t_type red_type_checker(char *str)
 	return (final);
 }
 
-t_redirections *redi_new(int *i, t_cmds *cm, t_type type)
+t_redirections *redi_new(int *i, t_cmds *cm, t_type type) // funcao que aloca
 {
 	t_redirections *new;
 
-	printf("%s%s%s\n", RED, __func__, RESET);
 	new = malloc(sizeof(t_redirections));
 	if (!new)
 		return NULL;
@@ -39,6 +38,9 @@ t_redirections *redi_new(int *i, t_cmds *cm, t_type type)
 		free(new);
 		return NULL;
 	}
+	printf("%s>>>>%s ", RED, RESET);
+	print_special(cm->args[*i]);
+	printf("\n");
 	new->element[0] = ft_strdup(cm->args[*i]);
 	split_str_del(cm->args, *i);
 	new->element[1] = ft_strdup(cm->args[*i]);
@@ -50,20 +52,39 @@ t_redirections *redi_new(int *i, t_cmds *cm, t_type type)
 	return new;
 }
 
+t_redirections *redirection_last_ptr(t_redirections *lst)
+{
+	if (!lst)
+		return NULL;
+	while (lst->next)
+		lst = lst->next;
+	return lst;
+}
+
 void redirection_analizer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
+	t_redirections *new;
+	t_redirections *last;
+	(void)sh;
 	if (redi_node == FILE_NONE)
 	{
 		printf("There is no redirection.\n");
 		return;
 	}
-	printf("%s%s%s\n", YEL, __func__, RESET);
-	printf("String Selector: \n");
-	print_special(node->args[*i]);
-	t_redirections *new;
-	(void)sh;
 	new = redi_new(i, node, redi_node);
+	if (!new)
+		return ;
+	if (!node->reds)
+	{
+		node->reds = new;
+		return ;
+	}
+	last = redirection_last_ptr(node->reds);
+	last->next = new;
 }
+
+
+
 
 void redirection(t_cmds *node, t_shell *sh)
 {
@@ -80,12 +101,8 @@ void redirection(t_cmds *node, t_shell *sh)
 		remove_quotes(args[i]);
 		red_mode = red_type_checker(args[i]);
 		redirection_analizer(red_mode, node, &i, sh);
-		print_split(args);
 		if (red_mode == FILE_NONE)
 			i++;
-		if (loop == 100)
-			break;
 		loop++;
 	}
-	clean(sh, true, 0, "STOP HERE\n");
 }

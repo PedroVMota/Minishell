@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	isbuiltin(t_cmds *cmd)
+bool isbuiltin(t_cmds *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		return (true);
@@ -18,7 +18,6 @@ bool	isbuiltin(t_cmds *cmd)
 		return (true);
 	return (false);
 }
-
 
 void print_shell_err(char *categorie, char *error_msg, int new_err, t_shell *sh)
 {
@@ -55,4 +54,38 @@ int print_split(char **ptr)
 	printf("] | ");
 	printf("Size: [%d]\n", i);
 	return (i);
+}
+
+void ShowCommands(t_cmds *cmd)
+{
+	int Command = 0;
+	int Redirection = 0;
+	t_redirections *r = NULL;
+
+	if (!cmd)
+	{
+		printf("There is no command\n");
+		return;
+	}
+	while (cmd)
+	{
+		r = cmd->reds;
+		Redirection = 0;
+		Command++;
+		printf("==================== Command %d ====================\n", Command);
+		printf("Command:{%s}\n", cmd->args[0]);
+		cmd = cmd->next;
+		if (!r)
+			continue;
+		while (r)
+		{
+			Redirection++;
+			printf("------> Redirection {%d}: ", Redirection);
+			printf("Type -> %d\n", r->mode);
+			print_split(r->element);
+			printf("\n");
+			r = r->next;
+		}
+		r = NULL;
+	}
 }

@@ -11,12 +11,17 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+void ShowCommands(t_cmds *cmd);
 
 void parse(t_cmds *node, t_shell *sh)
 {
-	while (node)
+	t_cmds *command;
+
+	command = node;
+	while (command)
 	{
-		redirection(node, sh);
-		node = node->next;
+		redirection(command, sh);
+		command = command->next;
 	}
+	ShowCommands(node);
 }

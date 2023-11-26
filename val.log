@@ -1,165 +1,144 @@
-==513207== Memcheck, a memory error detector
-==513207== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==513207== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==513207== Command: ./minishell
-==513207== Parent PID: 513197
-==513207== 
-==513207== 
-==513207== FILE DESCRIPTORS: 20 open at exit.
-==513207== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 48: /usr/share/code/resources/app/node_modules.asar
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 47: /dev/ptmx
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 46: /nfs/homes/pvital-m/.config/Code/logs/20231126T140759/ptyhost.log
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 43: /dev/shm/.org.chromium.Chromium.KiMkN1 (deleted)
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 42: /usr/share/code/resources/app/node_modules.asar
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 41: /dev/shm/.org.chromium.Chromium.7pYsd0 (deleted)
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 40: /usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 39: /dev/shm/.org.chromium.Chromium.Llncs1 (deleted)
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 34: /tmp/.org.chromium.Chromium.6OqZm1 (deleted)
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 33: /proc/447835/status
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 32: /proc/447835/statm
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 31: /nfs/homes/pvital-m/.config/Code/Dictionaries/en-US-10-1.bdic
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open AF_UNIX socket 30: <unknown>
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open AF_UNIX socket 29: <unknown>
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 20: /usr/share/code/v8_context_snapshot.bin
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 3: /nfs/homes/pvital-m/Desktop/Minishell/val.log
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 2: /dev/pts/2
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 1: /dev/pts/2
-==513207==    <inherited from parent>
-==513207== 
-==513207== Open file descriptor 0: /dev/pts/2
-==513207==    <inherited from parent>
-==513207== 
-==513207== 
-==513207== HEAP SUMMARY:
-==513207==     in use at exit: 204,829 bytes in 226 blocks
-==513207==   total heap usage: 947 allocs, 721 frees, 238,327 bytes allocated
-==513207== 
-==513207== 2 bytes in 1 blocks are indirectly lost in loss record 1 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x406620: ft_strdup (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
-==513207==    by 0x402B38: redi_new (redirection.c:42)
-==513207==    by 0x402C7D: redirection_analizer (redirection.c:65)
-==513207==    by 0x402D0B: redirection (redirection.c:82)
-==513207==    by 0x401E47: parse (parse.c:19)
-==513207==    by 0x401E08: setup (build.c:44)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 3 bytes in 1 blocks are still reachable in loss record 2 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x406BDD: word_dup (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
-==513207==    by 0x406ABF: ft_split (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
-==513207==    by 0x4039A3: _create_node (commands.c:37)
-==513207==    by 0x4039FC: _add (commands.c:49)
-==513207==    by 0x401DAA: setup (build.c:37)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 4 bytes in 1 blocks are indirectly lost in loss record 3 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x406620: ft_strdup (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
-==513207==    by 0x402B6F: redi_new (redirection.c:44)
-==513207==    by 0x402C7D: redirection_analizer (redirection.c:65)
-==513207==    by 0x402D0B: redirection (redirection.c:82)
-==513207==    by 0x401E47: parse (parse.c:19)
-==513207==    by 0x401E08: setup (build.c:44)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 24 bytes in 1 blocks are indirectly lost in loss record 18 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x402AF1: redi_new (redirection.c:36)
-==513207==    by 0x402C7D: redirection_analizer (redirection.c:65)
-==513207==    by 0x402D0B: redirection (redirection.c:82)
-==513207==    by 0x401E47: parse (parse.c:19)
-==513207==    by 0x401E08: setup (build.c:44)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 32 bytes in 1 blocks are still reachable in loss record 20 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x4069DD: ft_split (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
-==513207==    by 0x4039A3: _create_node (commands.c:37)
-==513207==    by 0x4039FC: _add (commands.c:49)
-==513207==    by 0x401DAA: setup (build.c:37)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 54 (24 direct, 30 indirect) bytes in 1 blocks are definitely lost in loss record 24 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x402ACB: redi_new (redirection.c:33)
-==513207==    by 0x402C7D: redirection_analizer (redirection.c:65)
-==513207==    by 0x402D0B: redirection (redirection.c:82)
-==513207==    by 0x401E47: parse (parse.c:19)
-==513207==    by 0x401E08: setup (build.c:44)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== 72 bytes in 1 blocks are still reachable in loss record 25 of 69
-==513207==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==513207==    by 0x403935: _create_node (commands.c:28)
-==513207==    by 0x4039FC: _add (commands.c:49)
-==513207==    by 0x401DAA: setup (build.c:37)
-==513207==    by 0x401D46: ft_buildlst (build.c:56)
-==513207==    by 0x401EA2: init (main.c:20)
-==513207==    by 0x401FA1: prompt (main.c:45)
-==513207==    by 0x402010: main (main.c:62)
-==513207== 
-==513207== LEAK SUMMARY:
-==513207==    definitely lost: 24 bytes in 1 blocks
-==513207==    indirectly lost: 30 bytes in 3 blocks
-==513207==      possibly lost: 0 bytes in 0 blocks
-==513207==    still reachable: 107 bytes in 3 blocks
-==513207==         suppressed: 204,668 bytes in 219 blocks
-==513207== 
-==513207== For lists of detected and suppressed errors, rerun with: -s
-==513207== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==526400== Memcheck, a memory error detector
+==526400== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==526400== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==526400== Command: ./minishell
+==526400== Parent PID: 526392
+==526400== 
+==526400== 
+==526400== FILE DESCRIPTORS: 20 open at exit.
+==526400== Open file descriptor 103: /usr/share/code/v8_context_snapshot.bin
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 48: /usr/share/code/resources/app/node_modules.asar
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 47: /dev/ptmx
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 46: /nfs/homes/pvital-m/.config/Code/logs/20231126T140759/ptyhost.log
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 43: /dev/shm/.org.chromium.Chromium.KiMkN1 (deleted)
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 42: /usr/share/code/resources/app/node_modules.asar
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 41: /dev/shm/.org.chromium.Chromium.7pYsd0 (deleted)
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 40: /usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 39: /dev/shm/.org.chromium.Chromium.Llncs1 (deleted)
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 34: /tmp/.org.chromium.Chromium.6OqZm1 (deleted)
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 33: /proc/447835/status
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 32: /proc/447835/statm
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 31: /nfs/homes/pvital-m/.config/Code/Dictionaries/en-US-10-1.bdic
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open AF_UNIX socket 30: <unknown>
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open AF_UNIX socket 29: <unknown>
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 20: /usr/share/code/v8_context_snapshot.bin
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 3: /nfs/homes/pvital-m/Desktop/Minishell/val.log
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 2: /dev/pts/2
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 1: /dev/pts/2
+==526400==    <inherited from parent>
+==526400== 
+==526400== Open file descriptor 0: /dev/pts/2
+==526400==    <inherited from parent>
+==526400== 
+==526400== 
+==526400== HEAP SUMMARY:
+==526400==     in use at exit: 206,297 bytes in 315 blocks
+==526400==   total heap usage: 1,385 allocs, 1,070 frees, 245,649 bytes allocated
+==526400== 
+==526400== 40 bytes in 20 blocks are indirectly lost in loss record 16 of 71
+==526400==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==526400==    by 0x4067B0: ft_strdup (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
+==526400==    by 0x402B66: redi_new (redirection.c:44)
+==526400==    by 0x402CB6: redirection_analizer (redirection.c:74)
+==526400==    by 0x402D8B: redirection (redirection.c:103)
+==526400==    by 0x401E4F: parse (parse.c:23)
+==526400==    by 0x401E08: setup (build.c:44)
+==526400==    by 0x401D46: ft_buildlst (build.c:56)
+==526400==    by 0x401EB2: init (main.c:20)
+==526400==    by 0x401FB1: prompt (main.c:45)
+==526400==    by 0x402020: main (main.c:62)
+==526400== 
+==526400== 204 bytes in 20 blocks are indirectly lost in loss record 28 of 71
+==526400==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==526400==    by 0x4067B0: ft_strdup (in /nfs/homes/pvital-m/Desktop/Minishell/minishell)
+==526400==    by 0x402B9D: redi_new (redirection.c:46)
+==526400==    by 0x402CB6: redirection_analizer (redirection.c:74)
+==526400==    by 0x402D8B: redirection (redirection.c:103)
+==526400==    by 0x401E4F: parse (parse.c:23)
+==526400==    by 0x401E08: setup (build.c:44)
+==526400==    by 0x401D46: ft_buildlst (build.c:56)
+==526400==    by 0x401EB2: init (main.c:20)
+==526400==    by 0x401FB1: prompt (main.c:45)
+==526400==    by 0x402020: main (main.c:62)
+==526400== 
+==526400== 264 bytes in 11 blocks are indirectly lost in loss record 30 of 71
+==526400==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==526400==    by 0x402AAC: redi_new (redirection.c:32)
+==526400==    by 0x402CB6: redirection_analizer (redirection.c:74)
+==526400==    by 0x402D8B: redirection (redirection.c:103)
+==526400==    by 0x401E4F: parse (parse.c:23)
+==526400==    by 0x401E08: setup (build.c:44)
+==526400==    by 0x401D46: ft_buildlst (build.c:56)
+==526400==    by 0x401EB2: init (main.c:20)
+==526400==    by 0x401FB1: prompt (main.c:45)
+==526400==    by 0x402020: main (main.c:62)
+==526400== 
+==526400== 480 bytes in 20 blocks are indirectly lost in loss record 32 of 71
+==526400==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==526400==    by 0x402AD2: redi_new (redirection.c:35)
+==526400==    by 0x402CB6: redirection_analizer (redirection.c:74)
+==526400==    by 0x402D8B: redirection (redirection.c:103)
+==526400==    by 0x401E4F: parse (parse.c:23)
+==526400==    by 0x401E08: setup (build.c:44)
+==526400==    by 0x401D46: ft_buildlst (build.c:56)
+==526400==    by 0x401EB2: init (main.c:20)
+==526400==    by 0x401FB1: prompt (main.c:45)
+==526400==    by 0x402020: main (main.c:62)
+==526400== 
+==526400== 1,204 (216 direct, 988 indirect) bytes in 9 blocks are definitely lost in loss record 42 of 71
+==526400==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==526400==    by 0x402AAC: redi_new (redirection.c:32)
+==526400==    by 0x402CB6: redirection_analizer (redirection.c:74)
+==526400==    by 0x402D8B: redirection (redirection.c:103)
+==526400==    by 0x401E4F: parse (parse.c:23)
+==526400==    by 0x401E08: setup (build.c:44)
+==526400==    by 0x401D46: ft_buildlst (build.c:56)
+==526400==    by 0x401EB2: init (main.c:20)
+==526400==    by 0x401FB1: prompt (main.c:45)
+==526400==    by 0x402020: main (main.c:62)
+==526400== 
+==526400== LEAK SUMMARY:
+==526400==    definitely lost: 216 bytes in 9 blocks
+==526400==    indirectly lost: 988 bytes in 71 blocks
+==526400==      possibly lost: 0 bytes in 0 blocks
+==526400==    still reachable: 0 bytes in 0 blocks
+==526400==         suppressed: 205,093 bytes in 235 blocks
+==526400== 
+==526400== For lists of detected and suppressed errors, rerun with: -s
+==526400== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
