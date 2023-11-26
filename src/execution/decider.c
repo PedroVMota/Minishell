@@ -64,6 +64,7 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 		ps[*p] = fork();
 		if(ps[*p] == 0)
 		{
+			free(ps);
 			printf("Processs : %d\n", getpid());
 			cmd->ft_exec(cmd);
 			exit(0);
