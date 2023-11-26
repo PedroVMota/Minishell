@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/26 18:59:41 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/26 19:12:11 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,15 @@ int	permission_checker(t_redirections *node)
 	int	fd;
 
 	fd = -1;
-	if (node->element[0] == ">")
-		check_out(node);
-	else if (node->element[0] == "<")
-		check_in(node);
+	while (node)
+	{
+		if (fd != -1)
+			close(fd);
+		if (node->element[0] == ">")
+			fd = check_out(node);
+		else if (node->element[0] == "<")
+			fd = check_in(node);
+			
+	}
 	return (fd);
 }
