@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/25 12:53:17 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:05:40 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_redirections
 	char **element;
 	struct s_redirections *next;
 } t_redirections;
+
 typedef struct s_cmd
 {
 	char **args;

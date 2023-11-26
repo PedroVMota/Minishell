@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:45:23 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/23 22:46:49 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/26 18:13:10 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	print_export_env(t_cmds *node)
 	t_env	*env;
 
 	env = node->sh->env;
-	standard_choiser(node);
+	// standard_choiser(node);
 	while (env)
 	{
 		printf("declare -x ");
