@@ -64,7 +64,7 @@ int	standard_choiser(t_cmds *cmd)
     if (fdi == -1 || fdo == -1)
     {
         end_endpoits(cmd);
-        return (-1);
+        return (0);
     }
     if (dup2(fdi, STDIN_FILENO) == -1)
     {
