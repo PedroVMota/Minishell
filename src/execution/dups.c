@@ -61,16 +61,7 @@ int standard_choiser(t_cmds *cmd)
 	int fdi = -1;
 	int fdo = -1;
 
-	if (cmd->prev && cmd->prev->pipe[0] != -1)
-		fdi = cmd->prev->pipe[0];
-	if (cmd->redirection[0] != -1)
-		fdi = cmd->redirection[0];
-
-	if (cmd->next && cmd->pipe[1] != -1)
-		fdo = cmd->pipe[1];
-	if (cmd->redirection[1] != -1)
-		fdo = cmd->redirection[1];
-
+	
 	if (fdi != -1)
 	{
 		dup2(fdi, STDIN_FILENO);

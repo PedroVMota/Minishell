@@ -37,6 +37,9 @@
 # define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
 
+
+//error output
+void print_shell_err(char *categorie, char *error_msg, int new_err, t_shell *sh);
 //Detect if is a builtin;
 bool	isbuiltin(t_cmds *cmd);
 
@@ -57,7 +60,7 @@ void	redirection(t_cmds *node, t_shell *sh);
 /// @param arr the list
 /// @param index the position that will be removed;
 void	split_str_del(char **arr, int index);
-void	split_str_move(char **src, int src_index, char **dest, int dest_index);
+void	split_str_move(char ***src, int src_index, char ***dest, int dest_index);
 void	split_str_replace(char **str, int index, char *new);
 char	**split_str_copy(char **src);
 

@@ -34,26 +34,27 @@ void	split_str_del(char **arr, int index)
 	arr[len - 1] = NULL;
 }
 
-void	split_str_move(char **src, int src_index, char **dest, int dest_index)
+void	split_str_move(char ***src, int src_index, char ***dest, int dest_index)
 {
 	int	dest_len;
 	int	src_len;
 
 	dest_len = 0;
 	src_len = 0;
-	if (!src || !dest || src_index < 0 || dest_index < 0)
+	if (!*src || !*dest || src_index < 0 || dest_index < 0)
 		return ;
-	while (src[src_len])
+	while (*src[src_len])
 		src_len++;
-	while (dest[dest_len])
+	while (*dest[dest_len])
 		dest_len++;
 	if (src_index >= src_len || dest_index >= dest_len)
 		return ;
-	dest[dest_index] = src[src_index];
-	src[src_index] = NULL;
+	printf("%s Passing {%s} to %s\n", BLU, *src[src_index], RESET);
+	(*dest)[dest_index] = (*src)[src_index];
+	(*src)[src_index] = NULL;
 }
 
-void	split_str_replace(char **str, int index, char *new)
+void	split_str_breplace(char **str, int index, char *new)
 {
 	int	len;
 

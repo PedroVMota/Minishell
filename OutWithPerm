@@ -1,0 +1,12 @@
+minishell
+.idea
+.trash
+*.o
+.DS_Store
+*.swp
+*.out
+a.out
+log.*
+*.ign
+.temp
+.sys

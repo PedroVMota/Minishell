@@ -29,7 +29,8 @@
 		"builtins.h": "c",
 		"stdlib.h": "c",
 		"functional": "c",
-		"vars.h": "c"
+		"vars.h": "c",
+		"wait.h": "c"
 	},
 	"files.exclude": {}
 }

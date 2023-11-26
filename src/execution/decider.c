@@ -59,9 +59,9 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 		isfork = false;
 	if (!isfork)
 	{
-		printf("%s================= PARENT PROCESS %d =================%s\n", MAG, getpid(), RESET);
-		printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
-		printf("%s================= PARENT PROCESS %d =================%s\n", MAG, getpid(), RESET);
+		printf("%s================= PARENT PROCESS %d =================%s\n", BLU, getpid(), RESET);
+		printf("%sExecuting Command%s: {%s}\n", BLU, RESET, cmd->args[0]);
+		printf("%s================= PARENT PROCESS %d =================%s\n", BLU, getpid(), RESET);
 		cmd->ft_exec(cmd);
 	}
 	else if ((isfork))

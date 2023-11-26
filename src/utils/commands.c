@@ -35,6 +35,7 @@ t_cmds	*_create_node(char *str)
 	node->prev = NULL;
 	node->next = NULL;
 	node->args = ft_split(str, '\4');
+	node->reds = NULL;
 	node->shouldrun = 1;
 	return (node);
 }
