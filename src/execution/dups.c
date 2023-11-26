@@ -70,14 +70,14 @@ int	standard_choiser(t_cmds *cmd)
     {
         write(2, "Minishell: ", 11);
         perror("Input Dup");
-        return (-1);
+        return (1);
     }
     if (dup2(fdo, STDOUT_FILENO) == -1)
     {
         write(2, "Minishell: ", 11);
         perror("Output Dup");
-        return (-1);
+        return (1);
     }
     end_endpoits(cmd);
-    return (fdo);
+    return (0);
 }
