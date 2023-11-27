@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   decider.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/10/28 16:08:40 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/27 04:10:48 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void exec_ptr_chooser(t_cmds *node)
+void	exec_ptr_chooser(t_cmds *node)
 {
 	if (!node || !node->args)
-		return;
+		return ;
 	if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;
 	else if (!ft_strcmp(node->args[0], "cd"))
@@ -34,14 +34,14 @@ void exec_ptr_chooser(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-void pipeline(t_cmds *node)
+void	pipeline(t_cmds *node)
 {
 	if (node->next)
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
 }
 
-void close_gen(t_cmds *head)
+void	close_gen(t_cmds *head)
 {
 	if (head->pipe[1] != -1)
 		close(head->pipe[1]);
@@ -51,17 +51,20 @@ void close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
-int command_exe(t_cmds *cmd, int *ps, int *p)
+int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
-	int isfork = true;
+	int	isfork;
 
+	isfork = true;
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
 		isfork = false;
 	if (!isfork)
 	{
-		printf("%s================= PARENT PROCESS %d =================%s\n", BLU, getpid(), RESET);
+		printf("%s================= PARENT PROCESS %d =================%s\n",
+			BLU, getpid(), RESET);
 		printf("%sExecuting Command%s: {%s}\n", BLU, RESET, cmd->args[0]);
-		printf("%s================= PARENT PROCESS %d =================%s\n", BLU, getpid(), RESET);
+		printf("%s================= PARENT PROCESS %d =================%s\n",
+			BLU, getpid(), RESET);
 		cmd->ft_exec(cmd);
 	}
 	else if ((isfork))
@@ -70,21 +73,25 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 		if (ps[*p] == 0)
 		{
 			free(ps);
-			printf("%s================= CHILD PROCESS %d =================%s\n", MAG, getpid(), RESET);
+			printf("%s================= CHILD PROCESS %d =================%s\n",
+				MAG, getpid(), RESET);
 			printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
-			printf("%s================= CHILD PROCESS %d =================%s\n", MAG, getpid(), RESET);
-			cmd->ft_exec(cmd);
-			exit(0);
+			printf("%s================= CHILD PROCESS %d =================%s\n",
+				MAG, getpid(), RESET);
+			if (cmd->ft_exec)
+				cmd->ft_exec(cmd);
+			clean(cmd->sh, true, 1, "Child process failed");
 		}
 	}
-	return 0;
+	return (0);
 }
 
-int software(t_shell *sh)
+int	software(t_shell *sh)
 {
-	int *processlist;
-	int process;
-	t_cmds *head;
+	int		*processlist;
+	int		process;
+	t_cmds	*head;
+	int		status;
 
 	process = 0;
 	head = sh->cmds;
@@ -99,10 +106,20 @@ int software(t_shell *sh)
 		command_exe(head, processlist, &process);
 		close_gen(head);
 		process++;
+		status = head->sh->exit;
 		head = head->next;
 	}
 	while (process > 0)
-		waitpid(processlist[--process], NULL, 0);
+	{
+		waitpid(processlist[--process], &status, 0);
+		printf("\n%s================= PARENT PROCESS %d =================%s\n",
+			BLU, getpid(), RESET);
+		printf("%sChild Process has finished%s\n", BLU, RESET);
+		printf("%sExit status: %d%s\n", BLU, status >> 8, RESET);
+		sh->exit = status >> 8;
+		printf("%s================= PARENT PROCESS %d =================%s\n",
+			BLU, getpid(), RESET);
+	}
 	free(processlist);
 	return (0);
 }

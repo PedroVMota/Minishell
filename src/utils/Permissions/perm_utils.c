@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   perm_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:47:46 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 12:48:21 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/11/27 03:43:49 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void shell_update_exit_status_error(int _new_err, t_shell *sh, char *msg)
+void	shell_update_exit_status_error(int _new_err, t_shell *sh, char *msg)
 {
-	if(!sh)
+	if (!sh)
 		clean(sh, true, 1, msg);
 	sh->exit = _new_err;
 	return ;
@@ -44,6 +44,8 @@ static char	**getpaths(t_shell *sh)
 	char	**paths;
 
 	list = sh->env;
+	if (!list)
+		return (NULL);
 	paths = NULL;
 	while (list)
 	{
@@ -60,7 +62,7 @@ static char	**getpaths(t_shell *sh)
 	return (NULL);
 }
 
-bool	isbuiltin(t_cmds *cmd);
+bool		isbuiltin(t_cmds *cmd);
 
 void	set_relative_path(t_cmds *head, int *err)
 {
@@ -68,13 +70,14 @@ void	set_relative_path(t_cmds *head, int *err)
 	char	*tmp;
 	char	**paths;
 
-
-	printf("%s%s%s\n", YEL, __func__, RESET);
-	if(isbuiltin(head))
+	if (isbuiltin(head))
 		return ;
 	paths = getpaths(head->sh);
-	if(!paths)
-		return shell_update_exit_status_error(126, head->sh, "Cannot Execute Binary files");
+	if (!paths)
+	{
+		*err = 1;
+		return ;
+	}
 	i = -1;
 	while (paths[++i])
 	{
@@ -95,15 +98,8 @@ void	set_relative_path(t_cmds *head, int *err)
 	*err = 127;
 }
 
-/*
-	printf("ReadPermission: %d\n", access(head->args[0], R_OK));
-	printf("WritePermission: %d\n", access(head->args[0], W_OK));
-	printf("ExecutePermission: %d\n", access(head->args[0], X_OK));
-	printf("FileExists: %d\n", access(head->args[0], F_OK));
-*/
 void	set_absolute_path(t_cmds *head, int *err)
 {
-	printf("%s%s%s\n", YEL, __func__, RESET);
 	if (access(head->args[0], X_OK) == -1)
 	{
 		*err = 126;

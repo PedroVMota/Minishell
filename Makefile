@@ -31,16 +31,19 @@ clean:
 
 fclean: clean 
 	@rm -f $(NAME) lst lst.txt *.log *.del *.ign
-	@make fclean -C $(libft) --no-printz
+	@make fclean -C $(libft) --no-print
 
 e:
-	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" env -i ./minishell
+	make && env -i ./minishell
 
 d:
 	make && valgrind --log-file="val.log"  --track-fds=yes ./minishell
 
 f:
 	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
+
+n:
+	make && ./minishell
 # make && ./minishell
 #--log-file="val.log"
 
