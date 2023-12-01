@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 12:59:42 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/12/01 18:14:01 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_cmds	*_create_node(char *str)
 	node->prev = NULL;
 	node->next = NULL;
 	node->args = ft_split(str, '\4');
-	node->reds = NULL;
+	node->infiles = NULL;
+	node->outfile = NULL;
 	node->shouldrun = 1;
 	return (node);
 }

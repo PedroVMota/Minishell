@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/25 12:45:55 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:22:37 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	permission_tester(t_cmds *head);
 int		software(t_shell *sh);
 // Data Type Manipulation
 
-void	heredoc(t_cmds *node, char *delimiter);
+void     heredoc(t_cmds *node, char *delimiter);
 void	redirection(t_cmds *node, t_shell *sh);
 
 /// @brief Remove an element of a 2D matrix
@@ -129,5 +129,6 @@ t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh);
 void	print_special(char *ptr);
 int		print_split(char **ptr);
 void	CommandDisplay(t_cmds *ptr);
-
+void    redirect(t_cmds *node);
+void    close_redi(t_cmds *node);
 #endif

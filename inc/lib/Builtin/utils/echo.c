@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/27 04:45:44 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/01 19:28:04 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ static int	check_options(t_cmds *node, int *word)
 	}
 	return (break_line);
 }
-void		ShowSingleCommand(t_cmds *cmd);
+
 int	ft_echo(t_cmds *node)
 {
 	int	word;
 	int	br;
 
 	outfile(node);
-	ShowSingleCommand(node);
 	if (node->shouldrun == 0)
 	{
 		return (1);

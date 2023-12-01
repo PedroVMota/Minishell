@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 09:54:28 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/11/26 18:05:40 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:19:38 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_redirections
 {
 	t_type mode;
 	char **element;
+
 	struct s_redirections *next;
 } t_redirections;
 
@@ -58,7 +59,8 @@ typedef struct s_cmd
 	
 	int (*ft_exec)(struct s_cmd *node);
 
-	t_redirections *reds;
+	t_redirections *infiles;
+	t_redirections *outfile;
 	struct s_shell *sh;
 	struct s_cmd *prev;
 	struct s_cmd *next;

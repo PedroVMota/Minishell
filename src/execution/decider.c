@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decider.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/27 04:10:48 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/01 19:47:17 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 		isfork = false;
 	if (!isfork)
 	{
-		printf("%s================= PARENT PROCESS %d =================%s\n",
-			BLU, getpid(), RESET);
-		printf("%sExecuting Command%s: {%s}\n", BLU, RESET, cmd->args[0]);
-		printf("%s================= PARENT PROCESS %d =================%s\n",
-			BLU, getpid(), RESET);
+		// printf("%s================= PARENT PROCESS %d =================%s\n",
+		// 	BLU, getpid(), RESET);
+		// printf("%sExecuting Command%s: {%s}\n", BLU, RESET, cmd->args[0]);
+		// printf("%s================= PARENT PROCESS %d =================%s\n",
+			// BLU, getpid(), RESET);
 		cmd->ft_exec(cmd);
 	}
 	else if ((isfork))
@@ -73,11 +73,11 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 		if (ps[*p] == 0)
 		{
 			free(ps);
-			printf("%s================= CHILD PROCESS %d =================%s\n",
-				MAG, getpid(), RESET);
-			printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
-			printf("%s================= CHILD PROCESS %d =================%s\n",
-				MAG, getpid(), RESET);
+			// printf("%s================= CHILD PROCESS %d =================%s\n",
+			// 	MAG, getpid(), RESET);
+			// printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
+			// printf("%s================= CHILD PROCESS %d =================%s\n",
+				// MAG, getpid(), RESET);
 			if (cmd->ft_exec)
 				cmd->ft_exec(cmd);
 			clean(cmd->sh, true, 1, "Child process failed");
@@ -112,13 +112,13 @@ int	software(t_shell *sh)
 	while (process > 0)
 	{
 		waitpid(processlist[--process], &status, 0);
-		printf("\n%s================= PARENT PROCESS %d =================%s\n",
-			BLU, getpid(), RESET);
-		printf("%sChild Process has finished%s\n", BLU, RESET);
-		printf("%sExit status: %d%s\n", BLU, status >> 8, RESET);
+		// printf("\n%s================= PARENT PROCESS %d =================%s\n",
+		// 	BLU, getpid(), RESET);
+		// printf("%sChild Process has finished%s\n", BLU, RESET);
+		// printf("%sExit status: %d%s\n", BLU, status >> 8, RESET);
 		sh->exit = status >> 8;
-		printf("%s================= PARENT PROCESS %d =================%s\n",
-			BLU, getpid(), RESET);
+		// printf("%s================= PARENT PROCESS %d =================%s\n",
+		// 	BLU, getpid(), RESET);
 	}
 	free(processlist);
 	return (0);

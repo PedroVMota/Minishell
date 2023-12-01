@@ -78,43 +78,43 @@ int	print_split(char **ptr)
 	return (i);
 }
 
-void	ShowCommands(t_cmds *cmd)
-{
-	int				Command;
-	int				Redirection;
-	t_redirections	*r;
+// void	ShowCommands(t_cmds *cmd)
+// {
+// 	int				Command;
+// 	int				Redirection;
+// 	t_redirections	*r;
 
-	Command = 0;
-	Redirection = 0;
-	r = NULL;
-	if (!cmd)
-	{
-		printf("There is no command\n");
-		return ;
-	}
-	while (cmd)
-	{
-		r = cmd->reds;
-		Redirection = 0;
-		Command++;
-		printf("==================== Command %d ====================\n",
-			Command);
-		printf("Command:{%s}\n", cmd->args[0]);
-		cmd = cmd->next;
-		if (!r)
-			continue ;
-		while (r)
-		{
-			Redirection++;
-			printf("------> Redirection {%d}: ", Redirection);
-			printf("Type -> %d\n", r->mode);
-			print_split(r->element);
-			printf("\n");
-			r = r->next;
-		}
-		r = NULL;
-	}
-}
+// 	Command = 0;
+// 	Redirection = 0;
+// 	r = NULL;
+// 	if (!cmd)
+// 	{
+// 		printf("There is no command\n");
+// 		return ;
+// 	}
+// 	while (cmd)
+// 	{
+// 		r = cmd->reds;
+// 		Redirection = 0;
+// 		Command++;
+// 		printf("==================== Command %d ====================\n",
+// 			Command);
+// 		printf("Command:{%s}\n", cmd->args[0]);
+// 		cmd = cmd->next;
+// 		if (!r)
+// 			continue ;
+// 		while (r)
+// 		{
+// 			Redirection++;
+// 			printf("------> Redirection {%d}: ", Redirection);
+// 			printf("Type -> %d\n", r->mode);
+// 			print_split(r->element);
+// 			printf("\n");
+// 			r = r->next;
+// 		}
+// 		r = NULL;
+// 	}
+// }
 
 int	size_of_split(char **ptr)
 {
@@ -126,38 +126,38 @@ int	size_of_split(char **ptr)
 	return (i);
 }
 
-void	ShowSingleCommand(t_cmds *cmd)
-{
-	int Command;
-	int Redirection;
-	t_redirections *r;
+// void	ShowSingleCommand(t_cmds *cmd)
+// {
+// 	int Command;
+// 	int Redirection;
+// 	t_redirections *r;
 
-	Command = 0;
-	Redirection = 0;
-	r = NULL;
-	if (!cmd)
-	{
-		printf("There is no command\n");
-		return ;
-	}
-	r = cmd->reds;
-	Redirection = 0;
-	Command++;
-	printf("==================== Command %d ====================\n", Command);
-	printf("Command: ");
-	print_split(cmd->args);
-	printf("\n");
-	printf("Size: [%d]\n", size_of_split(cmd->args));
-	cmd = cmd->next;
-	if (!r)
-		return ;
-	while (r)
-	{
-		Redirection++;
-		printf("------> Redirection {%d}: ", Redirection);
-		printf("Type -> %d\n", r->mode);
-		print_split(r->element);
-		printf("\n");
-		r = r->next;
-	}
-}
+// 	Command = 0;
+// 	Redirection = 0;
+// 	r = NULL;
+// 	if (!cmd)
+// 	{
+// 		printf("There is no command\n");
+// 		return ;
+// 	}
+// 	r = cmd->reds;
+// 	Redirection = 0;
+// 	Command++;
+// 	printf("==================== Command %d ====================\n", Command);
+// 	printf("Command: ");
+// 	print_split(cmd->args);
+// 	printf("\n");
+// 	printf("Size: [%d]\n", size_of_split(cmd->args));
+// 	cmd = cmd->next;
+// 	if (!r)
+// 		return ;
+// 	while (r)
+// 	{
+// 		Redirection++;
+// 		printf("------> Redirection {%d}: ", Redirection);
+// 		printf("Type -> %d\n", r->mode);
+// 		print_split(r->element);
+// 		printf("\n");
+// 		r = r->next;
+// 	}
+// }

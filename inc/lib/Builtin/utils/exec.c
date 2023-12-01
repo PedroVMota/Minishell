@@ -6,13 +6,14 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/01 15:51:23 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/01 19:51:18 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 bool	ShowSingleCommand(t_cmds *cmd);
+int	permission_checker(t_redirections *node);
 
 // Create a function that will search the redirection.
 // if there is an an output but the redirection return a
@@ -72,6 +73,7 @@ bool	permission_f(t_cmds *cmd)
 int	ft_exec(t_cmds *node)
 {
 	// standard_choiser(node);
+	redirect(node);
 	if (permission_f(node))
 		clean(node->sh, true, node->sh->exit, NULL);
 	if (permission_r(node))

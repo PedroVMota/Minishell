@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 13:17:29 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:25:10 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ int free_split(char **split, int ret)
 	return (ret);
 }
 
-static void clean_redirection(t_redirections **head)
-{
-	t_redirections *local;
-	t_redirections *next;
+// static void clean_redirection(t_redirections **head)
+// {
+// 	t_redirections *local;
+// 	t_redirections *next;
 
-	local = *head;
-	while(local)
-	{
-		free_split(local->element, 0);
-		next = local->next;
-		free(local);
-		local = next;
-	}
-}
+// 	local = *head;
+// 	while(local)
+// 	{
+// 		free_split(local->element, 0);
+// 		next = local->next;
+// 		free(local);
+// 		local = next;
+// 	}
+// }
 
 static void close_fds(t_cmds *cmds)
 {
@@ -66,8 +66,7 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 		cmds = sh->cmds;
 	while (sh && cmds)
 	{
-		if(cmds->reds)
-			clean_redirection(&cmds->reds);
+		close_redi(sh->cmds);
 		close_fds(cmds);
 		free_split(cmds->args, 1);
 		tmp = cmds->next;
