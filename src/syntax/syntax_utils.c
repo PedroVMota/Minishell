@@ -12,17 +12,17 @@
 
 #include <minishell.h>
 
-void	err_print(char *msg)
+void err_print(char *msg)
 {
 	ft_putstr_fd("minishell: Syntax error: ", 2);
 	ft_putendl_fd(msg, 2);
 }
 
 // SECTION - SKIP STRING SKIP
-void	skip_string_skip(char *in, int *i, t_shell *sh)
+void skip_string_skip(char *in, int *i, t_shell *sh)
 {
-	char	c;
-	bool	syntax_error;
+	char c;
+	bool syntax_error;
 
 	syntax_error = false;
 	c = in[*i];
@@ -32,7 +32,7 @@ void	skip_string_skip(char *in, int *i, t_shell *sh)
 		if (in[*i] == '\0')
 		{
 			syntax_error = true;
-			break ;
+			break;
 		}
 		(*i)++;
 	}
@@ -48,38 +48,21 @@ void	skip_string_skip(char *in, int *i, t_shell *sh)
 }
 
 // SECTION - PIPE ANALIZER
-bool	pipe_analizer(char *in, int *i, t_shell *sh)
+bool pipe_analizer(char *in, int *i, t_shell *sh)
 {
 	if (in[*i + 1])
 		(*i)++;
 	while (in[*i])
 	{
-		if (isalnum(in[*i]))
+		if (ft_isalnum(in[*i]))
 			return (false);
 		else if (in[*i] == '|')
 			return (true);
 		else if (in[*i] == '\'' || in[*i] == '\"')
+		{
 			skip_string_skip(in, i, sh);
-		(*i)++;
-	}
-	return (true);
-}
-
-// SECTION - REDIRECTIONS ANALIZER
-bool	redi_ana(char *in, int *i, t_shell *sh)
-{
-	if (in[*i + 1])
-		(*i)++;
-	while (in[*i])
-	{
-		if (isalnum(in[*i]))
-			return (false);
-		else if (in[*i] == '>' || in[*i] == '<')
-			(*i)++;
-		else if (in[*i] == '|')
-			syntax_pipe(in, i, sh);
-		else if (in[*i] == '\'' || in[*i] == '\"')
-			skip_string_skip(in, i, sh);
+			return false;
+		}
 		(*i)++;
 	}
 	return (true);
