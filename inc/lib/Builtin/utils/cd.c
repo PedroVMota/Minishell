@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 00:22:01 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/01 15:58:28 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_cd(t_cmds *node)
 					remove_part_str(node->args[1], "~/");
 				else
 				{
-					write(2, "Minishell: cd: No such file or directory\n", 42);
+					write(2, "Minishell: cd: No such file or directory\n", 43);
 					return (1);
 				}
 				change_to_home();
@@ -66,7 +66,7 @@ int	ft_cd(t_cmds *node)
 				change_to_home();
 		}
 		else if (node->args[2])
-			write(2, "Minishell: cd : too many arguments\n", 36);
+			write(2, "Minishell: cd : too many arguments\n", 35);
 		else if (node->args[1][0] == '-')
 			change_to_oldpwd();
 		else

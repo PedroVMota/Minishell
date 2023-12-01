@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:54:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/22 20:35:26 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/01 16:08:48 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	handle_sign(int sig, t_shell *sh)
 		return ;
 	}
 	pid = waitpid(-1, &status, 0);
-	write(2, "^C", 2);
 	write(2, "\n", 1);
 	if (pid == -1)
 	{
