@@ -6,12 +6,14 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 11:24:03 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/27 04:28:39 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "vars.h"
+
+bool	does_have_var(char *s);
 
 char	*varlib_obtain(char *str)
 {
@@ -57,7 +59,23 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 	}
 	result[j] = '\0';
 	free_array((char *[]){str, new_value, del, NULL});
+	printf("%s>> %s", RED, RESET);
+	print_special(result);
+	printf("\n");
 	return (result);
+}
+
+void printregion(char *str, int start, int end)
+{
+	int i;
+
+	i = start;
+	while (i < end)
+	{
+		printf("%c", str[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 char	*varlib_delete_unknown(char *str)
@@ -75,6 +93,7 @@ char	*varlib_delete_unknown(char *str)
 			|| !ft_isalnum(str[end])))
 		end++;
 	newlen = len - (end - start);
+	printregion(str, start, end);
 	if (newlen == 0)
 		return (NULL);
 	result = (char *)malloc(newlen + 1);
@@ -86,6 +105,9 @@ char	*varlib_delete_unknown(char *str)
 	ft_strlcpy(result, str, start + 1);
 	ft_strlcpy(result + start, str + end, len - end + 1);
 	free(str);
+	printf("%s>> %s", RED, RESET);
+	print_special(result);
+	printf("\n");
 	return (result);
 }
 
@@ -111,6 +133,7 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 			return (varlib_replace(str, ft_strdup(vars->vars[1]), var));
 		if (var[0] == '?')
 			return (varlib_replace(str, ft_itoa(sh->exit), var));
+		
 		free(var);
 		vars = vars->next;
 	}
@@ -120,16 +143,13 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 char	*varlib_execute(char *s, t_shell *h)
 {
 	int		index;
-	int		loop;
 	char	quote;
 
-	loop = 0;
 	index = 0;
 	quote = 0;
-	if (!s)
-		return (s);
-	while (s[index])
+	while ((does_have_var(s)) && s[index])
 	{
+		printf("Loop %d %c\n", index, s[index]);
 		if (!does_have_var(s))
 			return (s);
 		if (s[index] == '\'' && quote == 0)
@@ -138,7 +158,6 @@ char	*varlib_execute(char *s, t_shell *h)
 			quote = 0;
 		else if (s[index] == '$' && !quote)
 			s = varlib_decide(s, h, index);
-		loop++;
 		index++;
 	}
 	return (s);

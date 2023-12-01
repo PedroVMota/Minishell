@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/25 13:25:29 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/11/27 04:45:44 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void close_fd_cmd(t_cmds *node)
+static void	close_fd_cmd(t_cmds *node)
 {
 	if (node->prev)
 		close(node->prev->pipe[0]);
@@ -26,9 +26,9 @@ static void close_fd_cmd(t_cmds *node)
 		close(node->redirection[1]);
 }
 
-static void outfile(t_cmds *node)
+static void	outfile(t_cmds *node)
 {
-	int fd;
+	int	fd;
 
 	fd = -1;
 	if (node->next)
@@ -36,7 +36,7 @@ static void outfile(t_cmds *node)
 	if (node->redirection[1] != -1)
 		fd = node->redirection[1];
 	if (fd == -1)
-		return;
+		return ;
 	if (dup2(fd, 1) == -1)
 	{
 		write(2, "Minishell: ", 12);
@@ -46,14 +46,14 @@ static void outfile(t_cmds *node)
 	close_fd_cmd(node);
 }
 
-static int check_options(t_cmds *node, int *word)
+static int	check_options(t_cmds *node, int *word)
 {
-	int break_line;
+	int	break_line;
 
 	break_line = 0;
 	*word = 1;
 	if (!node->args[1])
-		write(1, "\n", 1);
+		return 0;
 	if (node->args[*word][0] == '-' && node->args[*word][1] == 'n')
 	{
 		break_line = 1;
@@ -61,17 +61,17 @@ static int check_options(t_cmds *node, int *word)
 	}
 	return (break_line);
 }
-
-int ft_echo(t_cmds *node)
+void		ShowSingleCommand(t_cmds *cmd);
+int	ft_echo(t_cmds *node)
 {
-	int word;
-	int br;
+	int	word;
+	int	br;
 
 	outfile(node);
+	ShowSingleCommand(node);
 	if (node->shouldrun == 0)
 	{
-		printf("Here\n");
-		return 1;
+		return (1);
 	}
 	br = check_options(node, &word);
 	while (node->args[word])
