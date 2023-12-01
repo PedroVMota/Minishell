@@ -6,22 +6,21 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 04:46:08 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/29 14:49:32 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init(char *input, t_shell *sh)
+void	center(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
 	input = varlib_execute(input, sh);
 	switch_caracters(&input);
 	sh->cmds = ft_buildlst(input, sh);
-	software(sh);
+	execution_part(sh);
 	clean(sh, false, sh->exit, NULL);
 	free(input);
-	(void)sh;
 }
 
 void	prompt(t_shell *shell)
@@ -30,7 +29,6 @@ void	prompt(t_shell *shell)
 
 	while (1)
 	{
-		printf("Main Process: %d\n", getpid());
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
@@ -42,7 +40,7 @@ void	prompt(t_shell *shell)
 		}
 		add_history(input);
 		ft_syntax_checker(input, shell);
-		init(input, shell);
+		center(input, shell);
 	}
 }
 

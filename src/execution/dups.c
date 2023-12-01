@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   dups.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/25 19:05:22 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/11/28 01:03:03 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int get_in(t_cmds *node)
+int	get_in(t_cmds *node)
 {
-	int fd;
+	int	fd;
 
 	fd = -1;
 	if (node->prev && node->prev->pipe[0] != -1)
@@ -24,9 +24,9 @@ int get_in(t_cmds *node)
 	return (fd);
 }
 
-int get_ou(t_cmds *node)
+int	get_ou(t_cmds *node)
 {
-	int fd;
+	int	fd;
 
 	fd = -1;
 	if (node->next && node->pipe[1] != -1)
@@ -36,7 +36,7 @@ int get_ou(t_cmds *node)
 	return (fd);
 }
 
-static void end_endpoits(t_cmds *cmd, int fdi, int fdo)
+static void	end_endpoits(t_cmds *cmd, int fdi, int fdo)
 {
 	if (cmd->prev)
 	{
@@ -56,12 +56,13 @@ static void end_endpoits(t_cmds *cmd, int fdi, int fdo)
 		close(fdo);
 }
 
-int standard_choiser(t_cmds *cmd)
+int	standard_choiser(t_cmds *cmd)
 {
-	int fdi = -1;
-	int fdo = -1;
+	int	fdi;
+	int	fdo;
 
-	
+	fdi = -1;
+	fdo = -1;
 	if (fdi != -1)
 	{
 		dup2(fdi, STDIN_FILENO);
@@ -72,7 +73,6 @@ int standard_choiser(t_cmds *cmd)
 		dup2(fdo, STDOUT_FILENO);
 		close(fdi);
 	}
-
 	end_endpoits(cmd, fdi, fdo);
 	return (0);
 }

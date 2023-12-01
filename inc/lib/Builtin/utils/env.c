@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 00:35:27 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/30 00:50:11 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ int	ft_env(t_cmds *node)
 	t_env	*env;
 	t_shell	*head_master;
 
+	if (file_descriptor_in(node))
+		return (1);
+	if (file_descriptor_out(node))
+		return (1);
 	head_master = node->sh;
 	env = node->sh->env;
 	while (env)

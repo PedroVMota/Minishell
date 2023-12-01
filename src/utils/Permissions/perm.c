@@ -6,19 +6,20 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 16:02:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 03:45:42 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/30 00:52:12 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void set_relative_path(t_cmds *head, int *err);
-void set_absolute_path(t_cmds *head, int *err);
+void	set_relative_path(t_cmds *head, int *err);
+void	set_absolute_path(t_cmds *head, int *err);
 
-int check_all_paths(t_cmds *head, int *err, int *type)
+int	check_all_paths(t_cmds *head, int *err, int *type)
 {
 	*type = 1;
-	if (ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../", 3))
+	if (ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",
+			3))
 		*type = 2;
 	if (!isbuiltin(head) && *type == 1)
 		set_relative_path(head, err);
@@ -27,10 +28,11 @@ int check_all_paths(t_cmds *head, int *err, int *type)
 	return (0);
 }
 
-bool permission_tester(t_cmds *head)
+bool	permission_tester(t_cmds *head)
 {
-	int type;
+	int	type;
 
+	type = 0;
 	check_all_paths(head, &head->sh->exit, &type);
 	if (head->sh->exit == 127 && type == 1)
 		return (false);

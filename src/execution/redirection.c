@@ -13,9 +13,9 @@
 
 #include "minishell.h"
 
-t_type red_type_checker(char *str)
+t_type	red_type_checker(char *str)
 {
-	t_type final;
+	t_type	final;
 
 	final = FILE_NONE;
 	if (str[0] == INFILE)
@@ -25,22 +25,19 @@ t_type red_type_checker(char *str)
 	return (final);
 }
 
-t_redirections *redi_new(int *i, t_cmds *cm, t_type type) // funcao que aloca
+t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
 {
-	t_redirections *new;
+	t_redirections	*new;
 
 	new = malloc(sizeof(t_redirections));
 	if (!new)
-		return NULL;
+		return (NULL);
 	new->element = malloc(sizeof(char *) * 3);
 	if (!new->element)
 	{
 		free(new);
-		return NULL;
+		return (NULL);
 	}
-	printf("%s>>>>%s ", RED, RESET);
-	print_special(cm->args[*i]);
-	printf("\n");
 	new->element[0] = ft_strdup(cm->args[*i]);
 	split_str_del(cm->args, *i);
 	new->element[1] = ft_strdup(cm->args[*i]);
@@ -48,29 +45,27 @@ t_redirections *redi_new(int *i, t_cmds *cm, t_type type) // funcao que aloca
 	new->element[2] = NULL;
 	new->mode = type;
 	new->next = NULL;
-	print_split(new->element);
-	return new;
+	return (new);
 }
 
-t_redirections *redirection_last_ptr(t_redirections *lst)
+t_redirections	*redirection_last_ptr(t_redirections *lst)
 {
 	if (!lst)
-		return NULL;
+		return (NULL);
 	while (lst->next)
 		lst = lst->next;
-	return lst;
+	return (lst);
 }
 
-void redirection_analizer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void	redirection_analizer(t_type redi_node, t_cmds *node, int *i,
+		t_shell *sh)
 {
-	t_redirections *new;
-	t_redirections *last;
+	t_redirections	*new;
+	t_redirections	*last;
+
 	(void)sh;
 	if (redi_node == FILE_NONE)
-	{
-		printf("There is no redirection.\n");
-		return;
-	}
+		return ;
 	new = redi_new(i, node, redi_node);
 	if (!new)
 		return ;
@@ -83,19 +78,17 @@ void redirection_analizer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 	last->next = new;
 }
 
-
-
-
-void redirection(t_cmds *node, t_shell *sh)
+void	redirection(t_cmds *node, t_shell *sh)
 {
-	char **args;
-	t_type red_mode;
-	int i;
+	char	**args;
+	t_type	red_mode;
+	int		i;
+	int		loop;
 
 	red_mode = FILE_NONE;
 	i = 0;
 	args = node->args;
-	int loop = -1;
+	loop = -1;
 	while (args[i])
 	{
 		remove_quotes(args[i]);

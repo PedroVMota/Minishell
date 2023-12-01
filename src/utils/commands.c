@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 12:59:42 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:35:48 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_cmds	*_create_node(char *str)
 	node->prev = NULL;
 	node->next = NULL;
 	node->args = ft_split(str, '\4');
+	if (!node->args)
+		free(node->args);
 	node->reds = NULL;
 	node->shouldrun = 1;
 	return (node);
@@ -47,6 +49,8 @@ t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh)
 	t_cmds	*node;
 
 	node = _create_node(cmd_line);
+	if (!node)
+		return (*head);
 	node->sh = sh;
 	last = ft_lstpos(*head);
 	first = *head;

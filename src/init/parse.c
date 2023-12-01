@@ -6,16 +6,15 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:52:30 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:47:01 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/29 14:36:43 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-void ShowCommands(t_cmds *cmd);
 
-void parse(t_cmds *node, t_shell *sh)
+void	parse(t_cmds *node, t_shell *sh)
 {
-	t_cmds *command;
+	t_cmds	*command;
 
 	command = node;
 	while (command)
@@ -23,5 +22,4 @@ void parse(t_cmds *node, t_shell *sh)
 		redirection(command, sh);
 		command = command->next;
 	}
-	ShowCommands(node);
 }

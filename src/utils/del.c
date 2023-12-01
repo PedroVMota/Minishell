@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 13:17:29 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/11/29 14:35:55 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int free_split(char **split, int ret)
+int	free_split(char **split, int ret)
 {
-	char **ptr;
+	char	**ptr;
 
 	ptr = split;
 	if (!split)
@@ -28,13 +28,15 @@ int free_split(char **split, int ret)
 	return (ret);
 }
 
-static void clean_redirection(t_redirections **head)
+static void	clean_redirection(t_redirections **head)
 {
-	t_redirections *local;
-	t_redirections *next;
+	t_redirections	*local;
+	t_redirections	*next;
 
 	local = *head;
-	while(local)
+	if (!local)
+		return ;
+	while (local)
 	{
 		free_split(local->element, 0);
 		next = local->next;
@@ -43,7 +45,7 @@ static void clean_redirection(t_redirections **head)
 	}
 }
 
-static void close_fds(t_cmds *cmds)
+static void	close_fds(t_cmds *cmds)
 {
 	if (cmds->pipe[0] != -1)
 		close(cmds->pipe[0]);
@@ -55,10 +57,10 @@ static void close_fds(t_cmds *cmds)
 		close(cmds->redirection[1]);
 }
 
-int clean(t_shell *sh, bool _exit, int status, char *msg)
+int	clean(t_shell *sh, bool _exit, int status, char *msg)
 {
-	t_cmds *cmds;
-	t_cmds *tmp;
+	t_cmds	*cmds;
+	t_cmds	*tmp;
 
 	tmp = NULL;
 	cmds = NULL;
@@ -66,7 +68,7 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 		cmds = sh->cmds;
 	while (sh && cmds)
 	{
-		if(cmds->reds)
+		if (cmds->reds)
 			clean_redirection(&cmds->reds);
 		close_fds(cmds);
 		free_split(cmds->args, 1);
@@ -76,7 +78,7 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 	}
 	if (_exit)
 	{
-		if(msg)
+		if (msg)
 			write(2, msg, ft_strlen(msg));
 		ft_env_delete(&sh->env);
 		exit(status);
@@ -84,9 +86,9 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 	return (0);
 }
 
-int ft_env_delete(t_env **env)
+int	ft_env_delete(t_env **env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while ((*env))
 	{

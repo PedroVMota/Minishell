@@ -7,6 +7,7 @@
                 "${workspaceFolder}/inc/lib/Libft/**",
                 "${workspaceFolder}/inc/lib/Builtin/**",
                 "${workspaceFolder}/inc/lib/Var/**",
+                "${workspaceFolder}/inc/lib/**",
                 "${workspaceFolder}/inc/**"
             ],
             "defines": [],

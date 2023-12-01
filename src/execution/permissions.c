@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes.c                                           :+:      :+:    :+:   */
+/*   permissions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 18:04:07 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:31:06 by pedro            ###   ########.fr       */
+/*   Created: 2023/11/29 14:36:02 by pedro             #+#    #+#             */
+/*   Updated: 2023/11/29 14:36:08 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	syntax_quotes(char *input, int i, int *flag, t_shell *sh)
+bool	f_perm(char *name, char **paths)
 {
-	char	c;
-
-	c = input[i];
-	*flag = c;
-	while (input[++i])
+	if (access(name, F_OK) == 0)
 	{
-		if (c == input[i])
-			return ;
+		free_split(paths, 0);
+		return (true);
 	}
-	syntax_report(&c, input, 1, sh);
+	return (false);
 }
