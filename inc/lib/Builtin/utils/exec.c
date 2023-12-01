@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/11/26 18:12:48 by oharoon          ###   ########.fr       */
-=======
-/*   Updated: 2023/11/27 04:49:41 by pedro            ###   ########.fr       */
->>>>>>> 2308d88c7cab162eaf24776ab6239e0319d17a1a
+/*   Updated: 2023/12/01 15:51:23 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +71,7 @@ bool	permission_f(t_cmds *cmd)
 
 int	ft_exec(t_cmds *node)
 {
-<<<<<<< HEAD
 	// standard_choiser(node);
-=======
 	if (permission_f(node))
 		clean(node->sh, true, node->sh->exit, NULL);
 	if (permission_r(node))
@@ -86,7 +80,6 @@ int	ft_exec(t_cmds *node)
 		clean(node->sh, true, node->sh->exit, NULL);
 	if (!node->shouldrun)
 		clean(node->sh, true, node->sh->exit, NULL);
->>>>>>> 2308d88c7cab162eaf24776ab6239e0319d17a1a
 	if (execve(node->args[0], node->args, node->sh->envp))
 	{
 		perror(node->args[0]);
