@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 15:24:42 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 18:01:55 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,23 +93,16 @@ char	*varlib_delete_unknown(char *str)
 			|| !ft_isalnum(str[end])))
 		end++;
 	newlen = len - (end - start);
-	printregion(str, start, end);
 	if (newlen == 0)
 		return (NULL);
 	result = (char *)malloc(newlen + 1);
 	if (!result)
-	{
-		free(str);
-		return (NULL);
-	}
+		return (str);
 	ft_strlcpy(result, str, start + 1);
 	ft_strlcpy(result + start, str + end, len - end + 1);
 	free(str);
 	return (result);
 }
-	// printf("%s>> %s", RED, RESET);
-	// print_special(result);
-	// printf("\n");
 
 /// @brief This will search and replac or delete the string
 /// @param str String Modified
@@ -148,7 +141,6 @@ char	*varlib_execute(char *s, t_shell *h)
 	quote = 0;
 	while ((does_have_var(s)) && s[index])
 	{
-		printf("Loop %d %c\n", index, s[index]);
 		if (!does_have_var(s))
 			return (s);
 		if (s[index] == '\'' && quote == 0)

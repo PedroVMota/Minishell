@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dups.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 15:08:38 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 17:59:22 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,5 @@ void	redirect(t_cmds *node)
 		node->outfile = node->outfile->next;
 	}
 	if (node->redirection[1] > 0)
-		dup2(node->redirection[1], 1); 
+		dup2(node->redirection[1], 1);
 }

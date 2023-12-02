@@ -6,18 +6,18 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 11:47:46 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 03:43:49 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/29 14:29:26 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	shell_update_exit_status_error(int _new_err, t_shell *sh, char *msg)
+bool		f_perm(char *name, char **paths);
+
+int	shell_update_exit_status_error(int _new_err, t_shell *sh)
 {
-	if (!sh)
-		clean(sh, true, 1, msg);
 	sh->exit = _new_err;
-	return ;
+	return (sh->exit);
 }
 
 static void	add_directory(char **cmd)
@@ -74,23 +74,17 @@ void	set_relative_path(t_cmds *head, int *err)
 		return ;
 	paths = getpaths(head->sh);
 	if (!paths)
-	{
-		*err = 1;
 		return ;
-	}
 	i = -1;
 	while (paths[++i])
 	{
 		tmp = ft_strjoin(paths[i], head->args[0]);
 		if (!tmp)
 			return ;
-		if (access(tmp, F_OK) == 0)
+		if (f_perm(tmp, paths))
 		{
-			free(head->args[0]);
-			free_split(paths, 1);
-			head->args[0] = tmp;
-			*err = 0;
-			return ;
+			split_str_replace(head->args, 0, tmp);
+			return ((void)(shell_update_exit_status_error(0, head->sh)));
 		}
 		free(tmp);
 	}
@@ -98,17 +92,11 @@ void	set_relative_path(t_cmds *head, int *err)
 	*err = 127;
 }
 
-void	set_absolute_path(t_cmds *head, int *err)
+int	set_absolute_path(t_cmds *head)
 {
 	if (access(head->args[0], X_OK) == -1)
-	{
-		*err = 126;
-		return ;
-	}
+		return (shell_update_exit_status_error(126, head->sh));
 	else if (access(head->args[0], F_OK))
-	{
-		*err = 127;
-		return ;
-	}
-	*err = 0;
+		return (shell_update_exit_status_error(127, head->sh));
+	return (shell_update_exit_status_error(0, head->sh));
 }

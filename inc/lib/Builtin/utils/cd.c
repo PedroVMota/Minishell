@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 15:18:41 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 18:00:57 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		check_repetition(t_env *new, t_env **env);
 void	change_to_home(void)
 {
 	if (chdir(getenv("HOME")) < 0)
-		write(2, "Minishell: cd: HOME not set\n", 28);
+		write(2, "Minishell: cd: HOME not set\n", 29);
 }
 
 void	change_to_oldpwd(void)
@@ -43,7 +43,7 @@ int	ft_cd_helper(t_cmds *node)
 			remove_part_str(node->args[1], "~/");
 		else
 		{
-			write(2, "Minishell: cd: No such file or directory\n", 43);
+			write(2, "Minishell: cd: No such file or directory\n", 42);
 			return (1);
 		}
 		change_to_home();
@@ -70,7 +70,7 @@ int	ft_cd(t_cmds *node)
 				return (1);
 		}
 		else if (node->args[2])
-			write(2, "Minishell: cd : too many arguments\n", 35);
+			write(2, "Minishell: cd : too many arguments\n", 36);
 		else if (node->args[1][0] == '-')
 			change_to_oldpwd();
 		else

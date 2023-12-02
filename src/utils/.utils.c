@@ -19,15 +19,6 @@ bool	isbuiltin(t_cmds *cmd)
 	return (false);
 }
 
-void	print_shell_err(char *categorie, char *error_msg, int new_err,
-		t_shell *sh)
-{
-	ft_putstr_fd("Minishell :", 2);
-	ft_putstr_fd(categorie, 2);
-	ft_putstr_fd(error_msg, 2);
-	sh->exit = new_err;
-}
-
 char	*convert_to_char(char c)
 {
 	if (c == '\1')

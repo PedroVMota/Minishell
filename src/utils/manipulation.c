@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 14:56:28 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:33:15 by pedro            ###   ########.fr       */
+/*   Updated: 2023/11/28 16:00:09 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	split_str_move(char ***src, int src_index, char ***dest, int dest_index)
 	(*src)[src_index] = NULL;
 }
 
-void	split_str_breplace(char **str, int index, char *new)
+void	split_str_replace(char **str, int index, char *new)
 {
 	int	len;
 

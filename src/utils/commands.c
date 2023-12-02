@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/01 18:14:01 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 17:47:51 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh)
 	t_cmds	*node;
 
 	node = _create_node(cmd_line);
+	if (!node)
+		return (*head);
 	node->sh = sh;
 	last = ft_lstpos(*head);
 	first = *head;
