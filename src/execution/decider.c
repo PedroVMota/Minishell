@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 14:25:23 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 17:21:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	exec_ptr_chooser(t_cmds *node)
 void	pipeline(t_cmds *node)
 {
 	if (node->next)
+	{
 		if (pipe(node->pipe) == -1)
 			perror("pipe");
+		
+	}
 }
 
 void	close_gen(t_cmds *head)
@@ -53,40 +56,40 @@ void	close_gen(t_cmds *head)
 
 int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
-	int	isfork;
+    int	isfork;
 
-	isfork = true;
-	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
-	{
-		cmd->is_builtin = 1;
-		isfork = false;
-	}
-	if (!isfork)
-	{
-		// printf("%s================= PARENT PROCESS %d =================%s\n",
-		// 	BLU, getpid(), RESET);
-		// printf("%sExecuting Command%s: {%s}\n", BLU, RESET, cmd->args[0]);
-		// printf("%s================= PARENT PROCESS %d =================%s\n",
-			// BLU, getpid(), RESET);
-		cmd->ft_exec(cmd);
-	}
-	else if ((isfork))
-	{
-		ps[*p] = fork();
-		if (ps[*p] == 0)
-		{
-			free(ps);
-			// printf("%s================= CHILD PROCESS %d =================%s\n",
-			// 	MAG, getpid(), RESET);
-			// printf("%sExecuting Command%s: {%s}\n", MAG, RESET, cmd->args[0]);
-			// printf("%s================= CHILD PROCESS %d =================%s\n",
-				// MAG, getpid(), RESET);
-			if (cmd->ft_exec)
-				cmd->ft_exec(cmd);
-			clean(cmd->sh, true, 1, "Child process failed");
-		}
-	}
-	return (0);
+    isfork = true;
+    if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
+    {
+        cmd->is_builtin = 1;
+        isfork = false;
+    }
+    if (!isfork)
+        cmd->ft_exec(cmd);
+    else if ((isfork))
+    {
+        ps[*p] = fork();
+        if (ps[*p] == 0)
+        {
+            free(ps);
+            if (cmd->prev)
+            {
+                dup2(cmd->prev->pipe[0], 0);
+                close(cmd->prev->pipe[0]);
+                close(cmd->prev->pipe[1]);
+            }
+            if (cmd->next)
+            {
+                dup2(cmd->pipe[1], 1);
+                close(cmd->pipe[0]);
+                close(cmd->pipe[1]);
+            }
+            if (cmd->ft_exec)
+                cmd->ft_exec(cmd);
+            clean(cmd->sh, true, 1, "Child process failed");
+        }
+    }
+    return (0);
 }
 
 int	software(t_shell *sh)
@@ -115,13 +118,7 @@ int	software(t_shell *sh)
 	while (process > 0)
 	{
 		waitpid(processlist[--process], &status, 0);
-		// printf("\n%s================= PARENT PROCESS %d =================%s\n",
-		// 	BLU, getpid(), RESET);
-		// printf("%sChild Process has finished%s\n", BLU, RESET);
-		// printf("%sExit status: %d%s\n", BLU, status >> 8, RESET);
 		sh->exit = status >> 8;
-		// printf("%s================= PARENT PROCESS %d =================%s\n",
-		// 	BLU, getpid(), RESET);
 	}
 	free(processlist);
 	return (0);

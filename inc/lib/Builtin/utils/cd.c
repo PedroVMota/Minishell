@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 15:18:41 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 16:37:48 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	remove_part_str(char *str, const char *remove);
 void	update_pwd_values(t_env **env, char *oldpwd, char *pwd);
 char	*get_pwd_from_list(t_env *env);
 int		check_repetition(t_env *new, t_env **env);
+int		check_nothing(t_cmds *node);
 
 void	change_to_home(void)
 {
