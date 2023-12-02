@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/01 19:47:17 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 14:25:23 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 
 	isfork = true;
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
+	{
+		cmd->is_builtin = 1;
 		isfork = false;
+	}
 	if (!isfork)
 	{
 		// printf("%s================= PARENT PROCESS %d =================%s\n",

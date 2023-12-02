@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 08:53:23 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/24 12:47:09 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/02 14:31:02 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ t_cmds	*ft_buildlst(char *elements, t_shell *sh)
 		return (NULL);
 	nodes = ft_split(elements, PIPE);
 	cmds = setup(nodes, sh);
+	cmds->is_builtin = 0;
+	cmds->saved_stdin = -1;
+    cmds->saved_stdout = -1;
 	return (cmds);
 }

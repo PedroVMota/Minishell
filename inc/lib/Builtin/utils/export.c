@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:54 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/01 16:26:42 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 15:21:53 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ int	ft_export(t_cmds *node)
 	t_env	*new;
 
 	i = 1;
+	redirect(node);
 	if (!node->args[i])
 	{
 		print_export_env(node);
+		close_redi(node);
 		return (1);
 	}
 	while (node->args[i])
@@ -103,5 +105,6 @@ int	ft_export(t_cmds *node)
 		i++;
 	}
 	list_order(node);
+	close_redi(node);
 	return (1);
 }

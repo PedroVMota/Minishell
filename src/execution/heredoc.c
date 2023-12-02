@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 09:17:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/01 21:21:22 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 13:24:22 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 void	heredoc(t_cmds *node, char *delimiter)
 {
 	char	*text;
+	
 	int		bytes_read;
 	int		here_doc[2];
 

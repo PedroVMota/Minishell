@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/01 15:58:48 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 15:18:50 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ void	remove_part_str(char *str, const char *remove)
 	if (pos != NULL)
 		ft_memmove(pos, pos + ft_strlen(remove),
 			ft_strlen(pos + ft_strlen(remove)) + 1);
+}
+
+int	check_nothing(t_cmds *node)
+{
+	if (!node->args || !node->args[0])
+	{
+		printf("\n");
+		return (1);
+	}
+	return (0);
 }

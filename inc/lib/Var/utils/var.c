@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:11:12 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 04:28:39 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/02 15:24:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 	}
 	result[j] = '\0';
 	free_array((char *[]){str, new_value, del, NULL});
-	printf("%s>> %s", RED, RESET);
-	print_special(result);
-	printf("\n");
 	return (result);
 }
+	// printf("%s>> %s", RED, RESET);
+	// print_special(result);
+	// printf("\n");
 
-void printregion(char *str, int start, int end)
+void	printregion(char *str, int start, int end)
 {
-	int i;
+	int	i;
 
 	i = start;
 	while (i < end)
@@ -105,11 +105,11 @@ char	*varlib_delete_unknown(char *str)
 	ft_strlcpy(result, str, start + 1);
 	ft_strlcpy(result + start, str + end, len - end + 1);
 	free(str);
-	printf("%s>> %s", RED, RESET);
-	print_special(result);
-	printf("\n");
 	return (result);
 }
+	// printf("%s>> %s", RED, RESET);
+	// print_special(result);
+	// printf("\n");
 
 /// @brief This will search and replac or delete the string
 /// @param str String Modified
@@ -133,7 +133,6 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 			return (varlib_replace(str, ft_strdup(vars->vars[1]), var));
 		if (var[0] == '?')
 			return (varlib_replace(str, ft_itoa(sh->exit), var));
-		
 		free(var);
 		vars = vars->next;
 	}

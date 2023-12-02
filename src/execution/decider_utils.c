@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   decider_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pvital-m <pvital-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/25 13:26:49 by pvital-m         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:01:55 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	builtin_detector(t_cmds *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], "echo"))
-		return (true);			
+		return (true);
 	if (!ft_strcmp(cmd->args[0], "cd"))
 		return (true);
 	if (!ft_strcmp(cmd->args[0], "pwd"))

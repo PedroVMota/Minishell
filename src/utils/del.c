@@ -6,15 +6,15 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/01 19:25:10 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 15:10:07 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int free_split(char **split, int ret)
+int	free_split(char **split, int ret)
 {
-	char **ptr;
+	char	**ptr;
 
 	ptr = split;
 	if (!split)
@@ -43,7 +43,7 @@ int free_split(char **split, int ret)
 // 	}
 // }
 
-static void close_fds(t_cmds *cmds)
+static void	close_fds(t_cmds *cmds)
 {
 	if (cmds->pipe[0] != -1)
 		close(cmds->pipe[0]);
@@ -55,10 +55,10 @@ static void close_fds(t_cmds *cmds)
 		close(cmds->redirection[1]);
 }
 
-int clean(t_shell *sh, bool _exit, int status, char *msg)
+int	clean(t_shell *sh, bool _exit, int status, char *msg)
 {
-	t_cmds *cmds;
-	t_cmds *tmp;
+	t_cmds	*cmds;
+	t_cmds	*tmp;
 
 	tmp = NULL;
 	cmds = NULL;
@@ -66,8 +66,8 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 		cmds = sh->cmds;
 	while (sh && cmds)
 	{
-		close_redi(sh->cmds);
 		close_fds(cmds);
+		close_redi(cmds);
 		free_split(cmds->args, 1);
 		tmp = cmds->next;
 		free(cmds);
@@ -75,7 +75,7 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 	}
 	if (_exit)
 	{
-		if(msg)
+		if (msg)
 			write(2, msg, ft_strlen(msg));
 		ft_env_delete(&sh->env);
 		exit(status);
@@ -83,9 +83,9 @@ int clean(t_shell *sh, bool _exit, int status, char *msg)
 	return (0);
 }
 
-int ft_env_delete(t_env **env)
+int	ft_env_delete(t_env **env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	while ((*env))
 	{
@@ -95,4 +95,27 @@ int ft_env_delete(t_env **env)
 		(*env) = tmp;
 	}
 	return (1);
+}
+
+void	close_redi(t_cmds *node)
+{
+	if (node->redirection[0] != -1 && node->redirection[0] != 2)
+		close(node->redirection[0]);
+	if (node->redirection[1] != -1 && node->redirection[1] != 2)
+		close(node->redirection[1]);
+	if (node->is_builtin == 1)
+	{
+		if (node->saved_stdin != -1)
+		{
+			dup2(node->saved_stdin, 0);
+			close(node->saved_stdin);
+			node->saved_stdin = -1;
+		}
+		if (node->saved_stdout != -1)
+		{
+			dup2(node->saved_stdout, 1);
+			close(node->saved_stdout);
+			node->saved_stdout = -1;
+		}
+	}
 }

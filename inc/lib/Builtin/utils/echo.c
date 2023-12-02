@@ -6,45 +6,11 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/01 19:28:04 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 15:19:50 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	close_fd_cmd(t_cmds *node)
-{
-	if (node->prev)
-		close(node->prev->pipe[0]);
-	if (node->pipe[0] != -1)
-		close(node->pipe[0]);
-	if (node->pipe[1] != -1)
-		close(node->pipe[1]);
-	if (node->redirection[0] != -1)
-		close(node->redirection[0]);
-	if (node->redirection[1] != -1)
-		close(node->redirection[1]);
-}
-
-static void	outfile(t_cmds *node)
-{
-	int	fd;
-
-	fd = -1;
-	if (node->next)
-		fd = node->pipe[1];
-	if (node->redirection[1] != -1)
-		fd = node->redirection[1];
-	if (fd == -1)
-		return ;
-	if (dup2(fd, 1) == -1)
-	{
-		write(2, "Minishell: ", 12);
-		perror("dup2");
-		exit(1);
-	}
-	close_fd_cmd(node);
-}
 
 static int	check_options(t_cmds *node, int *word)
 {
@@ -53,7 +19,7 @@ static int	check_options(t_cmds *node, int *word)
 	break_line = 0;
 	*word = 1;
 	if (!node->args[1])
-		return 0;
+		return (0);
 	if (node->args[*word][0] == '-' && node->args[*word][1] == 'n')
 	{
 		break_line = 1;
@@ -67,11 +33,7 @@ int	ft_echo(t_cmds *node)
 	int	word;
 	int	br;
 
-	outfile(node);
-	if (node->shouldrun == 0)
-	{
-		return (1);
-	}
+	redirect(node);
 	br = check_options(node, &word);
 	while (node->args[word])
 	{
@@ -85,5 +47,7 @@ int	ft_echo(t_cmds *node)
 		printf("\n");
 	if (node->next || node->prev)
 		clean(node->sh, true, 0, NULL);
+	else
+		close_redi(node);
 	return (0);
 }
