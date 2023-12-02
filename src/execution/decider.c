@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 17:21:42 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 17:48:36 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ void	close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
+void	create_pipe(t_cmds *cmd)
+{
+	if (cmd->prev)
+    {
+        dup2(cmd->prev->pipe[0], 0);
+        close(cmd->prev->pipe[0]);
+        close(cmd->prev->pipe[1]);
+    }
+    if (cmd->next)
+    {
+        dup2(cmd->pipe[1], 1);
+        close(cmd->pipe[0]);
+        close(cmd->pipe[1]);
+    }
+}
+
 int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
     int	isfork;
@@ -72,18 +88,7 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
         if (ps[*p] == 0)
         {
             free(ps);
-            if (cmd->prev)
-            {
-                dup2(cmd->prev->pipe[0], 0);
-                close(cmd->prev->pipe[0]);
-                close(cmd->prev->pipe[1]);
-            }
-            if (cmd->next)
-            {
-                dup2(cmd->pipe[1], 1);
-                close(cmd->pipe[0]);
-                close(cmd->pipe[1]);
-            }
+			create_pipe(cmd);
             if (cmd->ft_exec)
                 cmd->ft_exec(cmd);
             clean(cmd->sh, true, 1, "Child process failed");

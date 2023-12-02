@@ -6,11 +6,11 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:02:48 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 15:10:07 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 18:56:56 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	free_split(char **split, int ret)
 {
@@ -28,11 +28,11 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
+
 // static void clean_redirection(t_redirections **head)
 // {
 // 	t_redirections *local;
 // 	t_redirections *next;
-
 // 	local = *head;
 // 	while(local)
 // 	{

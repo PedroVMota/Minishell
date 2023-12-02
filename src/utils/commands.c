@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/01 18:14:01 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 17:28:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ t_cmds	*_create_node(char *str)
 	node->infiles = NULL;
 	node->outfile = NULL;
 	node->shouldrun = 1;
+	node->is_builtin = 0;
+	node->saved_stdin = -1;
+    node->saved_stdout = -1;
 	return (node);
 }
 

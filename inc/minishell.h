@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 09:56:11 by pvital-m          #+#    #+#             */
-/*   Updated: 2023/12/01 21:22:37 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 18:57:16 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
 
-
+// static void clean_redirection(t_redirections **head);
 //error output
 void print_shell_err(char *categorie, char *error_msg, int new_err, t_shell *sh);
 //Detect if is a builtin;
@@ -125,10 +125,10 @@ t_cmds	*_create_node(char *cmd);
 /// @param Head The very first head that will be distribute the done
 /// @return Doesn't return nothing. Instead the head will be updated!
 t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh);
-
 void	print_special(char *ptr);
 int		print_split(char **ptr);
 void	CommandDisplay(t_cmds *ptr);
 void    redirect(t_cmds *node);
 void    close_redi(t_cmds *node);
+
 #endif

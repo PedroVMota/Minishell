@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 11:16:59 by pedro             #+#    #+#             */
-/*   Updated: 2023/11/27 04:46:08 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/02 18:15:21 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	prompt(t_shell *shell)
 
 	while (1)
 	{
-		printf("Main Process: %d\n", getpid());
+		printf("%sMain Process%s: %d\n",RED,RESET, getpid());
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{

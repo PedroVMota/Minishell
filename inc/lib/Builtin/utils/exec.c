@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 15:21:34 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/02 18:59:53 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,24 @@
 bool	ShowSingleCommand(t_cmds *cmd);
 int		permission_checker(t_redirections *node);
 
+static void	clean_redirection(t_redirections **head)
+{
+	t_redirections	*local;
+	t_redirections	*next;
+
+	local = *head;
+	while (local)
+	{
+		free_split(local->element, 0);
+		next = local->next;
+		free(local);
+		local = next;
+	}
+}
+
 // Create a function that will search the redirection.
 // if there is an an output but the redirection return a
 // error then the current process must not execute.
-
 bool	permission_w(t_cmds *cmd)
 {
 	if (access(cmd->args[0], W_OK) == -1)
@@ -82,6 +96,8 @@ int	ft_exec(t_cmds *node)
 		clean(node->sh, true, node->sh->exit, NULL);
 	if (!node->shouldrun)
 		clean(node->sh, true, node->sh->exit, NULL);
+	clean_redirection(&node->infiles);
+	clean_redirection(&node->outfile);
 	if (execve(node->args[0], node->args, node->sh->envp))
 	{
 		perror(node->args[0]);
