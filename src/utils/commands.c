@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 18:17:05 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 17:47:51 by pedro            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
 
 t_cmds	*ft_lstpos(t_cmds *cmds)
@@ -34,9 +22,13 @@ t_cmds	*_create_node(char *str)
 	node->redirection[1] = -1;
 	node->prev = NULL;
 	node->next = NULL;
-	node->args = ft_split(str, '\4');
 	node->infiles = NULL;
 	node->outfile = NULL;
+	node->ft_exec = NULL;
+	node->args = ft_split(str, '\4');
+	node->is_builtin = 0;
+	node->saved_stdin = -1;
+	node->saved_stdout = -1;
 	node->shouldrun = 1;
 	return (node);
 }

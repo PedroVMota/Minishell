@@ -4,15 +4,14 @@ CFLAGS_EXTRA = -g #-fsanitize=address
 INC = -I inc/ -I inc/lib/Builtin/ -Iinc/lib/Var/ -Iinc/lib/Libft
 libft = inc/lib/Libft/utils
 
-FILES =	src/syntax/SyntaxRedirection.c src/syntax/syntax_utils.c src/syntax/syntax.c src/init/main.c \
-		src/init/parse.c src/init/enviroment.c src/init/signal.c src/init/build.c \
-		src/utils/commands.c src/utils/Permissions/perm_utils.c src/utils/Permissions/perm.c src/utils/search.c \
-		src/utils/manipulation.c src/utils/switchchar.c src/utils/del.c src/utils/.utils.c \
-		src/utils/t_mode.c src/execution/decider.c src/execution/heredoc.c src/execution/redirection.c \
-		src/execution/dups.c src/execution/permissions.c src/execution/decider_utils.c inc/lib/Builtin/utils/exec.c \
-		inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/cd_utils.c \
-		inc/lib/Builtin/utils/env.c inc/lib/Builtin/utils/cd.c inc/lib/Builtin/utils/exit.c inc/lib/Builtin/utils/export.c \
-		inc/lib/Var/utils/var.c inc/lib/Var/utils/var_utils.c
+FILES =	src/syntax/syntax.c src/syntax/syntax_utils.c src/init/signal.c src/init/enviroment.c \
+		src/init/build.c src/init/parse.c src/init/main.c src/execution/decider.c \
+		src/execution/decider_utils.c src/execution/heredoc.c src/execution/dups.c src/execution/redirection.c \
+		src/execution/permissions.c src/utils/del.c src/utils/Permissions/perm_utils.c src/utils/Permissions/perm.c \
+		src/utils/.utils.c src/utils/commands.c src/utils/manipulation.c src/utils/switchchar.c \
+		inc/lib/Builtin/utils/env.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/exit.c \
+		inc/lib/Builtin/utils/exec.c inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/cd_utils.c inc/lib/Builtin/utils/cd.c \
+		inc/lib/Builtin/utils/export.c inc/lib/Var/utils/var.c inc/lib/Var/utils/var_utils.c 
 
 OBJS = $(FILES:.c=.o)
 
@@ -38,10 +37,10 @@ e:
 	make && env -i ./minishell
 
 d:
-	make && valgrind --log-file="val.log"  --track-fds=yes ./minishell
+	make && valgrind --log-file="val.log" --suppressions="./pdfs/minishell.sup" --track-fds=yes ./minishell
 
 f:
-	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
+	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions="./pdfs/minishell.sup" ./minishell
 
 n:
 	make && ./minishell
