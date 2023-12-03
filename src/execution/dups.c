@@ -94,25 +94,30 @@ int	permission_checker(t_redirections *node, t_cmds *cmds)
 
 void	redirect(t_cmds *node)
 {
-	while (node->infiles)
+	t_redirections *in;
+	t_redirections *out;
+
+	in = node->infiles;
+	out = node->outfile;
+	while (in)
 	{
 		if (node->is_builtin == 1)
 			node->saved_stdin = dup(0);
 		if (node->redirection[0] > 0)
 			close(node->redirection[0]);
-		node->redirection[0] = permission_checker(node->infiles, node);
-		node->infiles = node->infiles->next;
+		node->redirection[0] = permission_checker(in, node);
+		in = in->next;
 	}
 	if (node->redirection[0] > 0)
 		dup2(node->redirection[0], 0);
-	while (node->outfile)
+	while (out)
 	{
 		if (node->is_builtin == 1)
 			node->saved_stdout = dup(1);
 		if (node->redirection[1] > 0)
 			close(node->redirection[1]);
-		node->redirection[1] = permission_checker(node->outfile, node);
-		node->outfile = node->outfile->next;
+		node->redirection[1] = permission_checker(out, node);
+		out = out->next;
 	}
 	if (node->redirection[1] > 0)
 		dup2(node->redirection[1], 1);

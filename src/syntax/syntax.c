@@ -85,5 +85,4 @@ void ft_syntax_checker(char *in, t_shell *sh)
 			syntax_redirection(in, &index, sh);
 		index++;
 	}
-	printf("Test Complete%s{OK}%s\n", GRN, RESET);
 }

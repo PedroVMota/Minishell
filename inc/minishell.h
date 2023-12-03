@@ -22,6 +22,8 @@
 # define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 # define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
+#define info(msg) printf("%d > %s{%s}%s\n", getpid(), YEL, msg, RESET);
+
 /*
  * -----------------------------------------------------------------------
  * -                                                                     -
@@ -68,7 +70,8 @@ t_cmds	*_add(char *cmd_line, t_cmds **head, t_shell *sh);
  * -                                                                     -
  * -----------------------------------------------------------------------
  */
-void redirection(t_cmds *node, t_shell *sh);
+void	clean_redirection(t_redirections **head);
+void	redirection(t_cmds *node, t_shell *sh);
 void	redirect(t_cmds *node);
 bool	isbuiltin(t_cmds *cmd);
 int		clean(t_shell *sh, bool _exit, int status, char *msg);

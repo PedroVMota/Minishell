@@ -17,6 +17,8 @@ bool	does_have_var(char *s)
 
 	index = 0;
 	quote = 0;
+	if(!s)
+		return (false);
 	while (s[index])
 	{
 		if (s[index] == '\'' && quote == 0)

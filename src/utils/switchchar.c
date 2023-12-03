@@ -54,6 +54,8 @@ void	switch_caracters(char **ptr)
 
 	main = 0;
 	change = true;
+	if(!ptr || !*ptr)
+		return ;
 	while ((*ptr)[main])
 	{
 		inside_string_skip((*ptr), &main, &change);

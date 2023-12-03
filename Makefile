@@ -40,7 +40,7 @@ d:
 	make && valgrind --log-file="val.log" --suppressions="./pdfs/minishell.sup" --track-fds=yes ./minishell
 
 f:
-	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions="./pdfs/minishell.sup" ./minishell
+	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
 
 n:
 	make && ./minishell

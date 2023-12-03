@@ -30,6 +30,7 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 
 	i = 0;
 	j = 0;
+	info("Replacing");
 	result = (char *)malloc(ft_strlen(str) - ft_strlen(del)
 			+ ft_strlen(new_value) + 1);
 	if (!result)
@@ -49,22 +50,6 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 	free_array((char *[]){str, new_value, del, NULL});
 	return (result);
 }
-	// printf("%s>> %s", RED, RESET);
-	// print_special(result);
-	// printf("\n");
-
-void	printregion(char *str, int start, int end)
-{
-	int	i;
-
-	i = start;
-	while (i < end)
-	{
-		printf("%c", str[i]);
-		i++;
-	}
-	printf("\n");
-}
 
 char	*varlib_delete_unknown(char *str)
 {
@@ -74,6 +59,7 @@ char	*varlib_delete_unknown(char *str)
 	int		end;
 	char	*result;
 
+	info("Deleting");
 	len = ft_strlen(str);
 	start = varlib_start_position(str);
 	end = start + 1;
@@ -89,6 +75,7 @@ char	*varlib_delete_unknown(char *str)
 	ft_strlcpy(result, str, start + 1);
 	ft_strlcpy(result + start, str + end, len - end + 1);
 	free(str);
+	printf("%s>> {%s}%s", RED, result, RESET);
 	return (result);
 }
 
@@ -127,16 +114,17 @@ char	*varlib_execute(char *s, t_shell *h)
 
 	index = 0;
 	quote = 0;
-	while ((does_have_var(s)) && s[index])
+	while (does_have_var(s))
 	{
-		if (!does_have_var(s))
-			return (s);
 		if (s[index] == '\'' && quote == 0)
 			quote = s[index];
 		else if (s[index] == '\'' && quote != 0)
 			quote = 0;
 		else if (s[index] == '$' && !quote)
+		{
 			s = varlib_decide(s, h, index);
+			index = 0;
+		}
 		index++;
 	}
 	return (s);

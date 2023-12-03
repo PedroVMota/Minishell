@@ -16,17 +16,15 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
-static void	clean_redirection(t_redirections **head)
+void	clean_redirection(t_redirections **head)
 {
 	t_redirections	*local;
 	t_redirections	*next;
 
 	local = *head;
-	if(!local)
-		printf("There is no redirections to delete");
+	if (!local)
 	while (local)
 	{
-		printf("%sDeleting redirection %d%s\n",RED, local->mode, RESET);
 		free_split(local->element, 0);
 		next = local->next;
 		free(local);
@@ -94,10 +92,8 @@ int	clean(t_shell *sh, bool _exit, int status, char *msg)
 		cmds = sh->cmds;
 	while (sh && cmds)
 	{
-		if (cmds->infiles)
-			clean_redirection(&cmds->infiles);
-		if (cmds->outfile)
-			clean_redirection(&cmds->outfile);
+		clean_redirection(&cmds->infiles);
+		clean_redirection(&cmds->outfile);
 		close_fds(cmds);
 		close_redi(cmds);
 		free_split(cmds->args, 1);

@@ -11,13 +11,27 @@ void	center(char *input, t_shell *sh)
 	free(input);
 }
 
+bool	isallwhitespace(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void	prompt(t_shell *shell)
 {
 	char	*input;
 
 	while (1)
 	{
-		printf("%sMainProcess%s: %d\n", RED, RESET, getpid());
+		info("MainLoop");
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
@@ -26,6 +40,11 @@ void	prompt(t_shell *shell)
 			ft_env_delete(&shell->env);
 			write(1, "Exit\n", 6);
 			exit(0);
+		}
+		if (isallwhitespace(input))
+		{
+			free(input);
+			continue ;
 		}
 		add_history(input);
 		ft_syntax_checker(input, shell);

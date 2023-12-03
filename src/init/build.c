@@ -20,8 +20,10 @@ static t_cmds	*setup(char **nodes, t_shell *sh)
 
 	lst = NULL;
 	index = 0;
+	sh->lstsize = 1;
 	while (nodes[index])
 	{
+		info(nodes[index]);
 		lst = _add(nodes[index], &lst, sh);
 		if (nodes[index])
 			free(nodes[index]);

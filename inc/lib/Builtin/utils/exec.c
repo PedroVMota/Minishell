@@ -9,6 +9,8 @@ int		permission_checker(t_redirections *node);
 
 bool	permission_w(t_cmds *cmd)
 {
+	if (!cmd->args || !cmd->args[0])
+		return (true);
 	if (access(cmd->args[0], W_OK) == -1)
 	{
 		write(2, "Error: Minishell: ", 19);
@@ -22,6 +24,8 @@ bool	permission_w(t_cmds *cmd)
 
 bool	permission_r(t_cmds *cmd)
 {
+	if (!cmd->args || !cmd->args[0])
+		return (true);
 	if (access(cmd->args[0], R_OK) == -1)
 	{
 		write(2, "Error: Minishell: ", 19);
@@ -35,6 +39,8 @@ bool	permission_r(t_cmds *cmd)
 
 bool	permission_x(t_cmds *cmd)
 {
+	if (!cmd->args || !cmd->args[0])
+		return (true);
 	if (access(cmd->args[0], X_OK) == -1)
 	{
 		write(2, "Error: Minishell: ", 19);
@@ -48,6 +54,8 @@ bool	permission_x(t_cmds *cmd)
 
 bool	permission_f(t_cmds *cmd)
 {
+	if (!cmd->args || !cmd->args[0])
+		return (true);
 	if (access(cmd->args[0], F_OK) == -1)
 	{
 		write(2, "Error: Minishell: ", 19);
@@ -59,7 +67,8 @@ bool	permission_f(t_cmds *cmd)
 	return (false);
 }
 
-bool	file_descriptor_in(t_cmds *node){
+bool	file_descriptor_in(t_cmds *node)
+{
 	int	fd;
 
 	fd = -1;
@@ -71,10 +80,11 @@ bool	file_descriptor_in(t_cmds *node){
 		return (false);
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return (true);
-	return false;
+	return (false);
 }
 
-bool	file_descriptor_out(t_cmds *node){
+bool	file_descriptor_out(t_cmds *node)
+{
 	int	fd;
 
 	fd = -1;
@@ -86,7 +96,7 @@ bool	file_descriptor_out(t_cmds *node){
 		return (false);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (true);
-	return false;
+	return (false);
 }
 
 int	ft_exec(t_cmds *node)
@@ -101,9 +111,11 @@ int	ft_exec(t_cmds *node)
 	if (!node->shouldrun)
 		clean(node->sh, true, node->sh->exit, NULL);
 	if (file_descriptor_in(node))
-		return (1);
+		clean(node->sh, true, 1, NULL);
 	if (file_descriptor_out(node))
-		return (1);
+		clean(node->sh, true, 1, NULL);
+	clean_redirection(&node->infiles);
+	clean_redirection(&node->outfile);
 	if (execve(node->args[0], node->args, node->sh->envp))
 	{
 		perror(node->args[0]);

@@ -45,7 +45,7 @@ t_redirections	*redirection_last_ptr(t_redirections *lst)
 	return (lst);
 }
 
-void redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void	redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
 	t_redirections	*new;
 	t_redirections	*last;
@@ -65,16 +65,14 @@ void redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 	last->next = new;
 }
 
-void redirection_out(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void	redirection_out(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
-	t_redirections *new;
-	t_redirections *last;
+	t_redirections	*new;
+	t_redirections	*last;
+
 	(void)sh;
 	if (redi_node == FILE_NONE)
-	{
-		printf("There is no redirection.\n");
-		return;
-	}
+		return ;
 	new = redi_new(i, node, redi_node);
 	if (!new)
 		return ;
@@ -87,7 +85,7 @@ void redirection_out(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 	last->next = new;
 }
 
-void placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void	placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
 	if (redi_node == FILE_IN_HEREDOC || redi_node == FILE_IN_READ)
 		redirection_in(redi_node, node, i, sh);
@@ -95,7 +93,7 @@ void placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 		redirection_out(redi_node, node, i, sh);
 }
 
-void redirection(t_cmds *node, t_shell *sh)
+void	redirection(t_cmds *node, t_shell *sh)
 {
 	char	**args;
 	t_type	red_mode;
@@ -114,5 +112,10 @@ void redirection(t_cmds *node, t_shell *sh)
 		if (red_mode == FILE_NONE)
 			i++;
 		loop++;
+	}
+	if (!node->args[0])
+	{
+		free(node->args);
+		node->args = NULL;
 	}
 }

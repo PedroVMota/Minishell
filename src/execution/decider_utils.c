@@ -2,9 +2,9 @@
 
 void	exec_ptr_chooser(t_cmds *node)
 {
-	if (!node || !node->args)
-		return ;
-	if (!ft_strcmp(node->args[0], "echo"))
+	if (!node->args || !node->args[0])
+		node->ft_exec = &ft_exec;
+	else if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;
 	else if (!ft_strcmp(node->args[0], "cd"))
 		node->ft_exec = &ft_cd;

@@ -21,6 +21,8 @@ bool	permission_tester(t_cmds *head)
 	int	type;
 
 	type = 0;
+	if(!head || !head->args || !head->args[0])
+		return (false);
 	check_all_paths(head, &head->sh->exit, &type);
 	if (head->sh->exit == 127 && type == 1)
 		return (false);
