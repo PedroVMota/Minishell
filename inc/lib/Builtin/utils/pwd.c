@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:33 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 14:51:19 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/03 14:04:47 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_pwd(t_cmds *node)
 	char	path[1024];
 
 	redirect(node);
+	if (!node->shouldrun)
+		clean(node->sh, true, node->sh->exit, NULL);
 	if (getcwd(path, sizeof(path)) != NULL)
 		printf("%s\n", path);
 	else

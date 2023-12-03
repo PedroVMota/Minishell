@@ -49,7 +49,7 @@ t_redirections *redi_new(int *i, t_cmds *cm, t_type type) // funcao que aloca
 	new->mode = type;
 	new->next = NULL;
 	print_split(new->element);
-	return new;
+	return (new);
 }
 
 t_redirections *redirection_last_ptr(t_redirections *lst)

@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 15:19:50 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/03 14:03:21 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ft_echo(t_cmds *node)
 	int	br;
 
 	redirect(node);
+	if (!node->shouldrun)
+		clean(node->sh, true, node->sh->exit, NULL);
 	br = check_options(node, &word);
 	while (node->args[word])
 	{

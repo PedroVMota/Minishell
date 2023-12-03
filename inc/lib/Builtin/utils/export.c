@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 21:11:54 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 18:11:27 by oharoon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 int	check_repetition(t_env *new, t_env **env)
@@ -26,12 +14,12 @@ int	check_repetition(t_env *new, t_env **env)
 	}
 	while (temp)
 	{
-		if (ft_strcmp(temp->vars[0], new->vars[0]) == 0)
+		if (strcmp(temp->vars[0], new->vars[0]) == 0)
 		{
 			if (temp->vars[1] == NULL)
 				temp->vars[1]
 					= (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char));
-			ft_strlcpy(temp->vars[1], new->vars[1], strlen(temp->vars[1]));
+			strcpy(temp->vars[1], new->vars[1]);
 			return (1);
 		}
 		temp = temp->next;
@@ -88,6 +76,8 @@ int	ft_export(t_cmds *node)
 
 	i = 1;
 	redirect(node);
+	if (node->next || node->prev || !node->shouldrun)
+		clean(node->sh, true, 0, NULL);
 	if (!node->args[i])
 	{
 		print_export_env(node);
@@ -99,9 +89,11 @@ int	ft_export(t_cmds *node)
 		new = ft_env_add(ft_strdup(node->args[i]));
 		if (check_repetition(new, &node->sh->env) == 0)
 			ft_ml_envadd_back(&node->sh->env, new);
+		else
+			ft_env_delete(&new);
 		i++;
 	}
 	list_order(node);
-	clean(node->sh, true, 0, NULL);
+	close_redi(node);
 	return (1);
 }
