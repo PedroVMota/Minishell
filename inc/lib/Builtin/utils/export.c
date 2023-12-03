@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/23 21:11:54 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/03 13:54:45 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_repetition(t_env *new, t_env **env)
@@ -14,12 +26,12 @@ int	check_repetition(t_env *new, t_env **env)
 	}
 	while (temp)
 	{
-		if (strcmp(temp->vars[0], new->vars[0]) == 0)
+		if (ft_strcmp(temp->vars[0], new->vars[0]) == 0)
 		{
 			if (temp->vars[1] == NULL)
 				temp->vars[1]
 					= (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char));
-			strcpy(temp->vars[1], new->vars[1]);
+			ft_strlcpy(temp->vars[1], new->vars[1], strlen(temp->vars[1]));
 			return (1);
 		}
 		temp = temp->next;
@@ -86,13 +98,13 @@ int	ft_export(t_cmds *node)
 	{
 		new = ft_env_add(ft_strdup(node->args[i]));
 		if (check_repetition(new, &node->sh->env) == 0)
-		{
-			printf("\nno reps\n");
 			ft_ml_envadd_back(&node->sh->env, new);
-		}
+		else
+			ft_env_delete(&new);
 		i++;
 	}
 	list_order(node);
-	close_redi(node);
+	if(node->next || node->prev)
+		clean(node->sh, true, 0, NULL);
 	return (1);
 }

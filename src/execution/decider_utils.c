@@ -45,6 +45,8 @@ void	wait_for_child(t_shell *sh, int *processlist, int *process)
 
 	while (*process > 0)
 	{
+		info("Waiting for child", YEL);
+		printf("Process: %d\n", *process);
 		waitpid(processlist[--(*process)], &status, 0);
 		sh->exit = status >> 8;
 	}

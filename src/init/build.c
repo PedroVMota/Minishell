@@ -20,7 +20,7 @@ static t_cmds	*setup(char **nodes, t_shell *sh)
 
 	lst = NULL;
 	index = 0;
-	sh->lstsize = 1;
+	sh->lstsize = 0;
 	while (nodes[index])
 	{
 		info(nodes[index], YEL);

@@ -5,11 +5,10 @@ int	free_split(char **split, int ret)
 	char	**ptr;
 
 	ptr = split;
-	if (!split)
-		return (1);
 	while (*ptr)
 	{
-		free(*ptr);
+		if (*ptr)
+			free(*ptr);
 		ptr++;
 	}
 	free(split);
@@ -51,8 +50,10 @@ int	ft_env_delete(t_env **env)
 
 	while ((*env))
 	{
+		info("Deleting env", YEL);
 		tmp = (*env)->next;
-		free_split((*env)->vars, 1);
+		if ((*env)->vars)
+			free_split((*env)->vars, 1);
 		free((*env));
 		(*env) = tmp;
 	}
