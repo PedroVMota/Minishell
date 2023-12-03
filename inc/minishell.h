@@ -22,7 +22,7 @@
 # define IN_SYNTAX_ERROR "Error: syntax error near unexpected token `<'\n"
 # define OUT_SYNTAX_ERROR "Error: syntax error near unexpected token `>'\n"
 
-#define info(msg) printf("%d > %s{%s}%s\n", getpid(), YEL, msg, RESET);
+#define info(msg, color) printf("%d > %s{%s}%s\n", getpid(), color, msg, RESET);
 
 /*
  * -----------------------------------------------------------------------

@@ -23,6 +23,7 @@ void	clean_redirection(t_redirections **head)
 
 	local = *head;
 	if (!local)
+		info("No redirections to clean", MAG);
 	while (local)
 	{
 		free_split(local->element, 0);

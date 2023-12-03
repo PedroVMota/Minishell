@@ -44,7 +44,7 @@ int	execution_part(t_shell *sh)
 
 	process = 0;
 	head = sh->cmds;
-	processlist = ft_calloc(sh->lstsize, sizeof(int));
+	processlist = malloc(sizeof(int) * (sh->lstsize + 1));
 	if (!processlist)
 		return (1);
 	while (head)

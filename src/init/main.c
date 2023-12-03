@@ -31,7 +31,7 @@ void	prompt(t_shell *shell)
 
 	while (1)
 	{
-		info("MainLoop");
+		info("MainLoop", MAG);
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{

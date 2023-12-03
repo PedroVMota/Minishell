@@ -30,7 +30,6 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 
 	i = 0;
 	j = 0;
-	info("Replacing");
 	result = (char *)malloc(ft_strlen(str) - ft_strlen(del)
 			+ ft_strlen(new_value) + 1);
 	if (!result)
@@ -59,7 +58,6 @@ char	*varlib_delete_unknown(char *str)
 	int		end;
 	char	*result;
 
-	info("Deleting");
 	len = ft_strlen(str);
 	start = varlib_start_position(str);
 	end = start + 1;
