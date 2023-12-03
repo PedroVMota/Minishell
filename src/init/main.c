@@ -8,7 +8,6 @@ void	center(char *input, t_shell *sh)
 	sh->cmds = ft_buildlst(input, sh);
 	execution_part(sh);
 	clean(sh, false, sh->exit, NULL);
-	free(input);
 }
 
 bool	isallwhitespace(char *input)
@@ -28,18 +27,19 @@ bool	isallwhitespace(char *input)
 void	prompt(t_shell *shell)
 {
 	char	*input;
+	char	*exit;
 
 	while (1)
 	{
-		info("MainLoop", MAG);
+		exit = ft_itoa(shell->exit);
+		info(exit, MAG);
+		free(exit);
 		input = readline("minishell >$ ");
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			if (input)
 				free(input);
-			ft_env_delete(&shell->env);
-			write(1, "Exit\n", 6);
-			exit(0);
+			clean(shell, true, 0, "exit\n");
 		}
 		if (isallwhitespace(input))
 		{

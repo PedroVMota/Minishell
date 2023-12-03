@@ -23,7 +23,6 @@ static t_cmds	*setup(char **nodes, t_shell *sh)
 	sh->lstsize = 0;
 	while (nodes[index])
 	{
-		info(nodes[index], YEL);
 		lst = _add(nodes[index], &lst, sh);
 		if (nodes[index])
 			free(nodes[index]);
@@ -49,5 +48,6 @@ t_cmds	*ft_buildlst(char *elements, t_shell *sh)
 	cmds->is_builtin = 0;
 	cmds->saved_stdin = -1;
     cmds->saved_stdout = -1;
+	free(elements);
 	return (cmds);
 }

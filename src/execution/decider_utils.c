@@ -42,12 +42,19 @@ void	setup_fd_for_next_fork(t_cmds *head)
 void	wait_for_child(t_shell *sh, int *processlist, int *process)
 {
 	int	status;
+	t_cmds	*head;
 
+	head = sh->cmds;
 	while (*process > 0)
 	{
-		info("Waiting for child", YEL);
-		printf("Process: %d\n", *process);
+		if(isbuiltin(head))
+		{
+			head = head->next;
+			(*process)--;
+			continue;
+		}
 		waitpid(processlist[--(*process)], &status, 0);
+		head = head->next;
 		sh->exit = status >> 8;
 	}
 	free(processlist);

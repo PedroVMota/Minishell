@@ -49,3 +49,13 @@ int	varlib_start_position(char *ptr)
 	}
 	return (-1);
 }
+
+void *trash(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	return (NULL);
+}

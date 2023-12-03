@@ -6,15 +6,38 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:54 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/03 13:54:45 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/03 23:27:25 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	print_export_char(char *str, bool _print_new_line)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL || str[0] == '\0')
+		return ;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+		{
+			printf("\\n");
+			if (str[i + 1] != '\0')
+				i++;
+		}
+		else
+			printf("%c", str[i]);
+		i++;
+	}
+	if (_print_new_line)
+		printf("\"\n");
+}
+
 int	check_repetition(t_env *new, t_env **env)
 {
-	t_env	*temp;	
+	t_env	*temp;
 	int		i;
 
 	temp = *env;
@@ -29,8 +52,8 @@ int	check_repetition(t_env *new, t_env **env)
 		if (ft_strcmp(temp->vars[0], new->vars[0]) == 0)
 		{
 			if (temp->vars[1] == NULL)
-				temp->vars[1]
-					= (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char));
+				temp->vars[1] = (char *)malloc(ft_strlen(new->vars[1])
+						* sizeof(char));
 			ft_strlcpy(temp->vars[1], new->vars[1], strlen(temp->vars[1]));
 			return (1);
 		}
@@ -48,43 +71,60 @@ void	print_export_env(t_cmds *node)
 	while (env)
 	{
 		printf("declare -x ");
-		printf("%s=%s\n", env->vars[0], env->vars[1]);
+		print_export_char(env->vars[0], false);
+		if (env->vars[1])
+		{
+			printf("=\"");
+			print_export_char(env->vars[1], true);
+		}
 		env = env->next;
 	}
 	return ;
 }
 
-void	list_order(t_cmds *node)
+int	compareStrings(const char *str1, const char *str2)
 {
-	t_env	*temp;
-	t_env	*temp2;
-	char	*aux;
+	return (strcmp(str1, str2));
+}
 
-	temp = node->sh->env;
-	while (temp)
+void	swapNodes(t_env *a, t_env *b)
+{
+	char	**temp;
+
+	temp = a->vars;
+	a->vars = b->vars;
+	b->vars = temp;
+}
+
+void	list_order(t_env *node)
+{
+	int		swapped;
+	t_env	*ptr1;
+	t_env	*lptr;
+
+	swapped = 1;
+	while (swapped)
 	{
-		temp2 = temp->next;
-		while (temp2)
+		swapped = 0;
+		ptr1 = node;
+		lptr = NULL;
+		while (ptr1->next != lptr)
 		{
-			if (strcmp(temp->vars[0], temp2->vars[0]) > 0)
+			if (compareStrings(ptr1->vars[0], ptr1->next->vars[0]) > 0)
 			{
-				aux = temp->vars[0];
-				temp->vars[0] = temp2->vars[0];
-				temp2->vars[0] = aux;
-				aux = temp->vars[1];
-				temp->vars[1] = temp2->vars[1];
-				temp2->vars[1] = aux;
+				swapNodes(ptr1, ptr1->next);
+				swapped = 1;
 			}
-			temp2 = temp2->next;
+			ptr1 = ptr1->next;
 		}
-		temp = temp->next;
+		lptr = ptr1;
 	}
 }
 
 int	ft_export(t_cmds *node)
 {
-	int		i;
-	t_env	*new;
+	int i;
+	t_env *new;
 
 	i = 1;
 	redirect(node);
@@ -103,8 +143,8 @@ int	ft_export(t_cmds *node)
 			ft_env_delete(&new);
 		i++;
 	}
-	list_order(node);
-	if(node->next || node->prev)
+	list_order(node->sh->env);
+	if (node->next || node->prev)
 		clean(node->sh, true, 0, NULL);
 	return (1);
 }

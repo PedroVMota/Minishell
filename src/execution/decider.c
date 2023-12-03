@@ -1,5 +1,18 @@
 #include <minishell.h>
+static int get_command_size(t_cmds *head)
+{
+	int	i;
 
+	i = 0;
+	while (head)
+	{
+		i++;
+		if(head->is_builtin && !(head->prev || head->next))
+			i -= 1;
+		head = head->next;
+	}
+	return (i);
+}
 int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
 	int	isfork;
@@ -44,7 +57,7 @@ int	execution_part(t_shell *sh)
 
 	process = 0;
 	head = sh->cmds;
-	processlist = malloc(sizeof(int) * (sh->lstsize + 1));
+	processlist = malloc(sizeof(int) * get_command_size(head));
 	if (!processlist)
 		return (1);
 	while (head)

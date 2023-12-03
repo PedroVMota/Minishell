@@ -99,6 +99,20 @@ bool	file_descriptor_out(t_cmds *node)
 	return (false);
 }
 
+static void	end_endpoits(t_cmds *cmd)
+{
+    if (cmd->prev)
+        close(cmd->prev->pipe[0]);
+    if (cmd->pipe[0] != -1)
+        close(cmd->pipe[0]);
+    if (cmd->pipe[1] != -1)
+        close(cmd->pipe[1]);
+    if (cmd->redirection[0] != -1)
+        close(cmd->redirection[0]);
+    if (cmd->redirection[1] != -1)
+        close(cmd->redirection[1]);
+}
+
 int	ft_exec(t_cmds *node)
 {
 	redirect(node);
@@ -114,6 +128,7 @@ int	ft_exec(t_cmds *node)
 		clean(node->sh, true, 1, NULL);
 	if (file_descriptor_out(node))
 		clean(node->sh, true, 1, NULL);
+	end_endpoits(node);
 	clean_redirection(&node->infiles);
 	clean_redirection(&node->outfile);
 	if (execve(node->args[0], node->args, node->sh->envp))

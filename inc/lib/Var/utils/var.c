@@ -66,7 +66,7 @@ char	*varlib_delete_unknown(char *str)
 		end++;
 	newlen = len - (end - start);
 	if (newlen == 0)
-		return (NULL);
+		return trash((char *[]){str, NULL});
 	result = (char *)malloc(newlen + 1);
 	if (!result)
 		return (str);

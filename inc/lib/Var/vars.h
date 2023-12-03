@@ -6,6 +6,7 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+void *trash(char **array);
 char	*varlib_execute(char *s, t_shell *h);
 void	*free_array(char **array);
 bool	does_have_var(char *s);

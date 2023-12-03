@@ -21,8 +21,6 @@ void	clean_redirection(t_redirections **head)
 	t_redirections	*next;
 
 	local = *head;
-	if (!local)
-		info("No redirections to clean", MAG);
 	while (local)
 	{
 		free_split(local->element, 0);
@@ -50,7 +48,6 @@ int	ft_env_delete(t_env **env)
 
 	while ((*env))
 	{
-		info("Deleting env", YEL);
 		tmp = (*env)->next;
 		if ((*env)->vars)
 			free_split((*env)->vars, 1);
@@ -83,26 +80,34 @@ void	close_redi(t_cmds *node)
 	}
 }
 
-int	clean(t_shell *sh, bool _exit, int status, char *msg)
+void	clean_commands(t_cmds **cmds)
 {
-	t_cmds *cmds;
 	t_cmds *tmp;
 
 	tmp = NULL;
-	cmds = NULL;
-	if (sh)
-		cmds = sh->cmds;
-	while (sh && cmds)
+	if (!(*cmds))
+		return ;
+	while (*cmds)
 	{
-		clean_redirection(&cmds->infiles);
-		clean_redirection(&cmds->outfile);
-		close_fds(cmds);
-		close_redi(cmds);
-		free_split(cmds->args, 1);
-		tmp = cmds->next;
-		free(cmds);
-		cmds = tmp;
+		close_fds(*cmds);
+		if ((*cmds)->args)
+			free_split((*cmds)->args, 1);
+		if ((*cmds)->infiles)
+			clean_redirection(&(*cmds)->infiles);
+		if ((*cmds)->outfile)
+			clean_redirection(&(*cmds)->outfile);
+		tmp = (*cmds)->next;
+		free(*cmds);
+		*cmds = tmp;
 	}
+
+}
+
+int	clean(t_shell *sh, bool _exit, int status, char *msg)
+{
+	if(!sh)
+		return (1);
+	clean_commands(&sh->cmds);
 	if (_exit)
 	{
 		if (msg)
