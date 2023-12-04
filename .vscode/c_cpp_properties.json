@@ -4,17 +4,13 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/inc/lib/Libft/**",
-                "${workspaceFolder}/inc/lib/Builtin/**",
-                "${workspaceFolder}/inc/lib/Var/**",
-                "${workspaceFolder}/inc/lib/**",
-                "${workspaceFolder}/inc/**"
+                "${workspaceFolder}/Patching/inc"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",
-            "cppStandard": "c++14",
-            "intelliSenseMode": "linux-clang-x64"
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4
