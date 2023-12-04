@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:12:23 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/02 14:58:58 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/04 22:59:11 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int ft_unset(t_cmds *node)
 		close(dups[0]);
 	if(dups[1] != -10)
 		close(dups[1]);
+	free(dups);
 	return (1);
 }

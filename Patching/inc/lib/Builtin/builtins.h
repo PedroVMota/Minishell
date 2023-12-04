@@ -9,7 +9,7 @@
 int is_valid_fd(int fd);
 int *set_dups(t_cmds *node);
 int permission_tester(t_cmds *head, int arr[]);
-void	remove_part_str(char *str, const char *remove);
+void	remove_part_str(char **str, const char *remove);
 void	update_pwd_values(t_env **env, char *oldpwd, char *pwd);
 char	*get_pwd_from_list(t_env *env);
 int		check_repetition(t_env *new, t_env **env);

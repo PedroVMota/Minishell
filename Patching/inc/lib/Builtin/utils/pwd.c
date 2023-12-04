@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:33 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/03 14:04:47 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int	ft_pwd(t_cmds *node)
 		close(dups[0]);
 	if(dups[1] != -10)
 		close(dups[1]);
+	free(dups);
 	return (0);
 }

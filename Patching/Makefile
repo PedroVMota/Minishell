@@ -4,15 +4,15 @@ CFLAGS_EXTRA = -g #-fsanitize=address
 INC = -I inc/ -I inc/lib/Builtin/ -Iinc/lib/Var/ -Iinc/lib/Libft
 libft = inc/lib/Libft/utils
 
-FILES =	src/init/parse.c src/init/enviroment.c src/init/main.c src/init/build.c \
-		src/init/signal.c src/execution/set_dups/dups.c src/execution/heredoc.c src/execution/redirection.c \
-		src/execution/chooser/decider_utils.c src/execution/chooser/decider.c src/utils/del.c src/utils/switchchar.c \
-		src/utils/.utils.c src/utils/commands.c src/utils/manipulation.c src/syntax/syntax.c \
-		src/syntax/syntax_utils.c inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/cd.c \
+FILES =	src/init/main.c src/init/Signal.c src/LinkList/CommandLinkList.c src/LinkList/EnviromentLinkList.c \
+		src/LinkList/RedirectionLinkList.c src/LinkList/CommandList.c src/MemoryManegment/del.c src/execution/Runner.c \
+		src/execution/RunnerUtils.c src/utils/SplitManipulator.c src/utils/HelperFunctions.c src/utils/Tokenizer.c \
+		src/utils/Quote_Parse.c src/FileDescriptors/heredoc.c src/syntax/SyntaxSmallFunctions.c src/syntax/SyntaxUtils.c \
+		src/syntax/SyntaxChecker.c inc/lib/Builtin/utils/unset.c inc/lib/Builtin/utils/pwd.c inc/lib/Builtin/utils/cd.c \
 		inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/env.c inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils1.c inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils0.c \
 		inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils2.c inc/lib/Builtin/utils/CommandPermissions/main.c inc/lib/Builtin/utils/exec.c inc/lib/Builtin/utils/exit.c \
-		inc/lib/Builtin/utils/export.c inc/lib/Builtin/utils/cd_utils.c inc/lib/Var/utils/var_utils.c inc/lib/Var/utils/var.c \
-
+		inc/lib/Builtin/utils/export.c inc/lib/Builtin/utils/Input_Output.c inc/lib/Builtin/utils/cd_utils.c inc/lib/Var/utils/var_utils.c \
+		inc/lib/Var/utils/var.c
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)

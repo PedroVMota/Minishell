@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 14:48:03 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ int ft_env(t_cmds *node)
 	if (dups[1] != -10)
 		close(dups[1]);
 	node->sh->exit = 0;
+	free(dups);
 	return (0);
 }

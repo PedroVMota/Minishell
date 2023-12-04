@@ -6,16 +6,11 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 15:59:33 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/04 23:08:35 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void remove_part_str(char *str, const char *remove);
-void update_pwd_values(t_env **env, char *oldpwd, char *pwd);
-char *get_pwd_from_list(t_env *env);
-int check_repetition(t_env *new, t_env **env);
 
 char *get_pwd_from_list(t_env *env)
 {
@@ -30,8 +25,8 @@ char *get_pwd_from_list(t_env *env)
 
 void search_env_for_update(t_env **head, char *search_name)
 {
-	if(!(*head))
-		return ;
+	if (!(*head))
+		return;
 	while (*head)
 	{
 		if (ft_strcmp((*head)->vars[0], search_name) == 0)
@@ -43,47 +38,39 @@ void search_env_for_update(t_env **head, char *search_name)
 
 void update_pwd_values(t_env **env, char *oldpwd, char *pwd)
 {
-	// t_env	*new_node;
-	// char	*oldpwd_str;
-	// char	*pwd_str;
-
-	// pwd_str = ft_strjoin("PWD=", pwd);
-	// oldpwd_str = ft_strjoin("OLDPWD=", oldpwd);
-	// new_node = ft_env_add(oldpwd_str);
-	// if (check_repetition(new_node, env) == 0)
-	// 	ft_ml_envadd_back(env, new_node);
-	// new_node = ft_env_add(pwd_str);
-	// if (check_repetition(new_node, env) == 0)
-	// 	ft_ml_envadd_back(env, new_node);
-
 	t_env *pwdenv;
 	t_env *oldpwdenv;
+	char *old;
+
+	old = NULL;
 	oldpwdenv = *env;
 	pwdenv = *env;
 	search_env_for_update(&oldpwdenv, "OLDPWD");
 	search_env_for_update(&pwdenv, "PWD");
 	if (pwdenv)
 	{
-		if(pwdenv->vars[1])
-			free(pwdenv->vars[1]);
 		pwdenv->vars[1] = pwd;
 	}
 	if (oldpwdenv)
 	{
-		if(oldpwdenv->vars[1])
-			free(oldpwdenv->vars[1]);
+		free(oldpwdenv->vars[1]);
 		oldpwdenv->vars[1] = oldpwd;
 	}
 }
 
-void remove_part_str(char *str, const char *remove)
+void remove_part_str(char **str, const char *remove)
 {
-	char *pos;
+	char *s;
+	char *sb;
 
-	pos = ft_strnstr(str, remove, ft_strlen(remove));
-	if (pos != NULL)
-		ft_memmove(pos, pos + ft_strlen(remove),
-				   ft_strlen(pos + ft_strlen(remove)) + 1);
+	sb = *str;
+
+	(void)remove;
+	s = ft_strdup(&sb[2]);
+	if (!s)
+		return;
+	free(*str);
+	*str = s;
 }
 
 int check_nothing(t_cmds *node)

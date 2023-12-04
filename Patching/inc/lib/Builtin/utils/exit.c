@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/11/23 22:49:24 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ int ft_exit(t_cmds *node)
 	if (dups[1] != -10)
 		close(dups[1]);
 	clean(node->sh, true, 0, NULL);
-
+	free(dups);
 	return (0);
 }

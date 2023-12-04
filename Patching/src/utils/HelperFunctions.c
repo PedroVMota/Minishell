@@ -20,3 +20,17 @@ if(!cmd->args || !cmd->args[0])
 		return (true);
 	return (false);
 }
+
+bool	isallwhitespace(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
+			return (false);
+		i++;
+	}
+	return (true);
+}

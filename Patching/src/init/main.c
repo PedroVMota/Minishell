@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+bool	isallwhitespace(char *input);
+
 void	center(char *input, t_shell *sh)
 {
 	sh->cmds = NULL;
@@ -10,19 +12,6 @@ void	center(char *input, t_shell *sh)
 	clean(sh, false, sh->exit, NULL);
 }
 
-bool	isallwhitespace(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i])
-	{
-		if (input[i] != ' ' && input[i] != '\t' && input[i] != '\n')
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 void	prompt(t_shell *shell)
 {

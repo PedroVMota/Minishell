@@ -144,6 +144,6 @@ int ft_export(t_cmds *node)
 		close(dups[1]);
 	if (node->next || node->prev)
 		clean(node->sh, true, 0, NULL);
-
+	free(dups);
 	return (1);
 }
