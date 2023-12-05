@@ -55,14 +55,16 @@ int ft_echo(t_cmds *node)
 			close(dups[0]);
 		if (dups[1] != -10)
 			close(dups[1]);
+	 	close_redi(node);
+		free(dups);
 		clean(node->sh, true, 0, NULL);
 	}
 	// else
-	// 	close_redi(node);
 	if (dups[0] != -10)
 		close(dups[0]);
 	if (dups[1] != -10)
 		close(dups[1]);
+ 	close_redi(node);
 	free(dups);
 	return (0);
 }

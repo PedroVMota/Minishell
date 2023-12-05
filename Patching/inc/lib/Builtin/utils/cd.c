@@ -44,7 +44,7 @@ int ft_cd_helper(t_cmds *node)
 		}
 		else
 		{
-			write(2, "Minishell: cd: No such file or directory\n", 43);
+			write(2, "Minishell: cd: No such file or directory\n", 42);
 			return (1);
 		}
 	}

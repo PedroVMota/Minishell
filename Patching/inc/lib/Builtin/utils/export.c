@@ -121,11 +121,11 @@ int ft_export(t_cmds *node)
 	if (!node->args[i])
 	{
 		print_export_env(node);
-		close_redi(node);
 		if (dups[0] != -10)
 			close(dups[0]);
 		if (dups[1] != -10)
 			close(dups[1]);
+		close_redi(node);
 		free(dups);
 		return (1);
 	}
@@ -145,9 +145,11 @@ int ft_export(t_cmds *node)
 		close(dups[1]);
 	if (node->next || node->prev)
 	{
+		close_redi(node);
 		free(dups);
 		clean(node->sh, true, 0, NULL);
 	}
+	close_redi(node);
 	free(dups);
 	return (1);
 }
