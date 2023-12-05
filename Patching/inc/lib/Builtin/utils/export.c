@@ -126,6 +126,7 @@ int ft_export(t_cmds *node)
 			close(dups[0]);
 		if (dups[1] != -10)
 			close(dups[1]);
+		free(dups);
 		return (1);
 	}
 	while (node->args[i])
@@ -143,7 +144,10 @@ int ft_export(t_cmds *node)
 	if (dups[1] != -10)
 		close(dups[1]);
 	if (node->next || node->prev)
+	{
+		free(dups);
 		clean(node->sh, true, 0, NULL);
+	}
 	free(dups);
 	return (1);
 }

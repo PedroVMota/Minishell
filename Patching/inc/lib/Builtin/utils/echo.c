@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 17:02:16 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int ft_echo(t_cmds *node)
 			close(dups[1]);
 		clean(node->sh, true, 0, NULL);
 	}
-	else
-		close_redi(node);
+	// else
+	// 	close_redi(node);
 	if (dups[0] != -10)
 		close(dups[0]);
 	if (dups[1] != -10)
