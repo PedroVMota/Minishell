@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/04 23:07:48 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:51:12 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int ft_cd(t_cmds *node)
 {
 	char *pwd;
 	char *oldpwd;
-	int *dups;
 
-	redirect(node);
-	dups = set_dups(node);
 	oldpwd = get_pwd_from_list(node->sh->env);
 	pwd = NULL;
 	if (check_nothing(node) == 1)
@@ -79,19 +76,8 @@ int ft_cd(t_cmds *node)
 		else
 			change_to_directory(node->args[1]);
 		pwd = getcwd(NULL, 0);
-		update_pwd_values(&node->sh->env, oldpwd, pwd);
-		if (dups[0] != -10)
-			close(dups[0]);
-		if (dups[1] != -10)
-			close(dups[1]);
-		free(dups);
+		update_pwd_values(&node->sh->env, oldpwd, pwd); 
 		return (1);
 	}
-
-	if (dups[0] != -10)
-		close(dups[0]);
-	if (dups[1] != -10)
-		close(dups[1]);
-	free(dups);
 	return (0);
 }
