@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   decider.c                                          :+:      :+:    :+:   */
+/*   Runner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 17:02:38 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 23:53:25 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 		isfork = false;
 	}
 	if (!isfork)
+	{
+		if (cmd->ft_exec == &ft_exit)
+			free(ps);
 		cmd->ft_exec(cmd);
+	}
 	else if ((isfork))
 	{
 		ps[*p] = fork();

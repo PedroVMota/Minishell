@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "minishell.h": "c",
-        "errno.h": "c",
-        "defines.h": "c",
-        "readline.h": "c"
-    }
-}

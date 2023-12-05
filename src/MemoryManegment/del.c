@@ -1,11 +1,11 @@
 #include <minishell.h>
 
-int	free_split(char **split, int ret)
+int free_split(char **split, int ret)
 {
-	char	**ptr;
+	char **ptr;
 
 	ptr = split;
-	if(!ptr)
+	if (!ptr)
 		return 0;
 	while (*ptr)
 	{
@@ -17,10 +17,10 @@ int	free_split(char **split, int ret)
 	return (ret);
 }
 
-void	clean_redirection(t_redirections **head)
+void clean_redirection(t_redirections **head)
 {
-	t_redirections	*local;
-	t_redirections	*next;
+	t_redirections *local;
+	t_redirections *next;
 
 	local = *head;
 	while (local)
@@ -32,7 +32,7 @@ void	clean_redirection(t_redirections **head)
 	}
 }
 
-static void	close_fds(t_cmds *cmds)
+static void close_fds(t_cmds *cmds)
 {
 	if (cmds->pipe[0] != -1)
 		close(cmds->pipe[0]);
@@ -44,9 +44,9 @@ static void	close_fds(t_cmds *cmds)
 		close(cmds->redirection[1]);
 }
 
-int	ft_env_delete(t_env **env)
+int ft_env_delete(t_env **env)
 {
-	t_env	*tmp;
+	t_env *tmp;
 
 	while ((*env))
 	{
@@ -59,7 +59,7 @@ int	ft_env_delete(t_env **env)
 	return (1);
 }
 
-void	close_redi(t_cmds *node)
+void close_redi(t_cmds *node)
 {
 	if (node->redirection[0] != -1 && node->redirection[0] != 2)
 		close(node->redirection[0]);
@@ -82,13 +82,13 @@ void	close_redi(t_cmds *node)
 	}
 }
 
-void	clean_commands(t_cmds **cmds)
+void clean_commands(t_cmds **cmds)
 {
 	t_cmds *tmp;
 
 	tmp = NULL;
 	if (!(*cmds))
-		return ;
+		return;
 	while (*cmds)
 	{
 		close_fds(*cmds);
@@ -105,9 +105,9 @@ void	clean_commands(t_cmds **cmds)
 	*cmds = NULL;
 }
 
-int	clean(t_shell *sh, bool _exit, int status, char *msg)
+int clean(t_shell *sh, bool _exit, int status, char *msg)
 {
-	if(!sh)
+	if (!sh)
 		return (1);
 	printf("Address: %p\n", sh->cmds);
 	clean_commands(&sh->cmds);
@@ -116,6 +116,8 @@ int	clean(t_shell *sh, bool _exit, int status, char *msg)
 		if (msg)
 			write(2, msg, ft_strlen(msg));
 		ft_env_delete(&sh->env);
+		close(1);
+		close(0);
 		exit(status);
 	}
 	return (0);

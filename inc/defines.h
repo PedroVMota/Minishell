@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/02 18:41:56 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/05 21:51:04 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
+	// int dups[2]
 	char					**envp;
 	int						exit;
 	int						lstsize;

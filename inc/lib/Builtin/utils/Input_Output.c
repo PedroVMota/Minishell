@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 23:32:46 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 23:47:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ int permission_checker(t_redirections *node, t_cmds *cmds)
 	fd = -1;
 	if (fd != -1)
 		close(fd);
-	if (!ft_strcmp(node->element[0], "\6"))
+	if (node->mode == FILE_OUT_TRUNC)
 		fd = check_out(node);
-	else if (!ft_strcmp(node->element[0], "\6\6"))
+	else if (node->mode == FILE_OUT_APPEND)
 		fd = out_append(node);
-	else if (!ft_strcmp(node->element[0], "\7"))
+	else if (node->mode == FILE_IN_READ)
 		fd = check_in(node);
-	else if (!ft_strcmp(node->element[0], "\7\7"))
+	else if (node->mode == FILE_IN_READ)
 	{
 		heredoc(cmds, node->element[1]);
 		if (cmds->redirection[0] != -1)

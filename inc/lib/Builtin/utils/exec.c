@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 23:13:35 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 23:28:14 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ bool checker(t_cmds *node)
 int ft_exec(t_cmds *node)
 {
 	int *dups;
-	info("Exec", YEL);
 	redirect(node);
 	dups = set_dups(node);
 
@@ -52,8 +51,6 @@ int ft_exec(t_cmds *node)
 		free(dups);
 		clean(node->sh, true, node->sh->exit, NULL);
 	}
-	printf("[%s]\n", node->args[0]);
-	info("Passed the file or command permissions", GRN);
 	clean_redirection(&node->infiles);
 	clean_redirection(&node->outfile);
 	free(dups);

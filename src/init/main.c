@@ -52,6 +52,8 @@ int	main(int c, char **v, char **envp)
 	shell.stop = 0;
 	shell.envp = envp;
 	shell.cmds = NULL;
+	// shell.dups[0]= -1;
+	// shell.dups[1]= -1;
 	handle_quit(0, &shell);
 	handle_sign(0, &shell);
 	ft_ml_sigdefault();

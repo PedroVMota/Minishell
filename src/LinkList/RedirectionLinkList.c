@@ -1,9 +1,9 @@
 
 #include "minishell.h"
 
-t_type	red_type_checker(char *str)
+t_type red_type_checker(char *str)
 {
-	t_type	final;
+	t_type final;
 
 	final = FILE_NONE;
 	if (str[0] == INFILE)
@@ -13,9 +13,25 @@ t_type	red_type_checker(char *str)
 	return (final);
 }
 
-t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
+void redi_checker(char ***new, t_shell *sh)
 {
-	t_redirections	*new;
+	int i;
+	i = -1;
+	while ((*new)[0][++i])
+	{
+		if ((*new)[0][i] == '\7' || (*new)[0][i] == '\6' || (*new)[0][i] == '\b')
+			continue;
+		else
+			break;
+	}
+	(*new)[1] = ft_strdup(&(*new)[0][i]);
+	if (!(*new)[1])
+		clean(sh, true, 1, "Malloc Error\n");
+}
+
+t_redirections *redi_new(int *i, t_cmds *cm, t_type type)
+{
+	t_redirections *new;
 
 	new = malloc(sizeof(t_redirections));
 	if (!new)
@@ -26,17 +42,26 @@ t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
 		free(new);
 		return (NULL);
 	}
+	
+	new->mode = type;
 	new->element[0] = ft_strdup(cm->args[*i]);
 	split_str_del(cm->args, *i);
-	new->element[1] = ft_strdup(cm->args[*i]);
-	split_str_del(cm->args, *i);
+	if (!cm->args[*i])
+		redi_checker(&new->element, cm->sh);
+	else
+	{
+		new->element[1] = ft_strdup(cm->args[*i]);
+		split_str_del(cm->args, *i);
+	}
+	info(new->element[0], GRN);
+	info(new->element[1], GRN);
 	new->element[2] = NULL;
-	new->mode = type;
 	new->next = NULL;
+
 	return (new);
 }
 
-t_redirections	*redirection_last_ptr(t_redirections *lst)
+t_redirections *redirection_last_ptr(t_redirections *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -45,47 +70,47 @@ t_redirections	*redirection_last_ptr(t_redirections *lst)
 	return (lst);
 }
 
-void	redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
-	t_redirections	*new;
-	t_redirections	*last;
+	t_redirections *new;
+	t_redirections *last;
 
 	(void)sh;
 	if (redi_node == FILE_NONE)
-		return ;
+		return;
 	new = redi_new(i, node, redi_node);
 	if (!new)
-		return ;
+		return;
 	if (!node->infiles)
 	{
 		node->infiles = new;
-		return ;
+		return;
 	}
 	last = redirection_last_ptr(node->infiles);
 	last->next = new;
 }
 
-void	redirection_out(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void redirection_out(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
-	t_redirections	*new;
-	t_redirections	*last;
+	t_redirections *new;
+	t_redirections *last;
 
 	(void)sh;
 	if (redi_node == FILE_NONE)
-		return ;
+		return;
 	new = redi_new(i, node, redi_node);
 	if (!new)
-		return ;
+		return;
 	if (!node->outfile)
 	{
 		node->outfile = new;
-		return ;
+		return;
 	}
 	last = redirection_last_ptr(node->outfile);
 	last->next = new;
 }
 
-void	placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
+void placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 {
 	if (redi_node == FILE_IN_HEREDOC || redi_node == FILE_IN_READ)
 		redirection_in(redi_node, node, i, sh);
@@ -93,12 +118,12 @@ void	placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
 		redirection_out(redi_node, node, i, sh);
 }
 
-void	redirection(t_cmds *node, t_shell *sh)
+void redirection(t_cmds *node, t_shell *sh)
 {
-	char	**args;
-	t_type	red_mode;
-	int		i;
-	int		loop;
+	char **args;
+	t_type red_mode;
+	int i;
+	int loop;
 
 	red_mode = FILE_NONE;
 	i = 0;
