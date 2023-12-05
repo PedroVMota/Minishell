@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:58:18 by oharoon           #+#    #+#             */
-/*   Updated: 2023/12/04 21:59:08 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:25:52 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int *set_dups(t_cmds *node)
 	if (node->next)
 		fdo = node->pipe[1];
 	if (node->redirection[1] != -1 && node->redirection[1] != -2)
-		fdi = node->redirection[1];
+		fdo = node->redirection[1];
 	if (fdi != -4)
 		du[0] = dup2(fdi, STDIN_FILENO);
 	if (fdo != -4)
