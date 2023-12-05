@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/05 16:51:12 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:58:37 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int ft_cd(t_cmds *node)
 	char *pwd;
 	char *oldpwd;
 
+	heredoc(node, node->infiles->element[1]);
 	oldpwd = get_pwd_from_list(node->sh->env);
 	pwd = NULL;
 	if (check_nothing(node) == 1)
@@ -75,7 +76,6 @@ int ft_cd(t_cmds *node)
 			change_to_oldpwd();
 		else
 			change_to_directory(node->args[1]);
-		pwd = getcwd(NULL, 0);
 		update_pwd_values(&node->sh->env, oldpwd, pwd); 
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:43 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 23:08:35 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:58:48 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void update_pwd_values(t_env **env, char *oldpwd, char *pwd)
 	t_env *oldpwdenv;
 	char *old;
 
+	pwd = getcwd(NULL, 0);
 	old = NULL;
 	oldpwdenv = *env;
 	pwdenv = *env;
