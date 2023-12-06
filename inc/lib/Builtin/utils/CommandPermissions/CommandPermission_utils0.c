@@ -1,13 +1,25 @@
-#include <builtins.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandPermission_utils0.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:53:51 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:59:59 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void add_directory(char **cmd);
-int shell_update_exit_status_error(int _new_err, t_shell *sh);
-bool f_perm(char *name, char **paths);
+#include <MiniBuiltins.h>
 
-char **getpaths(t_shell *sh)
+void	add_directory(char **cmd);
+int		shell_update_exit_status_error(int _new_err, t_shell *sh);
+bool	f_perm(char *name, char **paths);
+
+char	**getpaths(t_shell *sh)
 {
-	t_env *list;
-	char **paths;
+	t_env	*list;
+	char	**paths;
 
 	list = sh->env;
 	if (!list)
@@ -28,23 +40,23 @@ char **getpaths(t_shell *sh)
 	return (NULL);
 }
 
-void set_relative_path(t_cmds *head, int *err)
+void	set_relative_path(t_cmds *head, int *err)
 {
-	int i;
-	char *tmp;
-	char **paths;
+	int		i;
+	char	*tmp;
+	char	**paths;
 
 	if (isbuiltin(head))
-		return;
+		return ;
 	paths = getpaths(head->sh);
 	if (!paths)
-		return;
+		return ;
 	i = -1;
 	while (paths[++i])
 	{
 		tmp = ft_strjoin(paths[i], head->args[0]);
 		if (!tmp)
-			return;
+			return ;
 		if (f_perm(tmp, paths))
 		{
 			split_str_replace(head->args, 0, tmp);
@@ -56,7 +68,7 @@ void set_relative_path(t_cmds *head, int *err)
 	*err = 127;
 }
 
-int set_absolute_path(t_cmds *head)
+int	set_absolute_path(t_cmds *head)
 {
 	if (access(head->args[0], F_OK))
 		return (shell_update_exit_status_error(127, head->sh));
@@ -65,9 +77,10 @@ int set_absolute_path(t_cmds *head)
 	return (shell_update_exit_status_error(0, head->sh));
 }
 
-int check_all_paths(t_cmds *head, int *err, int *type)
+int	check_all_paths(t_cmds *head, int *err, int *type)
 {
-	if ((ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",3) || ft_strnstr(head->args[0], "/",3)))
+	if ((ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",
+				3) || ft_strnstr(head->args[0], "/", 3)))
 		*type = 2;
 	if (!(head->args[0][0] == '\0') && !isbuiltin(head) && *type == 1)
 		set_relative_path(head, err);

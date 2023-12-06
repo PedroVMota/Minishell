@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPermission_utils2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:58:18 by oharoon           #+#    #+#             */
-/*   Updated: 2023/12/05 16:31:13 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:00:15 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include <MiniBuiltins.h>
 
-int *set_dups(t_cmds *node)
+int	*set_dups(t_cmds *node)
 {
 	int	fdi;
 	int	fdo;
-	int	*du = malloc(4 * 2);
+	int	*du;
+
+	du = malloc(4 * 2);
 	if (!du)
 		clean(node->sh, true, 1, "Malloc Error\n");
 	du[0] = -10;

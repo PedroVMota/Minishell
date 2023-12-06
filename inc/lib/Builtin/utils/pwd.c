@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:11:33 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:01:10 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <MiniBuiltins.h>
 
 int	ft_pwd(t_cmds *node)
 {

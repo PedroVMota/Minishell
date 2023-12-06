@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   Input_Output.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/05 23:47:42 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:02:09 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <MiniBuiltins.h>
 
-int check_in(t_redirections *node)
+int	check_in(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK | R_OK);
@@ -28,10 +28,10 @@ int check_in(t_redirections *node)
 	return (fd);
 }
 
-int check_out(t_redirections *node)
+int	check_out(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -50,10 +50,10 @@ int check_out(t_redirections *node)
 	return (fd);
 }
 
-int out_append(t_redirections *node)
+int	out_append(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -94,9 +94,9 @@ int out_append(t_redirections *node)
 // 	return (fd);
 // }
 
-int permission_checker(t_redirections *node, t_cmds *cmds)
+int	permission_checker(t_redirections *node, t_cmds *cmds)
 {
-	int fd;
+	int	fd;
 
 	fd = -1;
 	if (fd != -1)
@@ -118,10 +118,10 @@ int permission_checker(t_redirections *node, t_cmds *cmds)
 	return (fd);
 }
 
-void redirect(t_cmds *node)
+void	redirect(t_cmds *node)
 {
-	t_redirections *in;
-	t_redirections *out;
+	t_redirections	*in;
+	t_redirections	*out;
 
 	in = node->infiles;
 	out = node->outfile;

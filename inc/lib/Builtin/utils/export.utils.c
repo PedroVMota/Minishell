@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Quote_Parse.c                                      :+:      :+:    :+:   */
+/*   export.utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 00:52:20 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:52:21 by pedromota        ###   ########.fr       */
+/*   Created: 2023/12/06 01:04:25 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 01:06:25 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include <MiniBuiltins.h>
 
-void	parse(t_cmds *node, t_shell *sh)
-{
-	t_cmds	*command;
+void	swpnodes(t_env *a, t_env *b){
+	char **temp;
 
-	command = node;
-	while (command)
-	{
-		redirection(command, sh);
-		command = command->next;
-	}
+	temp = a->vars;
+	a->vars = b->vars;
+	b->vars = temp;
 }
 
-void	remove_quotes(char *str)
-{
+void	print_export_char(char *str, bool _print_new_line){
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
+	if (str == NULL || str[0] == '\0')
+		return ;
 	while (str[i])
 	{
-		if (str[i] == '\1' || str[i] == '\2')
-			i++;
+		if (str[i] == '\n')
+		{
+			printf("\\n");
+			if (str[i + 1] != '\0')
+				i++;
+		}
 		else
-			str[j++] = str[i++];
+			printf("%c", str[i]);
+		i++;
 	}
-	str[j] = '\0';
+	if (_print_new_line)
+		printf("\"\n");
 }

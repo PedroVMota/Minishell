@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   decider_utils.c                                    :+:      :+:    :+:   */
+/*   RunnerUtils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/04 16:24:50 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 00:51:34 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ bool	builtin_detector(t_cmds *cmd)
 		return (true);
 	return (false);
 }
-
 
 void	exec_ptr_chooser(t_cmds *node)
 {
@@ -56,21 +55,28 @@ void	exec_ptr_chooser(t_cmds *node)
 
 void	wait_for_child(t_shell *sh, int *processlist, int *process)
 {
-	int	status;
+	int		status;
 	t_cmds	*head;
 
 	head = sh->cmds;
 	while (*process > 0)
 	{
-		if(isbuiltin(head))
+		if (isbuiltin(head))
 		{
 			head = head->next;
 			(*process)--;
-			continue;
+			continue ;
 		}
 		waitpid(processlist[--(*process)], &status, 0);
 		head = head->next;
 		sh->exit = status >> 8;
 	}
 	free(processlist);
+}
+
+void	run_parrent(t_cmds *node, int *ps)
+{
+	if (node->ft_exec == &ft_exit)
+		free(ps);
+	node->ft_exec(node);
 }

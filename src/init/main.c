@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:53:03 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:53:13 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	isallwhitespace(char *input);
@@ -11,7 +23,6 @@ void	center(char *input, t_shell *sh)
 	execution_part(sh);
 	clean(sh, false, sh->exit, NULL);
 }
-
 
 void	prompt(t_shell *shell)
 {
@@ -52,8 +63,6 @@ int	main(int c, char **v, char **envp)
 	shell.stop = 0;
 	shell.envp = envp;
 	shell.cmds = NULL;
-	// shell.dups[0]= -1;
-	// shell.dups[1]= -1;
 	handle_quit(0, &shell);
 	handle_sign(0, &shell);
 	ft_ml_sigdefault();

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:12:23 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/04 22:59:11 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:01:14 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <MiniBuiltins.h>
 
 void remove_node(t_env **head, char *content)
 {

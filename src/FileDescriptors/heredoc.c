@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:48:52 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	check_elements(char *input, char *target)
@@ -17,7 +29,6 @@ static int	check_elements(char *input, char *target)
 
 static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 {
-	(void)sh;
 	if (!*text || !delimiter)
 		return (true);
 	if (check_elements(*text, delimiter))
@@ -35,7 +46,6 @@ static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 void	heredoc(t_cmds *node, char *delimiter)
 {
 	char	*text;
-	
 	int		bytes_read;
 	int		here_doc[2];
 

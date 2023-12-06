@@ -1,32 +1,24 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 01:02:42 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 01:06:23 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void print_export_char(char *str, bool _print_new_line)
+#include <MiniBuiltins.h>
+
+void	swpnodes(t_env *a, t_env *b);
+void	print_export_char(char *str, bool _print_new_line);
+
+int	check_repetition(t_env *new, t_env **env)
 {
-	int i;
-
-	i = 0;
-	if (str == NULL || str[0] == '\0')
-		return;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-		{
-			printf("\\n");
-			if (str[i + 1] != '\0')
-				i++;
-		}
-		else
-			printf("%c", str[i]);
-		i++;
-	}
-	if (_print_new_line)
-		printf("\"\n");
-}
-
-int check_repetition(t_env *new, t_env **env)
-{
-	t_env *temp;
-	int i;
+	t_env	*temp;
+	int		i;
 
 	temp = *env;
 	i = 0;
@@ -40,7 +32,8 @@ int check_repetition(t_env *new, t_env **env)
 		if (ft_strcmp(temp->vars[0], new->vars[0]) == 0)
 		{
 			if (temp->vars[1] == NULL)
-				temp->vars[1] = (char *)malloc(ft_strlen(new->vars[1]) * sizeof(char));
+				temp->vars[1] = (char *)malloc(ft_strlen(new->vars[1])
+					* sizeof(char));
 			ft_strlcpy(temp->vars[1], new->vars[1], strlen(temp->vars[1]));
 			return (1);
 		}
@@ -50,9 +43,9 @@ int check_repetition(t_env *new, t_env **env)
 	return (0);
 }
 
-void print_export_env(t_cmds *node)
+void	print_export_env(t_cmds *node)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = node->sh->env;
 	while (env)
@@ -66,53 +59,41 @@ void print_export_env(t_cmds *node)
 		}
 		env = env->next;
 	}
-	return;
+	return ;
 }
 
-int compareStrings(const char *str1, const char *str2)
+
+
+void	list_order(t_env *node)
 {
-	return (strcmp(str1, str2));
-}
+	int		sw;
+	t_env	*prf;
+	t_env	*prs;
 
-void swapNodes(t_env *a, t_env *b)
-{
-	char **temp;
-
-	temp = a->vars;
-	a->vars = b->vars;
-	b->vars = temp;
-}
-
-void list_order(t_env *node)
-{
-	int swapped;
-	t_env *ptr1;
-	t_env *lptr;
-
-	swapped = 1;
-	while (swapped)
+	sw = 1;
+	while (sw)
 	{
-		swapped = 0;
-		ptr1 = node;
-		lptr = NULL;
-		while (ptr1->next != lptr)
+		sw = 0;
+		prf = node;
+		prs = NULL;
+		while (prf->next != prs)
 		{
-			if (compareStrings(ptr1->vars[0], ptr1->next->vars[0]) > 0)
+			if (ft_strcmp(prf->vars[0], prf->next->vars[0]) > 0)
 			{
-				swapNodes(ptr1, ptr1->next);
-				swapped = 1;
+				swpnodes(prf, prf->next);
+				sw = 1;
 			}
-			ptr1 = ptr1->next;
+			prf = prf->next;
 		}
-		lptr = ptr1;
+		prs = prf;
 	}
 }
 
-int ft_export(t_cmds *node)
+int	ft_export(t_cmds *node)
 {
-	int i;
-	t_env *new;
-	int *dups;
+	t_env	*new;
+	int		*dups;
+	int		i;
 
 	dups = NULL;
 	i = 1;

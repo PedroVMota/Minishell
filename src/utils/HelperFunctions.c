@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HelperFunctions.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:52:24 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:52:35 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	isbuiltin(t_cmds *cmd)
 {
-if(!cmd->args || !cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 		return (false);
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		return (true);

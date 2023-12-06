@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:57:02 by oharoon           #+#    #+#             */
-/*   Updated: 2023/12/04 23:13:11 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:00:10 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <builtins.h>
+#include <MiniBuiltins.h>
 
 int	check_all_paths(t_cmds *head, int *err, int *type);
 

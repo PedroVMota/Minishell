@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/04 22:59:34 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:00:55 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <MiniBuiltins.h>
 
 /// @brief This function is used to execute the command
 /// @param node  The command node

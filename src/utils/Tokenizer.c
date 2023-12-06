@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Tokenizer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:52:13 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:52:14 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 char	replace(char c)
@@ -54,7 +66,7 @@ void	switch_caracters(char **ptr)
 
 	main = 0;
 	change = true;
-	if(!ptr || !*ptr)
+	if (!ptr || !*ptr)
 		return ;
 	while ((*ptr)[main])
 	{

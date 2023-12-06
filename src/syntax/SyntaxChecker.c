@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   SyntaxChecker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 23:21:00 by oharoon           #+#    #+#             */
-/*   Updated: 2023/12/04 23:28:57 by oharoon          ###   ########.fr       */
+/*   Created: 2023/12/06 00:36:52 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:36:52 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	syntax_notsupported(char *in, int *i, t_shell *sh)
 
 void	syntax_redirection(char *in, int *i, t_shell *sh)
 {
-	int		type;
+	int	type;
 
 	type = 1;
 	if (in[*i] == '<' && in[*i + 1] == '<')
@@ -62,7 +62,7 @@ void	syntax_redirection(char *in, int *i, t_shell *sh)
 
 void	ft_syntax_checker(char *in, t_shell *sh)
 {
-int	index;
+	int	index;
 	int	len;
 
 	len = ft_strlen(in);

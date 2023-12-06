@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   CommandList.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:44:03 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:44:53 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	cmd_size(t_cmds *head)
@@ -47,7 +59,7 @@ t_cmds	*ft_buildlst(char *elements, t_shell *sh)
 	cmds = setup(nodes, sh);
 	cmds->is_builtin = 0;
 	cmds->saved_stdin = -1;
-    cmds->saved_stdout = -1;
+	cmds->saved_stdout = -1;
 	free(elements);
 	return (cmds);
 }

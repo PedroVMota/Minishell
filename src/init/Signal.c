@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 00:52:55 by pedromota         #+#    #+#             */
+/*   Updated: 2023/12/06 00:52:56 by pedromota        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_ml_sigdefault(void)
@@ -23,7 +35,6 @@ void	handle_quit(int sig, t_shell *sh)
 	{
 		printf("\b \b");
 	}
-
 }
 
 void	handle_sign(int sig, t_shell *sh)

@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/05 17:02:16 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 01:01:50 by pedromota        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <MiniBuiltins.h>
 
-static int check_options(t_cmds *node, int *word)
+static int	check_options(t_cmds *node, int *word)
 {
-	int break_line;
+	int	break_line;
 
 	break_line = 0;
 	*word = 1;
@@ -28,11 +28,11 @@ static int check_options(t_cmds *node, int *word)
 	return (break_line);
 }
 
-int ft_echo(t_cmds *node)
+int	ft_echo(t_cmds *node)
 {
-	int word;
-	int br;
-	int *dups;
+	int	word;
+	int	br;
+	int	*dups;
 
 	redirect(node);
 	dups = set_dups(node);
@@ -55,7 +55,7 @@ int ft_echo(t_cmds *node)
 			close(dups[0]);
 		if (dups[1] != -10)
 			close(dups[1]);
-	 	close_redi(node);
+		close_redi(node);
 		free(dups);
 		clean(node->sh, true, 0, NULL);
 	}
@@ -64,7 +64,7 @@ int ft_echo(t_cmds *node)
 		close(dups[0]);
 	if (dups[1] != -10)
 		close(dups[1]);
- 	close_redi(node);
+	close_redi(node);
 	free(dups);
 	return (0);
 }
