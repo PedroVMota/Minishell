@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:45:49 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:47:31 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 07:50:34 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	clean(t_shell *sh, bool _exit, int status, char *msg)
 {
 	if (!sh)
 		return (1);
-	printf("Address: %p\n", sh->cmds);
 	clean_commands(&sh->cmds);
 	if (_exit)
 	{

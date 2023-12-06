@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 01:01:50 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:43:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@ static int	check_options(t_cmds *node, int *word)
 		(*word)++;
 	}
 	return (break_line);
+}
+
+static void	close_data(int *dups, t_cmds *node, bool exit)
+{
+	if (dups[0] != -10)
+		close(dups[0]);
+	if (dups[1] != -10)
+		close(dups[1]);
+	close_redi(node);
+	free(dups);
+	if (exit)
+		clean(node->sh, true, 0, NULL);
 }
 
 int	ft_echo(t_cmds *node)
@@ -50,21 +62,8 @@ int	ft_echo(t_cmds *node)
 	if (br == 0)
 		printf("\n");
 	if (node->next || node->prev)
-	{
-		if (dups[0] != -10)
-			close(dups[0]);
-		if (dups[1] != -10)
-			close(dups[1]);
-		close_redi(node);
-		free(dups);
-		clean(node->sh, true, 0, NULL);
-	}
-	// else
-	if (dups[0] != -10)
-		close(dups[0]);
-	if (dups[1] != -10)
-		close(dups[1]);
-	close_redi(node);
-	free(dups);
+		close_data(dups, node, true);
+	else
+		close_data(dups, node, false);
 	return (0);
 }

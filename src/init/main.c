@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:53:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:53:13 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 13:07:38 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal_status;
 
 bool	isallwhitespace(char *input);
 
@@ -27,13 +29,10 @@ void	center(char *input, t_shell *sh)
 void	prompt(t_shell *shell)
 {
 	char	*input;
-	char	*exit;
 
 	while (1)
 	{
-		exit = ft_itoa(shell->exit);
-		info(exit, MAG);
-		free(exit);
+		ft_ml_sigdefault(SIG_STATE_MAIN);
 		input = readline("minishell >$ ");
 		if (!input)
 		{
@@ -52,6 +51,7 @@ void	prompt(t_shell *shell)
 	}
 }
 
+
 int	main(int c, char **v, char **envp)
 {
 	t_shell	shell;
@@ -63,9 +63,6 @@ int	main(int c, char **v, char **envp)
 	shell.stop = 0;
 	shell.envp = envp;
 	shell.cmds = NULL;
-	handle_quit(0, &shell);
-	handle_sign(0, &shell);
-	ft_ml_sigdefault();
 	prompt(&shell);
 	(void)(envp);
 	return (0);

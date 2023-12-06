@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 01:01:44 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:40:31 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,28 @@ int	ft_cd_helper(t_cmds *node)
 	return (0);
 }
 
+// heredoc(node,node->infiles->element[1]);
+// this was on the line 61 for some reason explain to me tommorow
 int	ft_cd(t_cmds *node)
 {
 	char	*pwd;
 	char	*oldpwd;
 
-	heredoc(node, node->infiles->element[1]);
 	oldpwd = get_pwd_from_list(node->sh->env);
 	pwd = NULL;
 	if (check_nothing(node) == 1)
 		return (1);
-	if (!ft_strncmp(node->args[0], "cd", 2))
+	if (!node->args[1] || node->args[1][0] == '~')
 	{
-		if (!node->args[1] || node->args[1][0] == '~')
-		{
-			if (ft_cd_helper(node) == 1)
-				return (1);
-		}
-		else if (node->args[2])
-			write(2, "Minishell: cd : too many arguments\n", 35);
-		else if (node->args[1][0] == '-')
-			change_to_oldpwd();
-		else
-			change_to_directory(node->args[1]);
-		update_pwd_values(&node->sh->env, oldpwd, pwd);
-		return (1);
+		if (ft_cd_helper(node) == 1)
+			return (1);
 	}
+	else if (node->args[2])
+		write(2, "Minishell: cd : too many arguments\n", 35);
+	else if (node->args[1][0] == '-')
+		change_to_oldpwd();
+	else
+		change_to_directory(node->args[1]);
+	update_pwd_values(&node->sh->env, oldpwd, pwd);
 	return (0);
 }

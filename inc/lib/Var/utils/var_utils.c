@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 04:56:45 by pedro             #+#    #+#             */
+/*   Updated: 2023/12/06 04:56:53 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vars.h"
 
 void	*free_array(char **array)
@@ -17,7 +29,7 @@ bool	does_have_var(char *s)
 
 	index = 0;
 	quote = 0;
-	if(!s)
+	if (!s)
 		return (false);
 	while (s[index])
 	{
@@ -50,7 +62,7 @@ int	varlib_start_position(char *ptr)
 	return (-1);
 }
 
-void *trash(char **array)
+void	*trash(char **array)
 {
 	int	i;
 

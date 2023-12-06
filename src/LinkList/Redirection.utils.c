@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Redirection.utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:38:30 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:43:57 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:26:30 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+t_redirections	*redirection_last_ptr(t_redirections *lst);
 
 void	redi_checker(char ***new, t_shell *sh)
 {
@@ -53,22 +55,36 @@ t_redirections	*all_together(int *i, t_cmds *cm, t_type type)
 		new->element[1] = ft_strdup(cm->args[*i]);
 		split_str_del(cm->args, *i);
 	}
-	info(new->element[0], GRN);
-	info(new->element[1], GRN);
 	new->next = NULL;
 	return (new);
 }
 
-t_type	red_type_checker(char *str)
+t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
 {
-	t_type	final;
+	t_redirections	*new;
 
-	final = FILE_NONE;
-	if (str[0] == INFILE)
-		final = FILE_IN_READ + (str[1] == INFILE);
-	if (str[0] == OUTTRUC)
-		final = 3 + (str[1] == OUTTRUC);
-	return (final);
+	new = malloc(sizeof(t_redirections));
+	if (!new)
+		return (NULL);
+	new->element = malloc(sizeof(char *) * 2);
+	if (!new->element)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->mode = type;
+	new->element[0] = ft_strdup(cm->args[*i]);
+	split_str_del(cm->args, *i);
+	if (!cm->args[*i])
+		redi_checker(&new->element, cm->sh);
+	else
+	{
+		new->element[1] = ft_strdup(cm->args[*i]);
+		split_str_del(cm->args, *i);
+	}
+	new->element[2] = NULL;
+	new->next = NULL;
+	return (new);
 }
 
 void	redirection_in(t_type redi_node, t_cmds *node, int *i, t_shell *sh)

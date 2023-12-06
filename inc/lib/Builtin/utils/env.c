@@ -3,26 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 01:00:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:56:25 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MiniBuiltins.h>
 
+static void	close_data(int *dups, t_cmds *node, bool exit, int status)
+{
+	if (dups[0] != -10)
+		close(dups[0]);
+	if (dups[1] != -10)
+		close(dups[1]);
+	close_redi(node);
+	free(dups);
+	if (exit)
+		clean(node->sh, true, status, NULL);
+}
+
 /// @brief This function is used to execute the command
 /// @param node  The command node
 /// @return exit status
-int ft_env(t_cmds *node)
+int	ft_env(t_cmds *node)
 {
-	t_env *env;
-	t_shell *head_master;
-	int *dups;
+	t_env	*env;
+	int		*dups;
+
 	redirect(node);
 	dups = set_dups(node);
-	head_master = node->sh;
 	env = node->sh->env;
 	while (env)
 	{
@@ -30,20 +41,8 @@ int ft_env(t_cmds *node)
 		env = env->next;
 	}
 	if (node->next || node->prev)
-	{
-		if (dups[0] != -10)
-			close(dups[0]);
-		if (dups[1] != -10)
-			close(dups[1]);
-		clean(head_master, true, 0, NULL);
-	}
+		close_data(dups, node, true, 0);
 	else
-		close_redi(node);
-	if (dups[0] != -10)
-		close(dups[0]);
-	if (dups[1] != -10)
-		close(dups[1]);
-	node->sh->exit = 0;
-	free(dups);
+		close_data(dups, node, false, 0);
 	return (0);
 }

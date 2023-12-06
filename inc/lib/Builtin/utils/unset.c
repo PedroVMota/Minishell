@@ -3,19 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:12:23 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 01:01:14 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:45:23 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MiniBuiltins.h>
 
-void remove_node(t_env **head, char *content)
+static void	close_data(int *dups, t_cmds *node, bool exit)
 {
-	t_env *current;
-	t_env *previous;
+	if (dups[0] != -10)
+		close(dups[0]);
+	if (dups[1] != -10)
+		close(dups[1]);
+	close_redi(node);
+	free(dups);
+	if (exit)
+		clean(node->sh, true, 0, NULL);
+}
+
+void	remove_node(t_env **head, char *content)
+{
+	t_env	*current;
+	t_env	*previous;
 
 	previous = NULL;
 	current = *head;
@@ -35,10 +47,10 @@ void remove_node(t_env **head, char *content)
 	}
 }
 
-int ft_unset(t_cmds *node)
+int	ft_unset(t_cmds *node)
 {
-	int i;
-	int *dups;
+	int	i;
+	int	*dups;
 
 	i = 0;
 	redirect(node);
@@ -47,16 +59,14 @@ int ft_unset(t_cmds *node)
 		NULL;
 	if (!node->args[i])
 	{
-		close_redi(node);
+		close_data(dups, node, false);
 		return (1);
 	}
 	while (node->args[++i])
 		remove_node(&node->sh->env, node->args[i]);
-	close_redi(node);
-	if(dups[0] != -10)
-		close(dups[0]);
-	if(dups[1] != -10)
-		close(dups[1]);
-	free(dups);
+	if (node->next || node->prev)
+		close_data(dups, node, true);
+	else
+		close_data(dups, node, false);
 	return (1);
 }

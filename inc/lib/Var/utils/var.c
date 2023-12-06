@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/06 04:57:07 by pedro             #+#    #+#             */
+/*   Updated: 2023/12/06 04:57:07 by pedro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "vars.h"
 
@@ -66,7 +78,7 @@ char	*varlib_delete_unknown(char *str)
 		end++;
 	newlen = len - (end - start);
 	if (newlen == 0)
-		return trash((char *[]){str, NULL});
+		return (trash((char *[]){str, NULL}));
 	result = (char *)malloc(newlen + 1);
 	if (!result)
 		return (str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/05 21:51:04 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/06 13:22:47 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct s_shell
 
 	t_cmds					*cmds;
 	t_env					*env;
+
+
 }							t_shell;
 
 # define EXIT_GENERAL_ERROR 2

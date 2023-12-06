@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Runner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:51:41 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 13:29:35 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,19 @@ void	close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
+void	sigquit_handler_in_process(int sig)
+{
+	if (sig == SIGQUIT)
+		ft_putstr_fd("Quit: 3\n", 2);
+	if (sig == SIGINT)
+		printf("\n");
+}
+
 int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
 	int	isfork;
 
+	// sig_t old[2];
 	isfork = true;
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
 	{
@@ -62,8 +71,13 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 	else if ((isfork))
 	{
 		ps[*p] = fork();
+		ft_ml_sigdefault(SIG_STATE_PARENT);
 		if (ps[*p] == 0)
 		{
+			if(isbuiltin(cmd))
+				ft_ml_sigdefault(SIG_STATE_CHILD_BUILTIN);
+			else
+				ft_ml_sigdefault(SIG_STATE_CHILD);
 			free(ps);
 			if (cmd->ft_exec)
 				cmd->ft_exec(cmd);

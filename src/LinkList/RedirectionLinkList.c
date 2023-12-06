@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   RedirectionLinkList.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:37:49 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:40:59 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/06 05:25:42 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_redirections	*all_together(int *i, t_cmds *cm, t_type type);
-t_type			red_type_checker(char *str);
 void			redirection_in(t_type redi_node, t_cmds *node, int *i,
 					t_shell *sh);
 void			redirection_out(t_type redi_node, t_cmds *node, int *i,
@@ -26,6 +25,18 @@ t_redirections	*redirection_last_ptr(t_redirections *lst)
 	while (lst->next)
 		lst = lst->next;
 	return (lst);
+}
+
+t_type	red_type_checker(char *str)
+{
+	t_type	final;
+
+	final = FILE_NONE;
+	if (str[0] == INFILE)
+		final = FILE_IN_READ + (str[1] == INFILE);
+	if (str[0] == OUTTRUC)
+		final = 3 + (str[1] == OUTTRUC);
+	return (final);
 }
 
 void	placer(t_type redi_node, t_cmds *node, int *i, t_shell *sh)
