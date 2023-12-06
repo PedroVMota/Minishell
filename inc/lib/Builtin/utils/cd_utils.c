@@ -40,10 +40,8 @@ void update_pwd_values(t_env **env, char *oldpwd, char *pwd)
 {
 	t_env *pwdenv;
 	t_env *oldpwdenv;
-	char *old;
 
 	pwd = getcwd(NULL, 0);
-	old = NULL;
 	oldpwdenv = *env;
 	pwdenv = *env;
 	search_env_for_update(&oldpwdenv, "OLDPWD");

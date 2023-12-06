@@ -50,13 +50,9 @@ void	syntax_notsupported(char *in, int *i, t_shell *sh)
 
 void	syntax_redirection(char *in, int *i, t_shell *sh)
 {
-	int		bi;
-	char	c;
 	int		type;
 
-	c = in[*i];
 	type = 1;
-	bi = *i;
 	if (in[*i] == '<' && in[*i + 1] == '<')
 		type = 2;
 	else if (in[(*i)] == '>' && in[(*i) + 1] == '>')
@@ -66,7 +62,7 @@ void	syntax_redirection(char *in, int *i, t_shell *sh)
 
 void	ft_syntax_checker(char *in, t_shell *sh)
 {
-	int	index;
+int	index;
 	int	len;
 
 	len = ft_strlen(in);

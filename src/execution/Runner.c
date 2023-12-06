@@ -81,7 +81,6 @@ int execution_part(t_shell *sh)
 	int *processlist;
 	int process;
 	t_cmds *head;
-	int status;
 
 	process = 0;
 	head = sh->cmds;
@@ -95,7 +94,6 @@ int execution_part(t_shell *sh)
 		command_exe(head, processlist, &process);
 		close_gen(head);
 		process++;
-		status = head->sh->exit;
 		head = head->next;
 	}
 	wait_for_child(sh, processlist, &process);
