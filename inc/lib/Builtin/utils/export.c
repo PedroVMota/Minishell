@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:02:42 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 05:13:35 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 01:01:38 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ int	ft_export(t_cmds *node)
 	else
 		add_to_the_list(node, &i);
 	list_order(node->sh->env);
-	close_data(dups, node, true);
+	if(node->next || node->prev)
+		close_data(dups, node, true);
+	else
+		close_data(dups, node, false);
 	return (1);
 }

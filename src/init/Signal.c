@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:52:55 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 13:33:11 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 04:37:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ static void	sh_main(int signal)
 	}
 }
 
+static void	sh_hd(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		close(STDIN_FILENO);
+		g_signal_status = SIGNAL_EXIT_HD;
+	}
+}
+
 void	ft_ml_sigdefault(int sig_state)
 {
 	if (sig_state == SIG_STATE_MAIN)
@@ -55,5 +65,10 @@ void	ft_ml_sigdefault(int sig_state)
 	{
 		signal(SIGINT, sh_print);
 		signal(SIGQUIT, sh_print);
+	}
+	else if (sig_state == SIG_STATE_HD_CHILD)
+	{
+		signal(SIGINT, sh_hd);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }

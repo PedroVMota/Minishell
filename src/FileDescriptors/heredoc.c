@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:48:52 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/07 04:40:46 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,18 @@ void	heredoc(t_cmds *node, char *delimiter)
 	int		here_doc[2];
 
 	text = NULL;
-	if (pipe(here_doc) == -1)
-		return ;
+	ft_ml_sigdefault(SIG_STATE_PARENT);
+	if (!(node->prev || node->next))
+	{
+		info("Condition 0", BLU);
+		ft_ml_sigdefault(SIG_STATE_IGNORE);
+	}
+	else if ((node->prev || node->next))
+	{
+		info("Condition 1", BLU);
+		ft_ml_sigdefault(SIG_STATE_HD_CHILD);
+	}
+	if (pipe(here_doc) == -1) return ;
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
 	while (bytes_read > -1 && node->sh->stop != 1)

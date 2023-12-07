@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:53:18 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 05:56:36 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 04:39:32 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	permission_checker(t_redirections *node, t_cmds *cmds){
 		fd = out_append(node);
 	else if (node->mode == FILE_IN_READ)
 		fd = check_in(node);
-	else if (node->mode == FILE_IN_READ)
+	else if (node->mode == FILE_IN_HEREDOC)
 	{
 		heredoc(cmds, node->element[1]);
 		if (cmds->redirection[0] != -1)

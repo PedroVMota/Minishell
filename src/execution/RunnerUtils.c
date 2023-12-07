@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RunnerUtils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 00:51:34 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/07 01:04:04 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	wait_for_child(t_shell *sh, int *processlist, int *process)
 	head = sh->cmds;
 	while (*process > 0)
 	{
-		if (isbuiltin(head))
+		if (head != NULL && isbuiltin(head) && !(head->prev || head->next))
 		{
 			head = head->next;
 			(*process)--;
@@ -79,4 +79,12 @@ void	run_parrent(t_cmds *node, int *ps)
 	if (node->ft_exec == &ft_exit)
 		free(ps);
 	node->ft_exec(node);
+}
+
+void	update_signal_for_child(t_cmds *cmd)
+{
+	if (isbuiltin(cmd))
+		ft_ml_sigdefault(SIG_STATE_CHILD_BUILTIN);
+	else
+		ft_ml_sigdefault(SIG_STATE_CHILD);
 }
