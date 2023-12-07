@@ -12,9 +12,10 @@
 
 #include <MiniBuiltins.h>
 
-int	check_in(t_redirections *node){
-	int	fd;
-	int	acess;
+int check_in(t_redirections *node)
+{
+	int fd;
+	int acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK | R_OK);
@@ -27,9 +28,10 @@ int	check_in(t_redirections *node){
 	return (fd);
 }
 
-int	check_out(t_redirections *node){
-	int	fd;
-	int	acess;
+int check_out(t_redirections *node)
+{
+	int fd;
+	int acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -48,9 +50,10 @@ int	check_out(t_redirections *node){
 	return (fd);
 }
 
-int	out_append(t_redirections *node){
-	int	fd;
-	int	acess;
+int out_append(t_redirections *node)
+{
+	int fd;
+	int acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -69,10 +72,42 @@ int	out_append(t_redirections *node){
 	return (fd);
 }
 
-int	permission_checker(t_redirections *node, t_cmds *cmds){
-	int	fd;
+static void heredoc_setup(t_cmds *cmds, t_redirections *node, int *local)
+{
+	pid_t pid;
+	int fd[2];
+
+	if(pipe(fd) == -1)
+		clean(cmds->sh, true, 1, "PIPE ERROR");
+	cmds->redirection[0] = fd[0];
+	ft_ml_sigdefault(SIG_STATE_IGNORE);
+	pid = fork();
+	if(pid == -1)
+		clean(cmds->sh, true, 1, "FORK ERROR");
+	if(!pid)
+	{
+		ft_ml_sigdefault(SIG_STATE_HD_CHILD);
+		close(fd[0]);
+		heredoc(cmds, node->element[1], fd[1]);
+	}
+	else
+	{
+		close(fd[1]);
+		waitpid(pid, local, 0);
+		ft_ml_sigdefault(SIG_STATE_CHILD);
+		*local = *local >> 8;
+		if(*local == 130)
+			info("HEREDOC EXIT ERROR", GRN);
+	}
+}
+
+int permission_checker(t_redirections *node, t_cmds *cmds)
+{
+	int fd;
+	int local;
 
 	fd = -1;
+	local = 0;
 	if (fd != -1)
 		close(fd);
 	if (node->mode == FILE_OUT_TRUNC)
@@ -83,11 +118,15 @@ int	permission_checker(t_redirections *node, t_cmds *cmds){
 		fd = check_in(node);
 	else if (node->mode == FILE_IN_HEREDOC)
 	{
-		heredoc(cmds, node->element[1]);
+
+		heredoc_setup(cmds, node, &local);
 		if (cmds->redirection[0] != -1)
 			fd = cmds->redirection[0];
 		if (cmds->redirection[0] == -2)
 			clean(cmds->sh, true, 1, NULL);
+		if(local == 130)
+			info("HEREDOC EXITED WITH ERROR", RED);
+			// clean(cmds->sh, true, 130, NULL);
 	}
 	return (fd);
 }

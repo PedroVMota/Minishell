@@ -66,7 +66,7 @@ t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
 	new = malloc(sizeof(t_redirections));
 	if (!new)
 		return (NULL);
-	new->element = malloc(sizeof(char *) * 2);
+	new->element = malloc(sizeof(char *) * 3);
 	if (!new->element)
 	{
 		free(new);
@@ -82,7 +82,7 @@ t_redirections	*redi_new(int *i, t_cmds *cm, t_type type)
 		new->element[1] = ft_strdup(cm->args[*i]);
 		split_str_del(cm->args, *i);
 	}
-	new->element[2] = NULL;
+	new->element[2] = 0;
 	new->next = NULL;
 	return (new);
 }

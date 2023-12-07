@@ -83,7 +83,7 @@ void	run_parrent(t_cmds *node, int *ps)
 
 void	update_signal_for_child(t_cmds *cmd)
 {
-	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
+	if (isbuiltin(cmd) && (cmd->prev || cmd->next))
 		ft_ml_sigdefault(SIG_STATE_CHILD_BUILTIN);
 	else
 		ft_ml_sigdefault(SIG_STATE_CHILD);

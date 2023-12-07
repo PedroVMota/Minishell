@@ -12,13 +12,14 @@
 
 #include "minishell.h"
 
-void		wait_for_child(t_shell *sh, int *processlist, int *process);
-void		run_parrent(t_cmds *node, int *ps);
-void	update_signal_for_child(t_cmds *cmd);
+void wait_for_child(t_shell *sh, int *processlist, int *process);
+void run_parrent(t_cmds *node, int *ps);
+void update_signal_for_child(t_cmds *cmd);
+bool t_redirection_has_hd(t_redirections *lst);
 
-static int	get_command_size(t_cmds *head)
+static int get_command_size(t_cmds *head)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (head)
@@ -31,14 +32,14 @@ static int	get_command_size(t_cmds *head)
 	return (i);
 }
 
-void	pipeline(t_cmds *node)
+void pipeline(t_cmds *node)
 {
 	if (node->next)
 		if (pipe(node->pipe) == -1)
 			clean(node->sh, true, 1, "Pipe Setup Error\n");
 }
 
-void	close_gen(t_cmds *head)
+void close_gen(t_cmds *head)
 {
 	if (head->pipe[1] != -1)
 		close(head->pipe[1]);
@@ -48,9 +49,9 @@ void	close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
-int	command_exe(t_cmds *cmd, int *ps, int *p)
+int command_exe(t_cmds *cmd, int *ps, int *p)
 {
-	int	isfork;
+	int isfork;
 
 	isfork = true;
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
@@ -62,24 +63,32 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 		run_parrent(cmd, ps);
 	else if ((isfork))
 	{
-		ps[*p] = fork();
 		ft_ml_sigdefault(SIG_STATE_PARENT);
+		ps[*p] = fork();
 		if (ps[*p] == 0)
 		{
+			ft_ml_sigdefault(SIG_STATE_CHILD);
 			free(ps);
 			if (cmd->ft_exec)
 				cmd->ft_exec(cmd);
 			clean(cmd->sh, true, 0, NULL);
 		}
+		else
+		{
+			ft_ml_sigdefault(SIG_STATE_IGNORE);
+			if(t_redirection_has_hd(cmd->infiles))
+				waitpid(ps[*p], NULL, 0);
+			ft_ml_sigdefault(SIG_STATE_PARENT);
+		}
 	}
 	return (0);
 }
 
-int	execution_part(t_shell *sh)
+int execution_part(t_shell *sh)
 {
-	int		*processlist;
-	int		process;
-	t_cmds	*head;
+	int *processlist;
+	int process;
+	t_cmds *head;
 
 	process = 0;
 	head = sh->cmds;

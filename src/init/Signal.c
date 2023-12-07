@@ -14,6 +14,7 @@
 
 static void	sh_print(int signal)
 {
+	info("CALLING PRINT", MAG);
 	if (signal == SIGQUIT)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	else if (signal == SIGINT)
@@ -47,28 +48,39 @@ void	ft_ml_sigdefault(int sig_state)
 {
 	if (sig_state == SIG_STATE_MAIN)
 	{
+		info("UPDATE TO MAIN", YEL);
 		signal(SIGINT, sh_main);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	if(sig_state == SIG_STATE_CHILD)
+	else if(sig_state == SIG_STATE_CHILD)
 	{
+		info("UPDATE TO CHILD", YEL);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
+	else if (sig_state == SIG_STATE_PARENT)
+	{
+		info("UPDATE TO PARENT", YEL);
+		signal(SIGINT, sh_print);
+		signal(SIGQUIT, sh_print);
+	}
 	else if (sig_state == SIG_STATE_CHILD_BUILTIN)
 	{
+		info("UPDATE TO CHILD BUILTIN", YEL);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGPIPE, SIG_IGN);
 	}
-	else if (sig_state == SIG_STATE_PARENT)
-	{
-		signal(SIGINT, sh_print);
-		signal(SIGQUIT, sh_print);
-	}
 	else if (sig_state == SIG_STATE_HD_CHILD)
 	{
+		info("UPDATE TO HEREDOC", YEL);
 		signal(SIGINT, sh_hd);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (sig_state == SIG_STATE_IGNORE)
+	{
+		info("UPDATE TO SIG INGORE", RED);
+		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
 }

@@ -12,14 +12,14 @@
 
 #include <minishell.h>
 
-static int	check_elements(char *input, char *target)
+static int check_elements(char *input, char *target)
 {
-	int	target_len;
-	int	input_len;
+	int target_len;
+	int input_len;
 
 	target_len = ft_strlen(target);
 	input_len = ft_strlen(input) - 1;
-	if (ft_strncmp(input, target, target_len) == 0 && input_len == target_len)
+	if (!ft_strcmp(input, target))
 	{
 		free(input);
 		return (1);
@@ -27,7 +27,7 @@ static int	check_elements(char *input, char *target)
 	return (0);
 }
 
-static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
+static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 {
 	if (!*text || !delimiter)
 		return (true);
@@ -39,38 +39,26 @@ static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 		free(*text);
 		return (true);
 	}
+	write(fd, "\n", 1);
 	free(*text);
 	return (false);
 }
 
-void	heredoc(t_cmds *node, char *delimiter)
+void heredoc(t_cmds *node, char *delimiter, int fdo)
 {
-	char	*text;
-	int		bytes_read;
-	int		here_doc[2];
+	char *text;
+	int bytes_read;
 
 	text = NULL;
-	ft_ml_sigdefault(SIG_STATE_PARENT);
-	if (!(node->prev || node->next))
-	{
-		info("Condition 0", BLU);
-		ft_ml_sigdefault(SIG_STATE_IGNORE);
-	}
-	else if ((node->prev || node->next))
-	{
-		info("Condition 1", BLU);
-		ft_ml_sigdefault(SIG_STATE_HD_CHILD);
-	}
-	if (pipe(here_doc) == -1)
-		return ;
-	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
 	while (bytes_read > -1 && node->sh->stop != 1)
 	{
-		write(1, "Here_doc >", 11);
-		text = get_next_line(0);
-		if (convert_data(&text, delimiter, node->sh, here_doc[1]))
-			break ;
+		text = readline("Heredoc $>");
+		if (convert_data(&text, delimiter, node->sh, fdo))
+			break;
 	}
-	close(here_doc[1]);
+	close(fdo);
+	if (g_signal_status == SIGNAL_EXIT_HD)
+		clean(node->sh, true, 130, NULL);
+	clean(node->sh, true, 0, NULL);
 }

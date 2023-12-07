@@ -55,7 +55,7 @@ void	redirect(t_cmds *node)
 	out = node->outfile;
 	set_infile(in, node);
 	set_output(out, node);
-	update_signal_for_child(node);
+	// update_signal_for_child(node);
 	if (node->redirection[1] == -2)
 		clean(node->sh, true, 1, NULL);
 }

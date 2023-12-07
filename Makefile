@@ -13,7 +13,7 @@ FILES =	src/syntax/SyntaxChecker.c src/syntax/SyntaxUtils.c src/syntax/SyntaxSma
 		inc/lib/Builtin/utils/exec.c inc/lib/Builtin/utils/export.utils.c inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils0.c inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils2.c \
 		inc/lib/Builtin/utils/CommandPermissions/CommandPermission_utils1.c inc/lib/Builtin/utils/CommandPermissions/main.c inc/lib/Builtin/utils/echo.c inc/lib/Builtin/utils/cd_utils.c \
 		inc/lib/Builtin/utils/cd.c inc/lib/Builtin/utils/export.c inc/lib/Builtin/utils/Input_Output.utils.c inc/lib/Var/utils/var.c \
-		inc/lib/Var/utils/var_utils.c
+		inc/lib/Var/utils/var_utils.c src/LinkList/Redirection.functions.c
 OBJS = $(FILES:.c=.o)
 
 all: $(NAME)
