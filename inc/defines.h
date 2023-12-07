@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 13:22:47 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 20:43:26 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_redirections
 	char					**element;
 	struct s_redirections	*next;
 }							t_redirections;
+
 typedef struct s_cmd
 {
 	char					**args;
@@ -57,7 +58,6 @@ typedef struct s_cmd
 	int						saved_stdin;
 	int						saved_stdout;
 	int						(*ft_exec)(struct s_cmd *node);
-
 	t_redirections			*reds;
 	struct s_shell			*sh;
 	struct s_cmd			*prev;

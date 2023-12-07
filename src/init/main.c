@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:53:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 13:07:38 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 20:55:20 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	prompt(t_shell *shell)
 	while (1)
 	{
 		ft_ml_sigdefault(SIG_STATE_MAIN);
+		shell->stop = 0;
 		input = readline("minishell >$ ");
 		if (!input)
 		{

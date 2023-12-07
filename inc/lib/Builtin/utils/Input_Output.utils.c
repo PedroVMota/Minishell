@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:53:18 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 04:39:32 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:59:32 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ int check_in(t_redirections *node)
 	acess = access(node->element[1], F_OK | R_OK);
 	if (acess == -1)
 	{
-		printf("Minishell: %s:\n", strerror(errno));
+		write(2, "Minishell: ", 11);
+		write(2, node->element[1], ft_strlen(node->element[1]));
+		write(2, " : ", 3);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
 		return (-2);
 	}
 	fd = open(node->element[1], O_RDONLY);
@@ -45,6 +48,7 @@ int check_out(t_redirections *node)
 		ft_putstr_fd(node->element[1], 2);
 		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(strerror(errno), 2);
+
 		return (-2);
 	}
 	return (fd);
@@ -96,8 +100,6 @@ static void heredoc_setup(t_cmds *cmds, t_redirections *node, int *local)
 		waitpid(pid, local, 0);
 		ft_ml_sigdefault(SIG_STATE_CHILD);
 		*local = *local >> 8;
-		if(*local == 130)
-			info("HEREDOC EXIT ERROR", GRN);
 	}
 }
 
@@ -125,8 +127,8 @@ int permission_checker(t_redirections *node, t_cmds *cmds)
 		if (cmds->redirection[0] == -2)
 			clean(cmds->sh, true, 1, NULL);
 		if(local == 130)
-			info("HEREDOC EXITED WITH ERROR", RED);
-			// clean(cmds->sh, true, 130, NULL);
+		{	clean(cmds->sh, true, 130, NULL);}
+			// info("HEREDOC EXITED WITH ERROR", RED);
 	}
 	return (fd);
 }

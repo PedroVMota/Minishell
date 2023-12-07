@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:52:55 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 04:37:24 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:53:08 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	sh_print(int signal)
 {
-	info("CALLING PRINT", MAG);
+	// info("CALLING PRINT", MAG);
 	if (signal == SIGQUIT)
 		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 	else if (signal == SIGINT)
@@ -48,38 +48,38 @@ void	ft_ml_sigdefault(int sig_state)
 {
 	if (sig_state == SIG_STATE_MAIN)
 	{
-		info("UPDATE TO MAIN", YEL);
+		// info("UPDATE TO MAIN", YEL);
 		signal(SIGINT, sh_main);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if(sig_state == SIG_STATE_CHILD)
 	{
-		info("UPDATE TO CHILD", YEL);
+		// info("UPDATE TO CHILD", YEL);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
 	else if (sig_state == SIG_STATE_PARENT)
 	{
-		info("UPDATE TO PARENT", YEL);
+		// info("UPDATE TO PARENT", YEL);
 		signal(SIGINT, sh_print);
 		signal(SIGQUIT, sh_print);
 	}
 	else if (sig_state == SIG_STATE_CHILD_BUILTIN)
 	{
-		info("UPDATE TO CHILD BUILTIN", YEL);
+		// info("UPDATE TO CHILD BUILTIN", YEL);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGPIPE, SIG_IGN);
 	}
 	else if (sig_state == SIG_STATE_HD_CHILD)
 	{
-		info("UPDATE TO HEREDOC", YEL);
+		// info("UPDATE TO HEREDOC", YEL);
 		signal(SIGINT, sh_hd);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (sig_state == SIG_STATE_IGNORE)
 	{
-		info("UPDATE TO SIG INGORE", RED);
+		// info("UPDATE TO SIG INGORE", RED);
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}

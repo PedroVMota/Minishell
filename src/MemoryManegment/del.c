@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:45:49 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 07:50:34 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:36:44 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void	close_fds(t_cmds *cmds)
 		close(cmds->pipe[0]);
 	if (cmds->pipe[1] != -1)
 		close(cmds->pipe[1]);
-	if (cmds->redirection[0] != -1)
+	if (cmds->redirection[0] != -1 && cmds->redirection[0] != -2)
 		close(cmds->redirection[0]);
-	if (cmds->redirection[1] != -1)
+	if (cmds->redirection[1] != -1 && cmds->redirection[1] != -2)
 		close(cmds->redirection[1]);
 }
 

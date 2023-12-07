@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 05:17:43 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 20:41:05 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 static int check_elements(char *input, char *target)
 {
-	int target_len;
-	int input_len;
-
-	target_len = ft_strlen(target);
-	input_len = ft_strlen(input) - 1;
 	if (!ft_strcmp(input, target))
 	{
 		free(input);

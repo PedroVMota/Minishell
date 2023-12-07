@@ -6,20 +6,17 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 05:19:03 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:55:50 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void wait_for_child(t_shell *sh, int *processlist, int *process);
-void run_parrent(t_cmds *node, int *ps);
-void update_signal_for_child(t_cmds *cmd);
-bool t_redirection_has_hd(t_redirections *lst);
+void	child_process_signal_updater(t_cmds *cmd);
 
-static int get_command_size(t_cmds *head)
+static int	get_command_size(t_cmds *head)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (head)
@@ -32,14 +29,14 @@ static int get_command_size(t_cmds *head)
 	return (i);
 }
 
-void pipeline(t_cmds *node)
+void	pipeline(t_cmds *node)
 {
 	if (node->next)
 		if (pipe(node->pipe) == -1)
 			clean(node->sh, true, 1, "Pipe Setup Error\n");
 }
 
-void close_gen(t_cmds *head)
+void	close_gen(t_cmds *head)
 {
 	if (head->pipe[1] != -1)
 		close(head->pipe[1]);
@@ -49,11 +46,13 @@ void close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
-int command_exe(t_cmds *cmd, int *ps, int *p)
+int	command_exe(t_cmds *cmd, int *ps, int *p)
 {
-	int isfork;
+	int	isfork;
 
 	isfork = true;
+	if (cmd->sh->stop == 1)
+		return (0);
 	if (isbuiltin(cmd) && !(cmd->prev || cmd->next))
 	{
 		cmd->is_builtin = 1;
@@ -67,28 +66,23 @@ int command_exe(t_cmds *cmd, int *ps, int *p)
 		ps[*p] = fork();
 		if (ps[*p] == 0)
 		{
-			ft_ml_sigdefault(SIG_STATE_CHILD);
+			child_process_signal_updater(cmd);
 			free(ps);
 			if (cmd->ft_exec)
 				cmd->ft_exec(cmd);
 			clean(cmd->sh, true, 0, NULL);
 		}
 		else
-		{
-			ft_ml_sigdefault(SIG_STATE_IGNORE);
-			if(t_redirection_has_hd(cmd->infiles))
-				waitpid(ps[*p], NULL, 0);
-			ft_ml_sigdefault(SIG_STATE_PARENT);
-		}
+			wait_case_heredoc(cmd->sh, cmd, ps, p);
 	}
 	return (0);
 }
 
-int execution_part(t_shell *sh)
+int	execution_part(t_shell *sh)
 {
-	int *processlist;
-	int process;
-	t_cmds *head;
+	int		*processlist;
+	int		process;
+	t_cmds	*head;
 
 	process = 0;
 	head = sh->cmds;

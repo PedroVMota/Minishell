@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RunnerUtils.c                                      :+:      :+:    :+:   */
+/*   Runner.utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 05:34:47 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:55:46 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,18 @@ void	run_parrent(t_cmds *node, int *ps)
 	node->ft_exec(node);
 }
 
-void	update_signal_for_child(t_cmds *cmd)
+void	wait_case_heredoc(t_shell *sh, t_cmds *cmd, int *ps, int *p)
 {
-	if (isbuiltin(cmd) && (cmd->prev || cmd->next))
-		ft_ml_sigdefault(SIG_STATE_CHILD_BUILTIN);
-	else
-		ft_ml_sigdefault(SIG_STATE_CHILD);
+	int check_error;
+
+	check_error = 0;
+	ft_ml_sigdefault(SIG_STATE_IGNORE);
+	if (t_redirection_has_hd(cmd->infiles))
+		waitpid(ps[*p], &check_error, 0);
+	ft_ml_sigdefault(SIG_STATE_PARENT);
+	if(check_error >> 8 == 130)
+	{
+		g_signal_status = SIGNAL_EXIT_HD;
+		sh->stop = 1;
+	}
 }

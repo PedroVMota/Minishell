@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:47:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 05:40:31 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 21:55:56 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int	ft_cd_helper(t_cmds *node)
 	{
 		if (node->args[1][1] == '/')
 		{
-			info(node->args[1], GRN);
 			remove_part_str(&node->args[1], "~/");
-			info(node->args[1], GRN);
 			change_to_home();
 			change_to_directory(node->args[1]);
 		}

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Redirection.functions.c                            :+:      :+:    :+:   */
+/*   Runner.smf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 20:59:38 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 20:59:50 by pedro            ###   ########.fr       */
+/*   Created: 2023/12/07 21:07:18 by pedro             #+#    #+#             */
+/*   Updated: 2023/12/07 21:31:09 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
-bool	t_redirection_has_hd(t_redirections *lst)
+void	child_process_signal_updater(t_cmds *cmd)
 {
-	while (lst)
-	{
-		if (lst->mode == FILE_IN_HEREDOC)
-			return (true);
-		lst = lst->next;
-	}
-	return (false);
+	if (isbuiltin(cmd))
+		ft_ml_sigdefault(SIG_STATE_CHILD_BUILTIN);
+	else
+		ft_ml_sigdefault(SIG_STATE_CHILD);
 }
