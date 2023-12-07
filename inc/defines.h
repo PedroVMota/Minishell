@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 20:43:26 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:41:19 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	// int dups[2]
 	char					**envp;
 	int						exit;
 	int						lstsize;
@@ -78,7 +77,6 @@ typedef struct s_shell
 
 	t_cmds					*cmds;
 	t_env					*env;
-
 
 }							t_shell;
 

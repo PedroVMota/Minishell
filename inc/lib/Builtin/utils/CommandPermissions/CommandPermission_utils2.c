@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 21:58:18 by oharoon           #+#    #+#             */
-/*   Updated: 2023/12/07 21:20:25 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:39:19 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,8 @@ int	*set_dups(t_cmds *node)
 	if (node->redirection[1] != -1 && node->redirection[1] != -2)
 		fdo = node->redirection[1];
 	if (fdi != -4)
-	{
 		du[0] = dup2(fdi, STDIN_FILENO);
-		printf("du[0] = %d\n", du[0]);
-	}
 	if (fdo != -4)
-	{
 		du[1] = dup2(fdo, STDOUT_FILENO);
-		printf("du[1] = %d\n", du[1]);
-	}
 	return (du);
 }

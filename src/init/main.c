@@ -6,13 +6,13 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:53:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 20:55:20 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:37:59 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_signal_status;
+int		g_signal_status;
 
 bool	isallwhitespace(char *input);
 
@@ -51,7 +51,6 @@ void	prompt(t_shell *shell)
 		center(input, shell);
 	}
 }
-
 
 int	main(int c, char **v, char **envp)
 {

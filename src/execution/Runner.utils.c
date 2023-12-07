@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 21:55:46 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:37:09 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ void	run_parrent(t_cmds *node, int *ps)
 
 void	wait_case_heredoc(t_shell *sh, t_cmds *cmd, int *ps, int *p)
 {
-	int check_error;
+	int	check_error;
 
 	check_error = 0;
 	ft_ml_sigdefault(SIG_STATE_IGNORE);
 	if (t_redirection_has_hd(cmd->infiles))
 		waitpid(ps[*p], &check_error, 0);
 	ft_ml_sigdefault(SIG_STATE_PARENT);
-	if(check_error >> 8 == 130)
+	if (check_error >> 8 == 130)
 	{
 		g_signal_status = SIGNAL_EXIT_HD;
 		sh->stop = 1;

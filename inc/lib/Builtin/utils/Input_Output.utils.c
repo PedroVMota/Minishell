@@ -6,16 +6,16 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:53:18 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 21:59:32 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:39:28 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MiniBuiltins.h>
 
-int check_in(t_redirections *node)
+int	check_in(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK | R_OK);
@@ -31,10 +31,10 @@ int check_in(t_redirections *node)
 	return (fd);
 }
 
-int check_out(t_redirections *node)
+int	check_out(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -48,16 +48,15 @@ int check_out(t_redirections *node)
 		ft_putstr_fd(node->element[1], 2);
 		ft_putstr_fd(" : ", 2);
 		ft_putendl_fd(strerror(errno), 2);
-
 		return (-2);
 	}
 	return (fd);
 }
 
-int out_append(t_redirections *node)
+int	out_append(t_redirections *node)
 {
-	int fd;
-	int acess;
+	int	fd;
+	int	acess;
 
 	fd = -1;
 	acess = access(node->element[1], F_OK);
@@ -76,19 +75,19 @@ int out_append(t_redirections *node)
 	return (fd);
 }
 
-static void heredoc_setup(t_cmds *cmds, t_redirections *node, int *local)
+static void	heredoc_setup(t_cmds *cmds, t_redirections *node, int *local)
 {
-	pid_t pid;
-	int fd[2];
+	pid_t	pid;
+	int		fd[2];
 
-	if(pipe(fd) == -1)
+	if (pipe(fd) == -1)
 		clean(cmds->sh, true, 1, "PIPE ERROR");
 	cmds->redirection[0] = fd[0];
 	ft_ml_sigdefault(SIG_STATE_IGNORE);
 	pid = fork();
-	if(pid == -1)
+	if (pid == -1)
 		clean(cmds->sh, true, 1, "FORK ERROR");
-	if(!pid)
+	if (!pid)
 	{
 		ft_ml_sigdefault(SIG_STATE_HD_CHILD);
 		close(fd[0]);
@@ -103,10 +102,10 @@ static void heredoc_setup(t_cmds *cmds, t_redirections *node, int *local)
 	}
 }
 
-int permission_checker(t_redirections *node, t_cmds *cmds)
+int	permission_checker(t_redirections *node, t_cmds *cmds)
 {
-	int fd;
-	int local;
+	int	fd;
+	int	local;
 
 	fd = -1;
 	local = 0;
@@ -120,15 +119,13 @@ int permission_checker(t_redirections *node, t_cmds *cmds)
 		fd = check_in(node);
 	else if (node->mode == FILE_IN_HEREDOC)
 	{
-
 		heredoc_setup(cmds, node, &local);
 		if (cmds->redirection[0] != -1)
 			fd = cmds->redirection[0];
 		if (cmds->redirection[0] == -2)
 			clean(cmds->sh, true, 1, NULL);
-		if(local == 130)
-		{	clean(cmds->sh, true, 130, NULL);}
-			// info("HEREDOC EXITED WITH ERROR", RED);
+		if (local == 130)
+			clean(cmds->sh, true, 130, NULL);
 	}
 	return (fd);
 }

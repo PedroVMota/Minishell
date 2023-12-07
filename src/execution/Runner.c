@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 21:55:50 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:36:43 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	command_exe(t_cmds *cmd, int *ps, int *p)
 		{
 			child_process_signal_updater(cmd);
 			free(ps);
-			if (cmd->ft_exec)
-				cmd->ft_exec(cmd);
+			cmd->ft_exec(cmd);
 			clean(cmd->sh, true, 0, NULL);
 		}
 		else

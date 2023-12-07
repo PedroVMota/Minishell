@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:55:00 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 21:55:37 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:40:59 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@
 # define SIGNAL_NEW_LINE 1
 # define SIGNAL_EXIT_HD 2
 
-// # define info(msg, color) printf("%s%d%s : %s[%s]%s\n", MAG, getpid(), RESET, color, msg, RESET);
+// # define info(msg, color) printf("%s%d%s : %s[%s]%s\n", MAG, getpid(), RESET,
+//color, msg, RESET);
 
 extern int	g_signal_status;
 

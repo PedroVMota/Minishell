@@ -6,13 +6,13 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 20:41:05 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:37:15 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int check_elements(char *input, char *target)
+static int	check_elements(char *input, char *target)
 {
 	if (!ft_strcmp(input, target))
 	{
@@ -22,7 +22,7 @@ static int check_elements(char *input, char *target)
 	return (0);
 }
 
-static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
+static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 {
 	if (!*text || !delimiter)
 		return (true);
@@ -39,10 +39,10 @@ static bool convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 	return (false);
 }
 
-void heredoc(t_cmds *node, char *delimiter, int fdo)
+void	heredoc(t_cmds *node, char *delimiter, int fdo)
 {
-	char *text;
-	int bytes_read;
+	char	*text;
+	int		bytes_read;
 
 	text = NULL;
 	bytes_read = 1;
@@ -50,7 +50,7 @@ void heredoc(t_cmds *node, char *delimiter, int fdo)
 	{
 		text = readline("Heredoc $>");
 		if (convert_data(&text, delimiter, node->sh, fdo))
-			break;
+			break ;
 	}
 	close(fdo);
 	if (g_signal_status == SIGNAL_EXIT_HD)

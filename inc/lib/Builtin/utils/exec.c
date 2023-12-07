@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 21:52:08 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 23:40:18 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,17 @@ void	close_all(t_cmds *l)
 
 static void	end_endpoits(t_cmds *cmd)
 {
-    if (cmd->prev)
-        close(cmd->prev->pipe[0]);
-    if (cmd->pipe[0] != -1)
-        close(cmd->pipe[0]);
-    if (cmd->pipe[1] != -1)
-        close(cmd->pipe[1]);
-    if (cmd->redirection[0] != -1)
-        close(cmd->redirection[0]);
-    if (cmd->redirection[1] != -1)
-        close(cmd->redirection[1]);
+	if (cmd->prev)
+		close(cmd->prev->pipe[0]);
+	if (cmd->pipe[0] != -1)
+		close(cmd->pipe[0]);
+	if (cmd->pipe[1] != -1)
+		close(cmd->pipe[1]);
+	if (cmd->redirection[0] != -1)
+		close(cmd->redirection[0]);
+	if (cmd->redirection[1] != -1)
+		close(cmd->redirection[1]);
 }
-
 
 int	ft_exec(t_cmds *node)
 {
@@ -81,7 +80,6 @@ int	ft_exec(t_cmds *node)
 	}
 	clean_redirection(&node->infiles);
 	clean_redirection(&node->outfile);
-	// close_all(node);
 	free(dups);
 	end_endpoits(node);
 	if (execve(node->args[0], node->args, node->sh->envp))
