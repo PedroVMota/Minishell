@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:10:52 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 05:56:55 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 05:20:16 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		out_append(t_redirections *node);
 int		permission_checker(t_redirections *node, t_cmds *cmds);
+void	update_signal_for_child(t_cmds *cmd);;
 
 void	set_infile(t_redirections *in, t_cmds *node)
 {
@@ -54,6 +55,7 @@ void	redirect(t_cmds *node)
 	out = node->outfile;
 	set_infile(in, node);
 	set_output(out, node);
+	update_signal_for_child(node);
 	if (node->redirection[1] == -2)
 		clean(node->sh, true, 1, NULL);
 }

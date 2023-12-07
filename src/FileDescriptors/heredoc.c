@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 04:40:46 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/07 05:17:43 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	heredoc(t_cmds *node, char *delimiter)
 		info("Condition 1", BLU);
 		ft_ml_sigdefault(SIG_STATE_HD_CHILD);
 	}
-	if (pipe(here_doc) == -1) return ;
+	if (pipe(here_doc) == -1)
+		return ;
 	node->redirection[0] = here_doc[0];
 	bytes_read = 1;
 	while (bytes_read > -1 && node->sh->stop != 1)
