@@ -48,7 +48,10 @@ static void	add_to_the_list(t_cmds *node, int *i)
 	new = NULL;
 	while (node->args[*i])
 	{
-		new = ft_env_add(ft_strdup(node->args[*i]));
+		if (ft_strchr(node->args[*i], '='))
+			new = ft_env_add(ft_strdup(node->args[*i]), 1);
+		else
+			new = ft_env_add(ft_strdup(node->args[*i]), 0);
 		if (check_repetition(new, &node->sh->env) == 0)
 			ft_ml_envadd_back(&node->sh->env, new);
 		else

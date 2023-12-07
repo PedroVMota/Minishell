@@ -99,7 +99,7 @@ void		redirect(t_cmds *node);
 bool		isbuiltin(t_cmds *cmd);
 int			clean(t_shell *sh, bool _exit, int status, char *msg);
 void		ft_ml_envadd_back(t_env **lst, t_env *new);
-t_env		*ft_env_add(char *str);
+t_env		*ft_env_add(char *str, int has_equal);
 int			ft_env_delete(t_env **env);
 t_env		*set_env(char **envp);
 void		parse(t_cmds *node, t_shell *sh);

@@ -37,7 +37,8 @@ int	ft_env(t_cmds *node)
 	env = node->sh->env;
 	while (env)
 	{
-		printf("%s=%s\n", env->vars[0], env->vars[1]);
+		if (env->has_equal)
+			printf("%s=%s\n", env->vars[0], env->vars[1]);
 		env = env->next;
 	}
 	if (node->next || node->prev)

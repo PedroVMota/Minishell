@@ -21,7 +21,7 @@ static t_env	*get_last(t_env *lst)
 	return (lst);
 }
 
-t_env	*ft_env_add(char *str)
+t_env	*ft_env_add(char *str, int has_equal)
 {
 	t_env	*new;
 	char	**split;
@@ -34,6 +34,7 @@ t_env	*ft_env_add(char *str)
 	if (!new)
 		return (NULL);
 	new->vars = split;
+	new->has_equal = has_equal;
 	new->next = NULL;
 	return (new);
 }
@@ -63,6 +64,6 @@ t_env	*set_env(char **envp)
 	if (!envp)
 		return (NULL);
 	while (envp[++i])
-		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i])));
+		ft_ml_envadd_back(&env, ft_env_add(ft_strdup(envp[i]), 1));
 	return (env);
 }

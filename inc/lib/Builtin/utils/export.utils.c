@@ -80,11 +80,12 @@ void	print_export_env(t_cmds *node)
 		print_export_char(env->vars[0], false);
 		if (env->vars[1])
 		{
-			printf("=\"");
+			if (env->has_equal)
+				printf("=\"");
 			print_export_char(env->vars[1], true);
 		}
 		else
-			printf("\"\n");
+			printf("\n");
 		env = env->next;
 	}
 	return ;
