@@ -1,0 +1,6 @@
+==888223== Memcheck, a memory error detector
+==888223== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==888223== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==888223== Command: ./minishell
+==888223== Parent PID: 888221
+==888223== 
