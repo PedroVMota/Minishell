@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 04:57:07 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 13:39:12 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:46:47 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 	while (i < ft_strlen(str))
 	{
 		update_quote(&quote, str, (int *)&i);
-		if (str[i] == '$' && strncmp(str + i + 1, del, ft_strlen(del)) == 0
+		if (str[i] == '$' && ft_strncmp(str + i + 1, del, ft_strlen(del)) == 0
 			&& quote != 1)
 			fill_result(result, new_value, del, (size_t *[2]){&i, &j});
 		else
@@ -107,7 +107,8 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 	while (vars)
 	{
 		var = varlib_obtain(str);
-		info(var, MAG) if (!var) return (str);
+		if (!var)
+			return (str);
 		if (!ft_strcmp(var, vars->vars[0]))
 			return (varlib_replace(str, ft_strdup(vars->vars[1]), var));
 		if (var[0] == '?')
@@ -130,9 +131,7 @@ char	*varlib_execute(char *s, t_shell *h)
 		update_quote(&quote, s, &index);
 		if (s[index] == '$' && quote != 1)
 		{
-			info(s, YEL);
 			s = varlib_decide(s, h, index);
-			info(s, YEL);
 			index = 0;
 		}
 		index++;

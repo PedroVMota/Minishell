@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 04:56:45 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 13:36:24 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:48:03 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	*free_array(char **array)
 
 void	update_quote(int *quote, char *s, int *index)
 {
-	if (s[*index] == '\'' && !*quote)
+	if (s[*index] == '\'' && *quote == 0)
 		*quote = 1;
-	else if (s[*index] == '\'' && *quote)
+	else if (s[*index] == '\'' && *quote == 1)
 		*quote = 0;
-	else if (s[*index] == '\"' && !*quote)
+	else if (s[*index] == '\"' && *quote == 0)
 		*quote = 2;
 	else if (s[*index] == '\"' && *quote == 2)
 		*quote = 0;
@@ -64,19 +64,9 @@ int	varlib_start_position(char *ptr)
 		return (0);
 	while (ptr[index])
 	{
-		if (ptr[index] == '\'' && !quote)
-			quote = 1;
-		else if (ptr[index] == '\'' && quote)
-			quote = 0;
-		else if (ptr[index] == '\"' && !quote)
-			quote = 2;
-		else if (ptr[index] == '\"' && quote == 2)
-			quote = 0;
+		update_quote(&quote, ptr, &index);
 		if (ptr[index] == '$' && ptr[index + 1] != '$' && quote != 1)
-		{
-			info("Found $", YEL);
 			return (index);
-		}
 		index++;
 	}
 	return (-1);

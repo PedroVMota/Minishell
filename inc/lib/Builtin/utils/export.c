@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:02:42 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 13:39:29 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:41:01 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,9 @@ static void	add_to_the_list(t_cmds *node, int *i)
 			continue ;
 		}
 		if (ft_strchr(node->args[*i], '='))
-		{
 			new = ft_env_add(ft_strdup(node->args[*i]), 1);
-			info("New Env with =", YEL);
-		}
 		else
-		{
 			new = ft_env_add(ft_strdup(node->args[*i]), 0);
-			info("New Env without =", YEL);
-		}
 		check_repetition(new, &node->sh->env);
 		(*i)++;
 	}
