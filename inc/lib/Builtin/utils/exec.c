@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 12:15:57 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:25:23 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool	checker(t_cmds *node)
 {
 	int	perm[2];
 
+	// printf("{%d}\n", node->args[0][0]);
 	permission_tester(node, perm);
 	if (perm[0] == 127 && perm[1] == 2)
 	{
@@ -71,7 +72,6 @@ int	ft_exec(t_cmds *node)
 {
 	int	*dups;
 
-	info("teste", YEL);
 	redirect(node);
 	dups = set_dups(node);
 	if (checker(node) == true)

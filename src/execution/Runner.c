@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Runner.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 13:35:42 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:15:29 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void		child_process_signal_updater(t_cmds *cmd);
-void		execute_command(t_cmds *cmd, int *isfork, int *ps, int *p);
+void	execute_command(t_cmds *cmd, int *isfork, int **ps, int *p);
 
 static int	get_command_size(t_cmds *head)
 {
@@ -47,7 +47,7 @@ void	close_gen(t_cmds *head)
 		close(head->pipe[0]);
 }
 
-int	command_exe(t_cmds *cmd, int *ps, int *p)
+int	command_exe(t_cmds *cmd, int **ps, int *p)
 {
 	int	isfork;
 
@@ -78,11 +78,11 @@ int	execution_part(t_shell *sh)
 	{
 		pipeline(head);
 		exec_ptr_chooser(head);
-		command_exe(head, processlist, &process);
+		command_exe(head, &processlist, &process);
 		close_gen(head);
 		process++;
 		head = head->next;
 	}
-	wait_for_child(sh, processlist, &process);
+	wait_for_child(sh, &processlist, &process);
 	return (0);
 }

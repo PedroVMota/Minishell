@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandList.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:44:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:44:53 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/08 18:25:03 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_cmds	*ft_buildlst(char *elements, t_shell *sh)
 
 	if (!elements)
 		return (NULL);
-	nodes = ft_split(elements, PIPE);
+	nodes = ft_split(elements, '\3');
 	if (!nodes)
 		return (NULL);
 	cmds = setup(nodes, sh);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:04:25 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 11:27:07 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:27:35 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,6 @@ static void	env_replace(t_env *temp, t_env *new)
 {
 	char	**olds;
 
-	info(__func__, YEL);
-	if (temp->has_equal)
-		info("The temp has equal", YEL);
-	if (new->has_equal)
-		info("The new has equal", YEL);
 	temp->has_equal = new->has_equal;
 	olds = temp->vars;
 	temp->vars = new->vars;

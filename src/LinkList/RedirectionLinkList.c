@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   RedirectionLinkList.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:37:49 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 05:25:42 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 18:24:42 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ t_type	red_type_checker(char *str)
 	t_type	final;
 
 	final = FILE_NONE;
-	if (str[0] == INFILE)
-		final = FILE_IN_READ + (str[1] == INFILE);
-	if (str[0] == OUTTRUC)
-		final = 3 + (str[1] == OUTTRUC);
+	if (str[0] == '\7')
+		final = FILE_IN_READ + (str[1] == '\7');
+	if (str[0] == '\6')
+		final = 3 + (str[1] == '\6');
 	return (final);
 }
 

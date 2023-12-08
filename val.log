@@ -1,6 +1,0 @@
-==19726== Memcheck, a memory error detector
-==19726== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==19726== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
-==19726== Command: ./minishell
-==19726== Parent PID: 19709
-==19726== 

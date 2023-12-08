@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:55:00 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 13:39:43 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:03:07 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void		parse(t_cmds *node, t_shell *sh);
 void		exec_ptr_chooser(t_cmds *node);
 void		pipeline(t_cmds *node);
 void		setup_fd_for_next_fork(t_cmds *head);
-void		wait_for_child(t_shell *sh, int *processlist, int *process);
 char		*varlib_execute(char *s, t_shell *h);
 /*
  * -----------------------------------------------------------------------
@@ -149,8 +148,8 @@ void		prompt(t_shell *shell);
 // Redirection Functions
 bool		t_redirection_has_hd(t_redirections *lst);
 // Runner Functions.
-void		wait_for_child(t_shell *sh, int *processlist, int *process);
-void		run_parrent(t_cmds *node, int *ps);
+void wait_for_child(t_shell *sh, int **processlist, int *process);
+void run_parrent(t_cmds *node, int **ps);
 void		update_signal_for_child(t_cmds *cmd);
-void		wait_case_heredoc(t_shell *sh, t_cmds *cmd, int *ps, int *p);
+void wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p);
 #endif

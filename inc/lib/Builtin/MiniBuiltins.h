@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MiniBuiltins.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:54:52 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 09:27:12 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:29:45 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include "minishell.h"
 # include "stdbool.h"
 
+void	print_export_env(t_cmds *node);
+void	list_order(t_env *node);
+void	swpnodes(t_env *a, t_env *b);
+void	print_export_char(char *str, bool _print_new_line);
+int		check_repetition(t_env *new, t_env **env);
 int		is_valid_fd(int fd);
 int		*set_dups(t_cmds *node);
 int		permission_tester(t_cmds *head, int arr[]);

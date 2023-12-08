@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 08:52:24 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 18:30:33 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static bool	convert_data(char **text, char *delimiter, t_shell *sh, int fd)
 {
 	if (!*text || !delimiter)
 		return (true);
+	*text = varlib_execute(*text, sh);
 	if (check_elements(*text, delimiter))
 		return (true);
-	*text = varlib_execute(*text, sh);
 	if (write(fd, *text, ft_strlen(*text)) == -1)
 	{
 		free(*text);

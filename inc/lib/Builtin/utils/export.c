@@ -3,22 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:02:42 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 13:41:01 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:27:07 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MiniBuiltins.h>
 
-void		list_order(t_env *node);
-void		swpnodes(t_env *a, t_env *b);
-void		print_export_char(char *str, bool _print_new_line);
-void		print_export_env(t_cmds *node);
-int			check_repetition(t_env *new, t_env **env);
 
-static void	close_data(int *dups, t_cmds *node, bool exit)
+
+static void close_data(int *dups, t_cmds *node, bool exit)
 {
 	if (dups[0] != -10)
 		close(dups[0]);
@@ -30,7 +26,7 @@ static void	close_data(int *dups, t_cmds *node, bool exit)
 		clean(node->sh, true, 0, NULL);
 }
 
-static int	just_print(t_cmds *node, int *i, int *dups)
+static int just_print(t_cmds *node, int *i, int *dups)
 {
 	if (!node->args[*i])
 	{
@@ -41,19 +37,19 @@ static int	just_print(t_cmds *node, int *i, int *dups)
 	return (1);
 }
 
-static void	add_to_the_list(t_cmds *node, int *i)
+static void add_to_the_list(t_cmds *node, int *i)
 {
-	t_env	*new;
+	t_env *new;
 
 	new = NULL;
 	while (node->args[*i])
 	{
-		if (node->args[*i][0] == '=' || !ft_isalpha(node->args[*i][0]))
+		if (node->args[*i][0] != '_' && (node->args[*i][0] == '=' || !ft_isalpha(node->args[*i][0])))
 		{
 			printf("minishell: export: `%s': not a valid identifier\n",
-				node->args[*i]);
+				   node->args[*i]);
 			(*i)++;
-			continue ;
+			continue;
 		}
 		if (ft_strchr(node->args[*i], '='))
 			new = ft_env_add(ft_strdup(node->args[*i]), 1);
@@ -64,10 +60,10 @@ static void	add_to_the_list(t_cmds *node, int *i)
 	}
 }
 
-int	ft_export(t_cmds *node)
+int ft_export(t_cmds *node)
 {
-	int	i;
-	int	*dups;
+	int i;
+	int *dups;
 
 	dups = NULL;
 	i = 1;

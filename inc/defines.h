@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 08:48:25 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:15:41 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+
+// # define DQUOTE '\1'
+// # define QUOTE '\2'
+// # define PIPE '\3'
+// # define SPACE '\4'
+// # define OUTTRUC '\6'
+// # define INFILE '\7'
+// # define HEREDOC '\b'
 
 typedef enum e_typeschecker
 {
@@ -68,10 +76,13 @@ typedef struct s_cmd
 
 }							t_cmds;
 
+
+
 typedef struct s_shell
 {
 	char					**envp;
 	int						exit;
+	
 	int						lstsize;
 	int						hd;
 	int						stop;
@@ -80,20 +91,5 @@ typedef struct s_shell
 	t_env					*env;
 
 }							t_shell;
-
-# define EXIT_GENERAL_ERROR 2
-# define EXIT_COMMAND_NOT_EXECUTABLE 126
-# define EXIT_COMMAND_NOT_FOUND 127
-# define EXIT_INVALID_ARGUMENT 128
-# define EXIT_INTERRUPTED_BY_CTRL_C 130
-# define EXIT_STATUS_OUT_OF_RANGE 255
-
-# define DQUOTE '\1'
-# define QUOTE '\2'
-# define PIPE '\3'
-# define SPACE '\4'
-# define OUTTRUC '\6'
-# define INFILE '\7'
-# define HEREDOC '\b'
 
 #endif

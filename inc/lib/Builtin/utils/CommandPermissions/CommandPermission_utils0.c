@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CommandPermission_utils0.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:53:51 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 13:36:57 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 21:30:22 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_all_paths(t_cmds *head, int *err, int *type)
 	(ft_strnstr(head->args[0], "./", 2) || ft_strnstr(head->args[0], "../",
 				3) || ft_strnstr(head->args[0], "/", 3)))
 		*type = 2;
-	if (*type == 1 && !isbuiltin(head))
+	if (!(head->args[0][0] == '\0') && *type == 1 && !isbuiltin(head))
 		set_relative_path(head, err);
 	else if (!(head->args[0][0] == '\0') && *type == 2)
 		set_absolute_path(head);
