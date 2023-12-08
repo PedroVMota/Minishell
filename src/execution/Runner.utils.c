@@ -6,13 +6,13 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 21:15:25 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 23:06:39 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool builtin_detector(t_cmds *cmd)
+bool	builtin_detector(t_cmds *cmd)
 {
 	if (!ft_strcmp(cmd->args[0], "echo"))
 		return (true);
@@ -31,10 +31,10 @@ bool builtin_detector(t_cmds *cmd)
 	return (false);
 }
 
-void exec_ptr_chooser(t_cmds *node)
+void	exec_ptr_chooser(t_cmds *node)
 {
 	if (!node)
-		return;
+		return ;
 	if (!node->args || !node->args[0])
 		node->ft_exec = &ft_exec;
 	else if (!ft_strcmp(node->args[0], "echo"))
@@ -55,10 +55,10 @@ void exec_ptr_chooser(t_cmds *node)
 		node->ft_exec = &ft_exec;
 }
 
-void wait_for_child(t_shell *sh, int **processlist, int *process)
+void	wait_for_child(t_shell *sh, int **processlist, int *process)
 {
-	int status;
-	t_cmds *head;
+	int		status;
+	t_cmds	*head;
 
 	head = sh->cmds;
 	while (*processlist && *process > 0)
@@ -67,7 +67,7 @@ void wait_for_child(t_shell *sh, int **processlist, int *process)
 		{
 			head = head->next;
 			(*process)--;
-			continue;
+			continue ;
 		}
 		waitpid((*processlist)[--(*process)], &status, 0);
 		head = head->next;
@@ -77,7 +77,7 @@ void wait_for_child(t_shell *sh, int **processlist, int *process)
 		free(*processlist);
 }
 
-void run_parrent(t_cmds *node, int **ps)
+void	run_parrent(t_cmds *node, int **ps)
 {
 	if (node->ft_exec == &ft_exit)
 	{
@@ -87,13 +87,14 @@ void run_parrent(t_cmds *node, int **ps)
 	node->ft_exec(node);
 }
 
-void wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p)
+void	wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p)
 {
-	int check_error;
+	int	check_error;
 
 	check_error = 0;
 	ft_ml_sigdefault(SIG_STATE_IGNORE);
-	if (t_redirection_has_hd(cmd->infiles))
+	if (cmd->args && t_redirection_has_hd(cmd->infiles)
+		&& !ft_strcmp(cmd->args[0], "./minishell"))
 		waitpid(*ps[*p], &check_error, 0);
 	ft_ml_sigdefault(SIG_STATE_PARENT);
 	if (check_error >> 8 == 130)
@@ -102,3 +103,5 @@ void wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p)
 		sh->stop = 1;
 	}
 }
+
+//t_redirection_has_hd(cmd->infiles) 

@@ -6,13 +6,13 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:13:03 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 19:58:07 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:27:37 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <MiniBuiltins.h>
 
-void close_data(int *dups)
+void	close_data(int *dups)
 {
 	if (dups[0] != -10)
 		close(dups[0]);
@@ -21,9 +21,9 @@ void close_data(int *dups)
 	free(dups);
 }
 
-long long count_args(char **s)
+long long	count_args(char **s)
 {
-	long long i;
+	long long	i;
 
 	i = -1;
 	while (s[++i])
@@ -31,24 +31,28 @@ long long count_args(char **s)
 	return (i);
 }
 
-char *check_first(char **s)
+char	*check_first(char **s)
 {
-	int i = -1;
+	int	i;
+
+	i = -1;
 	while (s[0][++i])
+	{
 		if ((s[0][i] < '0' && s[0][i] > '9'))
 		{
 			printf("I: %d\n", i);
 			return ("NUMERIC_ERROR_ERR_2");
 		}
+	}
 	if (count_args(s) > 2)
 		return ("TOO_MANY_ARGUMENTS_NOT_CLOSE");
-	return "OK";
+	return ("OK");
 }
 
-int ft_exit(t_cmds *node)
+int	ft_exit(t_cmds *node)
 {
-	char *security;
-	int *dups;
+	char	*security;
+	int		*dups;
 
 	security = check_first(node->args);
 	redirect(node);

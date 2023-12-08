@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 21:15:41 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:16:05 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,20 +76,15 @@ typedef struct s_cmd
 
 }							t_cmds;
 
-
-
 typedef struct s_shell
 {
 	char					**envp;
 	int						exit;
-	
 	int						lstsize;
 	int						hd;
 	int						stop;
-
 	t_cmds					*cmds;
 	t_env					*env;
-
 }							t_shell;
 
 #endif

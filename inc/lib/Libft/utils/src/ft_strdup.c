@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:35:20 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 18:43:48 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:29:48 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*ft_strdup(char *str)
 
 	i = -1;
 	len = ft_strlen((char *)str);
-	if(!str)
-		return NULL;
+	if (!str)
+		return (NULL);
 	dup_str = (char *)malloc((len + 1) * sizeof(char));
 	if (!dup_str)
 		return (0);

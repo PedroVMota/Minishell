@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 21:25:39 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:20:20 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	check_options(t_cmds *node, int *word)
 	*word = 1;
 	if (!node->args[1])
 		return (0);
-	if (node->args[*word][0] == '-')
+	while (node->args[*word] && node->args[*word][0] == '-'
+		&& node->args[*word][1] != '-')
 	{
 		while (node->args[*word][i] == 'n')
 		{
@@ -31,6 +32,7 @@ static int	check_options(t_cmds *node, int *word)
 					return (0);
 			i++;
 		}
+		i = 1;
 		break_line = 1;
 		(*word)++;
 	}

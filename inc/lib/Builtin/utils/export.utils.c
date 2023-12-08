@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:04:25 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 21:27:35 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:21:43 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,6 @@ void	list_order(t_env *node)
 		}
 		prs = prf;
 	}
-}
-
-void	print_export_env(t_cmds *node)
-{
-	t_env	*env;
-
-	env = node->sh->env;
-	while (env)
-	{
-		printf("declare -x ");
-		print_export_char(env->vars[0], false);
-		if (env->has_equal)
-			printf("=\"");
-		if (env->vars[1])
-			print_export_char(env->vars[1], true);
-		else if (!env->vars[1] && env->has_equal)
-			printf("\"\n");
-		else if (!env->vars[1] && !env->has_equal)
-			printf("\n");
-		env = env->next;
-	}
-	return ;
 }
 
 static void	env_replace(t_env *temp, t_env *new)

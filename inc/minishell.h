@@ -6,7 +6,7 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:55:00 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 21:03:07 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:15:39 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ void		prompt(t_shell *shell);
 // Redirection Functions
 bool		t_redirection_has_hd(t_redirections *lst);
 // Runner Functions.
-void wait_for_child(t_shell *sh, int **processlist, int *process);
-void run_parrent(t_cmds *node, int **ps);
+void		wait_for_child(t_shell *sh, int **processlist, int *process);
+void		run_parrent(t_cmds *node, int **ps);
 void		update_signal_for_child(t_cmds *cmd);
-void wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p);
+void		wait_case_heredoc(t_shell *sh, t_cmds *cmd, int **ps, int *p);
 #endif

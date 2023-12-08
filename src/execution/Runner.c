@@ -6,14 +6,14 @@
 /*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:16:17 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/08 21:15:29 by oharoon          ###   ########.fr       */
+/*   Updated: 2023/12/08 22:14:05 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void		child_process_signal_updater(t_cmds *cmd);
-void	execute_command(t_cmds *cmd, int *isfork, int **ps, int *p);
+void		execute_command(t_cmds *cmd, int *isfork, int **ps, int *p);
 
 static int	get_command_size(t_cmds *head)
 {
