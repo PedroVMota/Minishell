@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
+/*   By: oharoon <oharoon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:09 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 05:43:01 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 16:36:17 by oharoon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_options(t_cmds *node, int *word)
 	*word = 1;
 	if (!node->args[1])
 		return (0);
-	if (node->args[*word][0] == '-' && node->args[*word][1] == 'n')
+	if (node->args[*word][0] == '-' && node->args[*word][1] == 'n' && !node->args[*word][2])
 	{
 		break_line = 1;
 		(*word)++;
