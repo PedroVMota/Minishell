@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 12:44:15 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 23:37:09 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:35:47 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ bool	builtin_detector(t_cmds *cmd)
 
 void	exec_ptr_chooser(t_cmds *node)
 {
-	if (!node || !node->args)
+	if (!node)
 		return ;
-	if (!ft_strcmp(node->args[0], "echo"))
+	if (!node->args || !node->args[0])
+		node->ft_exec = &ft_exec;
+	else if (!ft_strcmp(node->args[0], "echo"))
 		node->ft_exec = &ft_echo;
 	else if (!ft_strcmp(node->args[0], "cd"))
 		node->ft_exec = &ft_cd;

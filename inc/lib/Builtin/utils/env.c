@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:52:13 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 04:34:38 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 08:44:00 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	ft_env(t_cmds *node)
 	env = node->sh->env;
 	while (env)
 	{
-		printf("%s=%s\n", env->vars[0], env->vars[1]);
+		if (env->has_equal)
+			printf("%s=%s\n", env->vars[0], env->vars[1]);
 		env = env->next;
 	}
 	if (node->next || node->prev)

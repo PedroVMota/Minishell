@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:48:47 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 23:37:15 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 08:52:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	heredoc(t_cmds *node, char *delimiter, int fdo)
 	bytes_read = 1;
 	while (bytes_read > -1 && node->sh->stop != 1)
 	{
-		text = readline("Heredoc $>");
+		text = readline("➡️  ");
 		if (convert_data(&text, delimiter, node->sh, fdo))
 			break ;
 	}

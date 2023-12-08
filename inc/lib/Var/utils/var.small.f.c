@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vars.h                                             :+:      :+:    :+:   */
+/*   var.small.f.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 04:57:29 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/08 13:36:40 by pedro            ###   ########.fr       */
+/*   Created: 2023/12/08 13:38:07 by pedro             #+#    #+#             */
+/*   Updated: 2023/12/08 13:38:40 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VARS_H
-# define VARS_H
+#include "vars.h"
 
-# include <defines.h>
-# include <libft.h>
-# include <stdbool.h>
-# include <stdlib.h>
+void	fill_result(char *result, char *new_value, char *del, size_t **m)
+{
+	size_t	*i;
+	size_t	*j;
 
-void	*trash(char **array);
-char	*varlib_execute(char *s, t_shell *h);
-void	*free_array(char **array);
-bool	does_have_var(char *s);
-int		varlib_start_position(char *ptr);
-
-#endif
+	i = m[0];
+	j = m[1];
+	strcpy(result + *j, new_value);
+	*j += ft_strlen(new_value);
+	*i += ft_strlen(del) + 1;
+}

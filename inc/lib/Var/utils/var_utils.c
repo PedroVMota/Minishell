@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 04:56:45 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 04:56:53 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:36:24 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ void	*free_array(char **array)
 	return (NULL);
 }
 
+void	update_quote(int *quote, char *s, int *index)
+{
+	if (s[*index] == '\'' && !*quote)
+		*quote = 1;
+	else if (s[*index] == '\'' && *quote)
+		*quote = 0;
+	else if (s[*index] == '\"' && !*quote)
+		*quote = 2;
+	else if (s[*index] == '\"' && *quote == 2)
+		*quote = 0;
+}
+
 bool	does_have_var(char *s)
 {
 	int	index;
@@ -33,11 +45,8 @@ bool	does_have_var(char *s)
 		return (false);
 	while (s[index])
 	{
-		if (s[index] == '\'' && quote == 0)
-			quote = s[index];
-		else if (s[index] == '\'' && quote != 0)
-			quote = 0;
-		else if (s[index] == '$' && !quote)
+		update_quote(&quote, s, &index);
+		if (s[index] == '$' && quote != 1)
 			return (true);
 		index++;
 	}
@@ -47,16 +56,27 @@ bool	does_have_var(char *s)
 int	varlib_start_position(char *ptr)
 {
 	int	index;
+	int	quote;
 
 	index = 0;
+	quote = 0;
 	if (!ptr)
 		return (0);
 	while (ptr[index])
 	{
-		if (ptr[index] == QUOTE)
-			return (-1);
-		if (ptr[index] == '$' && ptr[index + 1] != '$')
+		if (ptr[index] == '\'' && !quote)
+			quote = 1;
+		else if (ptr[index] == '\'' && quote)
+			quote = 0;
+		else if (ptr[index] == '\"' && !quote)
+			quote = 2;
+		else if (ptr[index] == '\"' && quote == 2)
+			quote = 0;
+		if (ptr[index] == '$' && ptr[index + 1] != '$' && quote != 1)
+		{
+			info("Found $", YEL);
 			return (index);
+		}
 		index++;
 	}
 	return (-1);

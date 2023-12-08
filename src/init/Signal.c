@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:52:55 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 23:39:03 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:35:56 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	sh_hd(int signal)
 	}
 }
 
-void		ft_ml_sigdefault_keep(int sig_state);
+void	ft_ml_sigdefault_keep(int sig_state)
 {
-	else if (sig_state == SIG_STATE_CHILD_BUILTIN)
+	if (sig_state == SIG_STATE_CHILD_BUILTIN)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);

@@ -1,3 +1,4 @@
+#!/bin/bash
 dirs=("src/" "inc/lib/Builtin" "inc/lib/Var")
 
 # Initialize the file count

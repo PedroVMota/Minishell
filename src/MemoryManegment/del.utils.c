@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del.utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedromota <pedromota@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 00:46:23 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 00:47:55 by pedromota        ###   ########.fr       */
+/*   Updated: 2023/12/08 12:16:29 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	clean_redirection(t_redirections **head)
 		free(local);
 		local = next;
 	}
+	*head = NULL;
 }
 
 int	ft_env_delete(t_env **env)

@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:02:42 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 01:01:38 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:39:29 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,24 @@ static void	add_to_the_list(t_cmds *node, int *i)
 	new = NULL;
 	while (node->args[*i])
 	{
-		new = ft_env_add(ft_strdup(node->args[*i]));
-		if (check_repetition(new, &node->sh->env) == 0)
-			ft_ml_envadd_back(&node->sh->env, new);
+		if (node->args[*i][0] == '=' || !ft_isalpha(node->args[*i][0]))
+		{
+			printf("minishell: export: `%s': not a valid identifier\n",
+				node->args[*i]);
+			(*i)++;
+			continue ;
+		}
+		if (ft_strchr(node->args[*i], '='))
+		{
+			new = ft_env_add(ft_strdup(node->args[*i]), 1);
+			info("New Env with =", YEL);
+		}
 		else
-			ft_env_delete(&new);
+		{
+			new = ft_env_add(ft_strdup(node->args[*i]), 0);
+			info("New Env without =", YEL);
+		}
+		check_repetition(new, &node->sh->env);
 		(*i)++;
 	}
 }
@@ -71,7 +84,7 @@ int	ft_export(t_cmds *node)
 	else
 		add_to_the_list(node, &i);
 	list_order(node->sh->env);
-	if(node->next || node->prev)
+	if (node->next || node->prev)
 		close_data(dups, node, true);
 	else
 		close_data(dups, node, false);

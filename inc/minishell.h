@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 05:55:00 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 23:40:59 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:39:43 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define SIGNAL_EXIT_HD 2
 
 // # define info(msg, color) printf("%s%d%s : %s[%s]%s\n", MAG, getpid(), RESET,
-//color, msg, RESET);
+	// color, msg, RESET);
 
 extern int	g_signal_status;
 
@@ -99,7 +99,7 @@ void		redirect(t_cmds *node);
 bool		isbuiltin(t_cmds *cmd);
 int			clean(t_shell *sh, bool _exit, int status, char *msg);
 void		ft_ml_envadd_back(t_env **lst, t_env *new);
-t_env		*ft_env_add(char *str);
+t_env		*ft_env_add(char *str, int has_equal);
 int			ft_env_delete(t_env **env);
 t_env		*set_env(char **envp);
 void		parse(t_cmds *node, t_shell *sh);

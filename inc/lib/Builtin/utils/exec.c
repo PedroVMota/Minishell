@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:14:28 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/07 23:40:18 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 12:15:57 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	ft_exec(t_cmds *node)
 {
 	int	*dups;
 
+	info("teste", YEL);
 	redirect(node);
 	dups = set_dups(node);
 	if (checker(node) == true)
@@ -82,8 +83,11 @@ int	ft_exec(t_cmds *node)
 	clean_redirection(&node->outfile);
 	free(dups);
 	end_endpoits(node);
-	if (execve(node->args[0], node->args, node->sh->envp))
+	if (!node->args || !node->args[0] || !node->args[0][0])
+		clean(node->sh, true, 0, NULL);
+	if (execve(node->args[0], node->args, node->sh->envp) != 0)
 	{
+		ft_putstr_fd("Minishell: ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		clean(node->sh, true, errno, NULL);
 	}

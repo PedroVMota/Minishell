@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:32:47 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/07 23:41:19 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 08:48:25 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef enum token_status
 typedef struct s_env
 {
 	char					**vars;
+	int						has_equal;
 	struct s_env			*next;
 }							t_env;
 

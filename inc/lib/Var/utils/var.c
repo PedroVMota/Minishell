@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 04:57:07 by pedro             #+#    #+#             */
-/*   Updated: 2023/12/06 04:57:07 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 13:39:12 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "vars.h"
 
 bool	does_have_var(char *s);
+void	skip_single_quote(char *s, int *index, int *quote);
+void	update_quote(int *quote, char *s, int *index);
+void	fill_result(char *result, char *new_value, char *del, size_t **m);
 
 char	*varlib_obtain(char *str)
 {
@@ -39,7 +42,9 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 	char	*result;
 	size_t	i;
 	size_t	j;
+	int		quote;
 
+	quote = 0;
 	i = 0;
 	j = 0;
 	result = (char *)malloc(ft_strlen(str) - ft_strlen(del)
@@ -48,12 +53,10 @@ char	*varlib_replace(char *str, char *new_value, char *del)
 		return (free_array((char *[]){str, new_value, del, NULL}));
 	while (i < ft_strlen(str))
 	{
-		if (str[i] == '$' && strncmp(str + i + 1, del, ft_strlen(del)) == 0)
-		{
-			strcpy(result + j, new_value);
-			j += ft_strlen(new_value);
-			i += ft_strlen(del) + 1;
-		}
+		update_quote(&quote, str, (int *)&i);
+		if (str[i] == '$' && strncmp(str + i + 1, del, ft_strlen(del)) == 0
+			&& quote != 1)
+			fill_result(result, new_value, del, (size_t *[2]){&i, &j});
 		else
 			result[j++] = str[i++];
 	}
@@ -104,8 +107,7 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 	while (vars)
 	{
 		var = varlib_obtain(str);
-		if (!var)
-			return (str);
+		info(var, MAG) if (!var) return (str);
 		if (!ft_strcmp(var, vars->vars[0]))
 			return (varlib_replace(str, ft_strdup(vars->vars[1]), var));
 		if (var[0] == '?')
@@ -118,20 +120,19 @@ char	*varlib_decide(char *str, t_shell *sh, int pos)
 
 char	*varlib_execute(char *s, t_shell *h)
 {
-	int		index;
-	char	quote;
+	int	index;
+	int	quote;
 
-	index = 0;
 	quote = 0;
+	index = 0;
 	while (does_have_var(s))
 	{
-		if (s[index] == '\'' && quote == 0)
-			quote = s[index];
-		else if (s[index] == '\'' && quote != 0)
-			quote = 0;
-		else if (s[index] == '$' && !quote)
+		update_quote(&quote, s, &index);
+		if (s[index] == '$' && quote != 1)
 		{
+			info(s, YEL);
 			s = varlib_decide(s, h, index);
+			info(s, YEL);
 			index = 0;
 		}
 		index++;

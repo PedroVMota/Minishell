@@ -6,7 +6,7 @@
 /*   By: pedro <pedro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 01:04:25 by pedromota         #+#    #+#             */
-/*   Updated: 2023/12/06 05:43:12 by pedro            ###   ########.fr       */
+/*   Updated: 2023/12/08 11:27:07 by pedro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,34 @@ void	print_export_env(t_cmds *node)
 	{
 		printf("declare -x ");
 		print_export_char(env->vars[0], false);
-		if (env->vars[1])
-		{
+		if (env->has_equal)
 			printf("=\"");
+		if (env->vars[1])
 			print_export_char(env->vars[1], true);
-		}
-		else
+		else if (!env->vars[1] && env->has_equal)
 			printf("\"\n");
+		else if (!env->vars[1] && !env->has_equal)
+			printf("\n");
 		env = env->next;
 	}
 	return ;
+}
+
+static void	env_replace(t_env *temp, t_env *new)
+{
+	char	**olds;
+
+	info(__func__, YEL);
+	if (temp->has_equal)
+		info("The temp has equal", YEL);
+	if (new->has_equal)
+		info("The new has equal", YEL);
+	temp->has_equal = new->has_equal;
+	olds = temp->vars;
+	temp->vars = new->vars;
+	free_split(olds, 0);
+	new->vars = NULL;
+	ft_env_delete(&new);
 }
 
 int	check_repetition(t_env *new, t_env **env)
@@ -97,23 +115,16 @@ int	check_repetition(t_env *new, t_env **env)
 
 	temp = *env;
 	i = 0;
-	if (new->vars[0][0] == '=')
-	{
-		printf("minishell: %s is not a valid identifier\n", new->vars[0]);
-		return (1);
-	}
 	while (temp)
 	{
 		if (ft_strcmp(temp->vars[0], new->vars[0]) == 0)
 		{
-			if (temp->vars[1] == NULL)
-				temp->vars[1] = (char *)malloc(ft_strlen(new->vars[1])
-						* sizeof(char));
-			ft_strlcpy(temp->vars[1], new->vars[1], strlen(temp->vars[1]));
-			return (1);
+			env_replace(temp, new);
+			return (0);
 		}
 		temp = temp->next;
 		i++;
 	}
+	ft_ml_envadd_back(env, new);
 	return (0);
 }
