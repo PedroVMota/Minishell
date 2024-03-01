@@ -17,7 +17,7 @@
   - [Forks and Dups](#Forks-and-Dups)
     - [Forks](#Forks)
     - [Dups](#Dups)
-    - [Why you should close](###Closing-File-Descriptors)
+    - [Why you should close](#Closing-File-Descriptors)
 - [Implementation](#implementation)
   - [The Lexer](#the-lexer)
   - [The Parser](#the-parser)
