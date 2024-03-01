@@ -176,6 +176,7 @@ These functions are useful for `redirecting` `standard input`, `output` and `err
 
 
 ```bash
+    # before running
     $> cat test.txt
     $>
 ```
@@ -214,10 +215,23 @@ int main() {
 
 ```
 
+In this program, the `open()` function is used to open a file named `"test.txt"` for writing. If the file does not exist, it is created. The `dup2()` function is then called to duplicate the file descriptor for stdout (`STDOUT_FILENO`) to the file descriptor for the file. This means that anything written to stdout will now go to the file. The `printf()` function is used to write a message to stdout, but because of the `dup2()` call, this message will go to the file. Finally, the file is closed with `close()`.
+
 ```bash
+    # after running
     $> ./run
     Done!
     $> cat test.txt 
     This will be written to the file
     $>
 ```
+
+### Closing File Descriptors:
+
+In Unix-like operating systems, each process has a limit on the number of file descriptors it can have open at any one time. This limit is typically quite high (often in the thousands), but it is still finite. If a process continually opens files without closing them, it will eventually reach this limit and will not be able to open any more files.
+
+Additionally, open file descriptors consume system resources. While the amount of resources used by a single file descriptor is small, it can add up if many are left open. This can lead to decreased system performance.
+
+Furthermore, leaving file descriptors open can lead to issues with file locking. If a process has a file open, other processes may not be able to write to it, depending on the type of lock in place.
+
+Finally, it's a matter of good programming practice. Just like how you free memory that you've allocated when you're done with it, you should close file descriptors when you're done using them. This makes your code cleaner, easier to understand, and less prone to bugs or leaks.
