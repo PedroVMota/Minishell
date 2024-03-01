@@ -93,6 +93,9 @@ Here's a basic description of how it works:
 
 # Forks and Dups
 
+
+### Forks
+
 In Unix-like operating systems, a fork operation creates a new process. The new `process`, called the child, is an exact copy of the calling process, called the parent, except for a few values that get changed, such as the process ID. This operation is performed by the `fork()` system call.
 
 When a process is forked, both the parent and child processes have their own private address space. This means that the child process gets a separate copy of all the memory that was allocated to the parent process. Any changes made in the child process do not affect the parent process, and vice versa.
@@ -157,4 +160,64 @@ int main()
   }
   return 0;
 }
+```
+
+### Dups
+
+`dup` and `dup2` are system calls in Unix-like operating systems that are used for duplicating file descriptors.
+
+
+`dup(int oldfd)` takes a single argument, an existing file descriptor, and returns a new file descriptor that points to the same open file, pipe, or network connection. The new file descriptor is the lowest-numbered file descriptor not currently open for the process. Both file descriptors can be used interchangeably. They share locks, file position pointers and flags; for example, if the file position is modified by using `lseek` on one descriptor, the change will be reflected when the other descriptor is used to read from or write to the file.
+
+`dup2(int oldfd, int newfd)` performs the same task, but it takes two arguments. The second argument is the file descriptor number for the duplicate. If the second argument is an open file descriptor, it is first closed. If the old and new file descriptors are equal, `dup2` will return the new one without closing it.
+
+These functions are useful for `redirecting` `standard input`, `output` and `error`, among other things. For example, by duplicating the file descriptor, a process can write to a file by simply writing to stdout if the file descriptor for that file has been duplicated onto the file descriptor for stdout.
+
+
+
+```bash
+    $> cat test.txt
+    $>
+```
+
+```c
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+int main() {
+
+    int StandarOutputBackup = dup(1);
+    // Open the file
+    int file = open("test.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+
+    // Duplicate stdout file descriptor to the file
+    dup2(file, STDOUT_FILENO);
+
+    // Now, everything written to stdout will go to the file
+    printf("This will be written to the file\n");
+
+    close(file);
+
+
+    dup2(StandarOutputBackup, STDOUT_FILENO);
+
+    printf("Done!\n")
+
+
+
+    return 0;
+}
+
+```
+
+```bash
+    $> ./run
+    Done!
+    $> cat test.txt 
+    This will be written to the file
+    $>
 ```
