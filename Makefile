@@ -34,16 +34,7 @@ fclean: clean
 	@rm -f $(NAME) lst lst.txt *.log *.del *.ign
 	@make fclean -C $(libft) --no-print
 
-e:
-	make && env -i ./minishell
-
-d:
-	make && valgrind --log-file="val.log" --suppressions="./pdfs/minishell.sup" --track-fds=yes ./minishell
-
-f:
-	make && valgrind --log-file="val.log"  --track-fds=yes --leak-check=full --show-leak-kinds=all --suppressions=".minishell.sup" ./minishell
-
-n:
+Run:
 	make && ./minishell
 # make && ./minishell
 #--log-file="val.log"
